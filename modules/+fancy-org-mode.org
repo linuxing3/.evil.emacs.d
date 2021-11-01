@@ -871,7 +871,7 @@ block)))
 
 #+DESCRIPTION: 使用文学编程，对org模式进行终极设置 
 
-#+PROPERTY:    header-args:elisp  :tangle ~/OneDrive/config/emacs/scratch/modules/+fancy-org-mode.el
+#+PROPERTY:    header-args:elisp  :tangle ~/EnvSetup\config\evil-emacs/modules/+fancy-org-mode.el
 #+PROPERTY:    header-args:sh     :tangle no
 #+PROPERTY:    header-args:       :results silent   :eval no-export   :comments org
 
