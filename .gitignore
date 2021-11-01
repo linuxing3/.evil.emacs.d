@@ -1,0 +1,13 @@
+.DS_Store
+*.local
+
+# production
+.local
+.extension
+.cache
+local
+private
+elpa
+test
+auto-save-list
+eshell
