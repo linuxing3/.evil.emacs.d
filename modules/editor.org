@@ -1,0 +1,26 @@
+#+TITLE: Base's Emacs Editor Configuration
+#+OPTIONS: toc:4 h:4
+
+* 配置说明
+** 关于本文件
+   :PROPERTIES:
+   :CUSTOM_ID: babel-init
+   :END:
+<<babel-init>>
+* 语音朗读 
+
+#+begin_src emacs-lisp :tangle yes
+(defvar my/espeak-command "c:/program files (x86)/espeak/command_line/espeak.exe")
+(defun my/say (string &optional speed)
+  (interactive "MString: ")
+  (setq speed (or speed 175))
+  (call-process my/espeak-command nil nil nil string "-s" speed))
+#+end_src
+* 系统路径
+
+#+begin_src emacs-lisp :tangle yes
+  (when (eq system-type 'windows-nt)
+  (setenv "PATH" (concat 
+                   "\"c:/program files/postgresql/9.3/bin;\"" 
+                   (getenv "PATH"))))
+#+end_src
