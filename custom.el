@@ -7,7 +7,7 @@
  '(global-display-line-numbers-mode t)
  '(org-support-shift-select t)
  '(package-selected-packages
-   '(lsp-jedi lsp-mode yasnippet lsp-treemacs lsp-ui lsp-ivy projectile hydra flycheck company avy which-key dap-mode))
+   '(org-agenda page-break-lines nyan-mode highlight-indent-guides info-colors all-the-icons-dired evil-leader lsp-mode yasnippet lsp-treemacs lsp-ui lsp-ivy projectile hydra flycheck company avy which-key dap-mode))
  '(scroll-bar-mode nil)
  '(show-paren-mode t)
  '(tool-bar-mode nil))

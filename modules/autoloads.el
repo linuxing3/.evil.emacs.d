@@ -10,14 +10,19 @@
     (expand-file-name path home-directory)))
 
 ;;;###autoload
+(defun private-module-path (path)
+  "Prepend drive label to PATH."
+  (expand-file-name path linuxing3-private-modules))
+
+;;;###autoload
 (defun dropbox-path (path)
   "Prepend drive label to PATH."
-    (concat home-directory cloud-service-provider "/" path))
+  (concat home-directory cloud-service-provider "/" path))
 
 ;;;###autoload
 (defun workspace-path (path)
   "Prepend drive label to PATH."
-    (concat home-directory "/workspace/" path))
+  (concat home-directory "/workspace/" path))
 
 ;;;###autoload
 (defmacro with-dir (DIR &rest FORMS)
@@ -28,6 +33,14 @@
          (progn (cd ,DIR) ,@FORMS)
        (cd ,orig-dir))))
 ;; (macroexpand '(with-dir "~/.emacs.d"))
+
+;;;###autoload
+;; 递归遍历加载路径
+(defun add-subdirs-to-load-path(dir)
+    "Recursive add directories to `load-path`."
+    (let ((default-directory (file-name-as-directory dir)))
+      (add-to-list 'load-path dir)
+      (normal-top-level-add-subdirs-to-load-path)))
 
 ;;;###autoload
 (defun org-global-props (&optional property buffer)
@@ -41,6 +54,17 @@
   "Get global org property KEY of current buffer."
   (org-element-property :value (car (org-global-props key))))
 
+;; 切换代理
+(defun linuxing3-toggle-proxy ()
+  (interactive)
+  (if (null url-proxy-services)
+      (progn
+        (setq url-proxy-services
+              '(("http" . "127.0.0.1:8000")
+                ("https" . "127.0.0.1:8000")))
+        (message "代理已开启."))
+    (setq url-proxy-services nil)
+    (message "代理已关闭.")))
 
 ;; ===============================================
 ;; 核心设置
@@ -117,14 +141,10 @@ in windows could be c:/Users/Administrator"
   :group 'linuxing3
   :type 'string)
 
-;; (defvar home-directory ""
-;;   "Home directory")
-
-;; (defvar data-drive "")
-
-;; (defvar cloud-service-provider "")
-
-;; (setenv "CLOUD_SERVICE_PROVIDER" "OneDrive")
+(defcustom linuxing3-private-modules "~/EnvSetup/config/evil-emacs/modules"
+  "Normally I use EnvSetup directory to hold all my private lisp files"
+  :group 'linuxing3
+  :type 'string)
 
 (defun +ensure-user-env ()
   "Check user env settings"
@@ -136,7 +156,7 @@ in windows could be c:/Users/Administrator"
    ;; (setenv "DATA_DRIVE" "C:/Users/Administrator")
    (if (equal nil (getenv "DATA_DRIVE"))
        (if IS-WINDOWS (setq data-drive "C:/Users/Administrator")
-	 (setq data-drive "/"))
+	     (setq data-drive "/"))
      (setq data-drive (expand-file-name (getenv "DATA_DRIVE"))))
 
    ;; (setenv "HOME_DIRECTORY" "D:/home/vagrant")

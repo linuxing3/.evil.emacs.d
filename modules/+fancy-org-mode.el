@@ -268,6 +268,23 @@ block)))
   :config)
 
 (with-eval-after-load 'org-agenda
+    (defun evan/agenda-icon-material (name)
+      "返回一个all-the-icons-material图标"
+      (list (all-the-icons-material name)))
+    (setq org-agenda-category-icon-alist
+        `(
+          ;; 学习相关
+          ("待办" ,(evan/agenda-icon-material "check_box") nil nil :ascent center)
+          ("学习" ,(evan/agenda-icon-material "book") nil nil :ascent center)
+          ("等待" ,(evan/agenda-icon-material "ac_unit") nil nil :ascent center)
+          ("完成" ,(evan/agenda-icon-material "done") nil nil :ascent center)
+          ;; 代码相关
+          ("取消" ,(evan/agenda-icon-material "cancel") nil nil :ascent)
+          ("BUG" ,(evan/agenda-icon-material "bug_report") nil nil :ascent center)
+          ("新事件" ,(evan/agenda-icon-material "new_releases") nil nil :ascent center)
+          ("已知问题" ,(evan/agenda-icon-material "comment") nil nil :ascent center)
+          ("修改中" ,(evan/agenda-icon-material "adjust") nil nil :ascent center)
+          ("已修复" ,(evan/agenda-icon-material "thumb_up") nil nil :ascent center)))
   ;; agenda 里面时间块彩色显示
   ;; From: https://emacs-china.org/t/org-agenda/8679/3
   (defun ljg/org-agenda-time-grid-spacing ()
@@ -373,27 +390,17 @@ block)))
 
 (use-package org-bullets
   :ensure t
-  :init (add-hook 'org-mode-hook 'org-bullets-mode))
+  :init (add-hook 'org-mode-hook 'org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("☰" "☷"  "☯"  "✿" ">"))
+)
 
-(use-package org
+(use-package org-fancy-priorities
+  :ensure t
+  :hook
+  (org-mode . org-fancy-priorities-mode)
   :config
-  (font-lock-add-keywords            ; A bit silly but my headers are now
-   'org-mode `(("^\\*+ \\(TODO\\) "  ; shorter, and that is nice canceled
-                (1 (progn (compose-region (match-beginning 1) (match-end 1) "⚑")
-                          nil)))
-               ("^\\*+ \\(WAIT\\) "
-                (1 (progn (compose-region (match-beginning 1) (match-end 1) "⚐")
-                          nil)))
-               ("^\\*+ \\(CANCELED\\) "
-                (1 (progn (compose-region (match-beginning 1) (match-end 1) "✘")
-                          nil)))
-               ("^\\*+ \\(DONE\\) "
-                (1 (progn (compose-region (match-beginning 1) (match-end 1) "✔")
-                          nil)))))
-    :init
-    (font-lock-add-keywords 'org-mode
-			    '(("^ +\\([-*]\\) "
-			       (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))))
+  (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")))
 
 (use-package org
   :config
@@ -453,7 +460,6 @@ block)))
 
 ;; (use-package org-noter :ensure t)
 ;; (use-package org-appear :ensure t)
-(use-package org-fancy-priorities :ensure t)
 (use-package org-superstar
   :ensure t
   :after org
@@ -461,56 +467,8 @@ block)))
   :config
   (set-face-attribute 'org-superstar-header-bullet nil :inherit 'fixed-pitched :height 180)
   :custom
-  ;; ;; set the leading bullet to be a space. For alignment purposes I use an em-quad space (U+2001)
-  ;; (org-superstar-headline-bullets-list '(" "))
-  (org-superstar-todo-bullet-alist '(("DONE" . ?✔)
-				 ("TODO" . ?✍)
-				 ("WAIT" . ?✍)
-				 ("CANCELLED" . ?✍)
-				 ("IN-PROGRESS" . ?✍)
-				 ))
-  (org-superstar-special-todo-items t)
-  ;; (org-superstar-leading-bullet "")
-  )
-
-(defun xing/org-mode-setup ()
-  ;; (org-indent-mode)
-  (visual-line-mode 1)
-  (setq prettify-symbols-unprettify-at-point 'right-edge)
-  (push '("[ ]" .  "☐") prettify-symbols-alist)
-  (push '("[X]" . "☑") prettify-symbols-alist)
-  (push '("[-]" . "❍") prettify-symbols-alist)
-  (push '("TODO" . "") prettify-symbols-alist)
-  (push '("DONE" . "") prettify-symbols-alist)
-  (push '("BRANCH" . "") prettify-symbols-alist)
-  (push '("MR" . "") prettify-symbols-alist)
-  (push '("MERGED" . "") prettify-symbols-alist)
-  (push '("FORK" . "") prettify-symbols-alist)
-  (push '("ISSUE" . "") prettify-symbols-alist)
-  (push '("GITHUB" . "") prettify-symbols-alist)
-  (push '("WRITING" . "") prettify-symbols-alist)
-  (push '("WRITE" . "") prettify-symbols-alist)
-  (prettify-symbols-mode))
-
-(defvar xing/org-todo-bullet-faces
-  '(("TODO" . (:inherit base-todo-keyword-face :foreground "#FF8580"))
-("ISSUE" . (:inherit base-todo-keyword-face :foreground "#FF8580"
-			 :family "github-octicons" :height 160))
-("BRANCH" . (:inherit base-todo-keyword-face :foreground "#D58422"
-			  :family "github-octicons"))
-("FORK" . (:inherit base-todo-keyword-face :foreground "#D58422"
-			:family "github-octicons"))
-("MR" . (:inherit base-todo-keyword-face :foreground "#C7A941"
-		  :family "github-octicons"))
-("MERGED" . (:inherit base-todo-keyword-face :foreground "#75AD18"
-			  :family "github-octicons"))
-("GITHUB" . (:inherit base-todo-keyword-face :foreground "#BBBBBB"
-			  :family "github-octicons" :height 160))
-("DONE" . (:inherit base-todo-keyword-face :foreground "#75AD18"))
-("IDEA" . (:inherit base-todo-keyword-face :foreground "#85AAFF"))
-("WRITE" . (:inherit base-todo-keyword-face :foreground "#FF8580"))
-("WRITING" . (:inherit base-todo-keyword-face :foreground "#C7A941"))
-))
+  (org-superstar-headline-bullets-list '("☰" "☷" "☯" "✿" ">"))
+  (setq org-ellipsis " ▼ "))
 
 (use-package org-download :ensure t)
 

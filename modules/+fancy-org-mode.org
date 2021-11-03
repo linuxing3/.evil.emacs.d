@@ -17,6 +17,18 @@
 	   ("C-c O" . org-open-at-point-global)
 	   ("C-M-|" . indent-rigidly))
     :config
+    (setq org-todo-keywords '((sequence "[学习](s!/@)" "[待办](t!/@)" "[等待](w!))" "|" "[完成](d!/@)" "[取消](c!@)")
+                       (sequence "[BUG](b!/@)" "[新事件](i/@)" "[已知问题](k!/@)" "[修改中](W!/@)" "|" "[已修复](f!)"))) 
+    (setq org-todo-keyword-faces '(("[学习]" . (:foreground "white" :background "#2ECC71" :weight bold))
+								 ("[待办]" . (:foreground "white" :background "#F1C40F" :weight bold))
+								 ("[等待]" . (:foreground "white" :background "#3498DB" :weight bold))
+								 ("[完成]" . (:foreground "black" :background "snow " :weight bold))
+								 ("[取消]" . (:foreground "white" :background "#566573" :weight bold))
+								 ("[BUG]" . (:foreground "white" :background "#E74C3C" :weight bold))
+								 ("[新事件]" . (:foreground "white" :background "#D35400" :weight bold))
+								 ("[已知问题]" . (:foreground "white" :background "#17A589" :weight bold))
+								 ("[修改中]" . (:foreground "white" :background "#BB8FCE" :weight bold))
+								 ("[已修复]" . (:foreground "white" :background "#566573" :weight bold))))
     (setq org-use-speed-commands t
 	  org-return-follows-link t
 	  org-hide-emphasis-markers t
@@ -26,41 +38,7 @@
 	  org-src-tab-acts-natively t
 	  org-confirm-babel-evaluate nil)
     ;; todo关键字
-    (setq org-todo-keywords
-        '((sequence
-           "TODO(t)"  ; A task that needs doing & is ready to do
-           "PROJ(p)"  ; A project, which usually contains other tasks
-           "LOOP(r)"  ; A recurring task
-           "STRT(s)"  ; A task that is in progress
-           "WAIT(w)"  ; Something external is holding up this task
-           "HOLD(h)"  ; This task is paused/on hold because of me
-           "IDEA(i)"  ; An unconfirmed and unapproved task or notion
-           "|"
-           "DONE(d)"  ; Task successfully completed
-           "KILL(k)") ; Task was cancelled, aborted or is no longer applicable
-          (sequence
-           "[ ](T)"   ; A task that needs doing
-           "[-](S)"   ; Task is in progress
-           "[?](W)"   ; Task is being held up or paused
-           "|"
-           "[X](D)")  ; Task was completed
-          (sequence
-           "|"
-           "OKAY(o)"
-           "YES(y)"
-           "NO(n)"))
-        org-todo-keyword-faces
-        '(("[-]"  . +org-todo-active)
-          ("STRT" . +org-todo-active)
-          ("[?]"  . +org-todo-onhold)
-          ("WAIT" . +org-todo-onhold)
-          ("HOLD" . +org-todo-onhold)
-          ("PROJ" . +org-todo-project)
-          ("NO"   . +org-todo-cancel)
-          ("KILL" . +org-todo-cancel)))
 
-    ;; 	org-todo-keywords '((sequence "TODO(t)" "WAIT(g)" "|" "DONE(d)")
-    ;; 			    (sequence "|" "CANCELED(c)")))
     (setq-default org-display-custom-times t)
     (setq org-time-stamp-custom-formats '("<%a %b %e %Y>" . "<%a %b %e %Y %H:%M>"))
     (setq org-columns-default-format "%80ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM")
@@ -516,6 +494,23 @@ block)))
   :config)
 
 (with-eval-after-load 'org-agenda
+    (defun evan/agenda-icon-material (name)
+      "返回一个all-the-icons-material图标"
+      (list (all-the-icons-material name)))
+    (setq org-agenda-category-icon-alist
+        `(
+          ;; 学习相关
+          ("待办" ,(evan/agenda-icon-material "check_box") nil nil :ascent center)
+          ("学习" ,(evan/agenda-icon-material "book") nil nil :ascent center)
+          ("等待" ,(evan/agenda-icon-material "ac_unit") nil nil :ascent center)
+          ("完成" ,(evan/agenda-icon-material "done") nil nil :ascent center)
+          ;; 代码相关
+          ("取消" ,(evan/agenda-icon-material "cancel") nil nil :ascent)
+          ("BUG" ,(evan/agenda-icon-material "bug_report") nil nil :ascent center)
+          ("新事件" ,(evan/agenda-icon-material "new_releases") nil nil :ascent center)
+          ("已知问题" ,(evan/agenda-icon-material "comment") nil nil :ascent center)
+          ("修改中" ,(evan/agenda-icon-material "adjust") nil nil :ascent center)
+          ("已修复" ,(evan/agenda-icon-material "thumb_up") nil nil :ascent center)))
   ;; agenda 里面时间块彩色显示
   ;; From: https://emacs-china.org/t/org-agenda/8679/3
   (defun ljg/org-agenda-time-grid-spacing ()
@@ -609,6 +604,10 @@ block)))
 #+END_SRC
 
 #+RESULTS:
+| u | My GTD view        | ((todo  ((org-agenda-overriding-header Get Things Done) (org-super-agenda-groups '((:name 马上去做 Quick Picks :effort< 0:30) (:name 重要任务 Important :priority A) (:priority<= B :scheduled today :order 1) (:discard (:anything t)))))) (todo  ((org-agenda-overriding-header All Projects) (org-super-agenda-groups '((:name none :children todo) (:discard (:anything t))))))) |
+| x | My Super view      | ((agenda  ((org-agenda-overriding-header Today Calendar) (org-super-agenda-groups '((:name Today :time-grid t))))))                                                                                                                                                                                                                                                                  |
+| d | Daniel's Task view | ((todo  ((org-agenda-overriding-header Daniel's Tasks) (org-super-agenda-groups '((:name daniel :tag (DANIEL daniel kids KIDS)) (:discard (:anything t)))))))                                                                                                                                                                                                                        |
+| e | Computer Related   | ((tags-todo  ((org-agenda-overriding-header Computer Related) (org-super-agenda-groups `((:name General Comupter Related :tag COMPUTER) (:name Emacs Related :tag COMPUTER :regexp (org emacs ,(rx bow emacs eow))))))))                                                                                                                                                             |
 
 **　大脑模拟
 
@@ -639,37 +638,27 @@ block)))
 #+BEGIN_SRC elisp
 (use-package org-bullets
   :ensure t
-  :init (add-hook 'org-mode-hook 'org-bullets-mode))
+  :init (add-hook 'org-mode-hook 'org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("☀" "☪"  "☯"  "✿" "→"))
+)
 #+END_SRC
 
 #+RESULTS:
 
-*** 字体关键字
-
+*** 美化优先级 
 #+BEGIN_SRC elisp
-(use-package org
-  :config
-  (font-lock-add-keywords            ; A bit silly but my headers are now
-   'org-mode `(("^\\*+ \\(TODO\\) "  ; shorter, and that is nice canceled
-                (1 (progn (compose-region (match-beginning 1) (match-end 1) "⚑")
-                          nil)))
-               ("^\\*+ \\(WAIT\\) "
-                (1 (progn (compose-region (match-beginning 1) (match-end 1) "⚐")
-                          nil)))
-               ("^\\*+ \\(CANCELED\\) "
-                (1 (progn (compose-region (match-beginning 1) (match-end 1) "✘")
-                          nil)))
-               ("^\\*+ \\(DONE\\) "
-                (1 (progn (compose-region (match-beginning 1) (match-end 1) "✔")
-                          nil)))))
-    :init
-    (font-lock-add-keywords 'org-mode
-			    '(("^ +\\([-*]\\) "
-			       (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))))
+  (use-package org-fancy-priorities
+    :ensure t
+    :hook
+    (org-mode . org-fancy-priorities-mode)
+    :config
+    (setq org-fancy-priorities-list '("♥" "↑" "↓")))
+
 #+END_SRC
 
 #+RESULTS:
-: t
+| yas-minor-mode-on | auto-fill-mode | org-superstar-mode | org-fancy-priorities-mode | org-bullets-mode | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-show-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes |
 
 *** 标题字体
 #+BEGIN_SRC elisp
@@ -738,73 +727,25 @@ block)))
 *** 超级星号
 
     =superstar= 是用于美化每个星号图标
-#+BEGIN_SRC elisp
 
-     ;; (use-package org-noter :ensure t)
-     ;; (use-package org-appear :ensure t)
-     (use-package org-fancy-priorities :ensure t)
-     (use-package org-superstar
-       :ensure t
-       :after org
-       :hook (org-mode . org-superstar-mode)
-       :config
-       (set-face-attribute 'org-superstar-header-bullet nil :inherit 'fixed-pitched :height 180)
-       :custom
-       ;; ;; set the leading bullet to be a space. For alignment purposes I use an em-quad space (U+2001)
-       ;; (org-superstar-headline-bullets-list '(" "))
-       (org-superstar-todo-bullet-alist '(("DONE" . ?✔)
-					  ("TODO" . ?✍)
-					  ("WAIT" . ?✍)
-					  ("CANCELLED" . ?✍)
-					  ("IN-PROGRESS" . ?✍)
-					  ))
-       (org-superstar-special-todo-items t)
-       ;; (org-superstar-leading-bullet "")
-       )
+#+BEGIN_SRC elisp :tangle yes
 
-     (defun xing/org-mode-setup ()
-       ;; (org-indent-mode)
-       (visual-line-mode 1)
-       (setq prettify-symbols-unprettify-at-point 'right-edge)
-       (push '("[ ]" .  "☐") prettify-symbols-alist)
-       (push '("[X]" . "☑") prettify-symbols-alist)
-       (push '("[-]" . "❍") prettify-symbols-alist)
-       (push '("TODO" . "") prettify-symbols-alist)
-       (push '("DONE" . "") prettify-symbols-alist)
-       (push '("BRANCH" . "") prettify-symbols-alist)
-       (push '("MR" . "") prettify-symbols-alist)
-       (push '("MERGED" . "") prettify-symbols-alist)
-       (push '("FORK" . "") prettify-symbols-alist)
-       (push '("ISSUE" . "") prettify-symbols-alist)
-       (push '("GITHUB" . "") prettify-symbols-alist)
-       (push '("WRITING" . "") prettify-symbols-alist)
-       (push '("WRITE" . "") prettify-symbols-alist)
-       (prettify-symbols-mode))
-
-     (defvar xing/org-todo-bullet-faces
-       '(("TODO" . (:inherit base-todo-keyword-face :foreground "#FF8580"))
-	 ("ISSUE" . (:inherit base-todo-keyword-face :foreground "#FF8580"
-			      :family "github-octicons" :height 160))
-	 ("BRANCH" . (:inherit base-todo-keyword-face :foreground "#D58422"
-			       :family "github-octicons"))
-	 ("FORK" . (:inherit base-todo-keyword-face :foreground "#D58422"
-			     :family "github-octicons"))
-	 ("MR" . (:inherit base-todo-keyword-face :foreground "#C7A941"
-			   :family "github-octicons"))
-	 ("MERGED" . (:inherit base-todo-keyword-face :foreground "#75AD18"
-			       :family "github-octicons"))
-	 ("GITHUB" . (:inherit base-todo-keyword-face :foreground "#BBBBBB"
-			       :family "github-octicons" :height 160))
-	 ("DONE" . (:inherit base-todo-keyword-face :foreground "#75AD18"))
-	 ("IDEA" . (:inherit base-todo-keyword-face :foreground "#85AAFF"))
-	 ("WRITE" . (:inherit base-todo-keyword-face :foreground "#FF8580"))
-	 ("WRITING" . (:inherit base-todo-keyword-face :foreground "#C7A941"))
-	 ))
+  ;; (use-package org-noter :ensure t)
+  ;; (use-package org-appear :ensure t)
+  (use-package org-superstar
+    :ensure t
+    :after org
+    :hook (org-mode . org-superstar-mode)
+    :config
+    (set-face-attribute 'org-superstar-header-bullet nil :inherit 'fixed-pitched :height 180)
+    :custom
+    (org-superstar-headline-bullets-list '("☀" "☪" "☯" "✿" "→"))
+    (setq org-ellipsis " ▼ "))
 
 #+END_SRC
 
 #+RESULTS:
-: xing/org-todo-bullet-faces
+| yas-minor-mode-on | auto-fill-mode | org-superstar-mode | org-fancy-priorities-mode | org-bullets-mode | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-show-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes |
 
 ** 下载工具
 
