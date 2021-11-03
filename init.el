@@ -58,7 +58,7 @@
 (global-font-lock-mode t)
 (transient-mark-mode t)
 ;; 全屏
-(toggle-frame-fullscreen)
+;; (toggle-frame-fullscreen)
 
 (setq gc-cons-threshold most-positive-fixnum
       gc-cons-percentage 0.5)

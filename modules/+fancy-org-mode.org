@@ -16,10 +16,9 @@
 	   ("C-c L" . org-insert-link-global)
 	   ("C-c O" . org-open-at-point-global)
 	   ("C-M-|" . indent-rigidly))
-    :custom
-    (org-todo-keywords '((sequence "[学习](s!/@)" "[待办](t!/@)" "[等待](w!))" "|" "[完成](d!/@)" "[取消](c!@)")
-                       (sequence "[BUG](b!/@)" "[新事件](i/@)" "[已知问题](k!/@)" "[修改中](W!/@)" "|" "[已修复](f!)"))) 
     :config
+    (setq org-todo-keywords '((sequence "[学习](s!/@)" "[待办](t!/@)" "[等待](w!))" "|" "[完成](d!/@)" "[取消](c!@)")
+                       (sequence "[BUG](b!/@)" "[新事件](i/@)" "[已知问题](k!/@)" "[修改中](W!/@)" "|" "[已修复](f!)"))) 
     (setq org-todo-keyword-faces '(("[学习]" . (:foreground "white" :background "#2ECC71" :weight bold))
 								 ("[待办]" . (:foreground "white" :background "#F1C40F" :weight bold))
 								 ("[等待]" . (:foreground "white" :background "#3498DB" :weight bold))
@@ -637,42 +636,29 @@ block)))
 *** 使用图标
 
 #+BEGIN_SRC elisp
-;;(use-package org-bullets
-;;  :ensure t
-;;  :init (add-hook 'org-mode-hook 'org-bullets-mode)
-;;  :custom
-;;  ;;(org-bullets-bullet-list '("☰" "☷" "✿"  ">"))
-;;)
+(use-package org-bullets
+  :ensure t
+  :init (add-hook 'org-mode-hook 'org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("☀" "☪"  "☯"  "✿" "→"))
+)
 #+END_SRC
 
 #+RESULTS:
 
-*** 字体关键字
-
+*** 美化优先级 
 #+BEGIN_SRC elisp
-(use-package org
-  :config
-  (font-lock-add-keywords            ; A bit silly but my headers are now
-   'org-mode `(("^\\*+ \\(TODO\\) "  ; shorter, and that is nice canceled
-                (1 (progn (compose-region (match-beginning 1) (match-end 1) "⚑")
-                          nil)))
-               ("^\\*+ \\(WAIT\\) "
-                (1 (progn (compose-region (match-beginning 1) (match-end 1) "⚐")
-                          nil)))
-               ("^\\*+ \\(CANCELED\\) "
-                (1 (progn (compose-region (match-beginning 1) (match-end 1) "✘")
-                          nil)))
-               ("^\\*+ \\(DONE\\) "
-                (1 (progn (compose-region (match-beginning 1) (match-end 1) "✔")
-                          nil)))))
-    :init
-    (font-lock-add-keywords 'org-mode
-			    '(("^ +\\([-*]\\) "
-			       (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))))
+  (use-package org-fancy-priorities
+    :ensure t
+    :hook
+    (org-mode . org-fancy-priorities-mode)
+    :config
+    (setq org-fancy-priorities-list '("♥" "↑" "↓")))
+
 #+END_SRC
 
 #+RESULTS:
-: t
+| yas-minor-mode-on | auto-fill-mode | org-superstar-mode | org-fancy-priorities-mode | org-bullets-mode | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-show-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes |
 
 *** 标题字体
 #+BEGIN_SRC elisp
@@ -741,73 +727,25 @@ block)))
 *** 超级星号
 
     =superstar= 是用于美化每个星号图标
-#+BEGIN_SRC elisp
 
-     ;; (use-package org-noter :ensure t)
-     ;; (use-package org-appear :ensure t)
-     (use-package org-fancy-priorities :ensure t)
-     (use-package org-superstar
-       :ensure t
-       :after org
-       :hook (org-mode . org-superstar-mode)
-       :config
-       (set-face-attribute 'org-superstar-header-bullet nil :inherit 'fixed-pitched :height 180)
-       :custom
-       ;; ;; set the leading bullet to be a space. For alignment purposes I use an em-quad space (U+2001)
-       ;; (org-superstar-headline-bullets-list '(" "))
-       (org-superstar-todo-bullet-alist '(("DONE" . ?✔)
-					  ("TODO" . ?✍)
-					  ("WAIT" . ?✍)
-					  ("CANCELLED" . ?✍)
-					  ("IN-PROGRESS" . ?✍)
-					  ))
-       (org-superstar-special-todo-items t)
-       ;; (org-superstar-leading-bullet "")
-       )
+#+BEGIN_SRC elisp :tangle yes
 
-     (defun xing/org-mode-setup ()
-       ;; (org-indent-mode)
-       (visual-line-mode 1)
-       (setq prettify-symbols-unprettify-at-point 'right-edge)
-       (push '("[ ]" .  "☐") prettify-symbols-alist)
-       (push '("[X]" . "☑") prettify-symbols-alist)
-       (push '("[-]" . "❍") prettify-symbols-alist)
-       (push '("TODO" . "") prettify-symbols-alist)
-       (push '("DONE" . "") prettify-symbols-alist)
-       (push '("BRANCH" . "") prettify-symbols-alist)
-       (push '("MR" . "") prettify-symbols-alist)
-       (push '("MERGED" . "") prettify-symbols-alist)
-       (push '("FORK" . "") prettify-symbols-alist)
-       (push '("ISSUE" . "") prettify-symbols-alist)
-       (push '("GITHUB" . "") prettify-symbols-alist)
-       (push '("WRITING" . "") prettify-symbols-alist)
-       (push '("WRITE" . "") prettify-symbols-alist)
-       (prettify-symbols-mode))
-
-     (defvar xing/org-todo-bullet-faces
-       '(("TODO" . (:inherit base-todo-keyword-face :foreground "#FF8580"))
-	 ("ISSUE" . (:inherit base-todo-keyword-face :foreground "#FF8580"
-			      :family "github-octicons" :height 160))
-	 ("BRANCH" . (:inherit base-todo-keyword-face :foreground "#D58422"
-			       :family "github-octicons"))
-	 ("FORK" . (:inherit base-todo-keyword-face :foreground "#D58422"
-			     :family "github-octicons"))
-	 ("MR" . (:inherit base-todo-keyword-face :foreground "#C7A941"
-			   :family "github-octicons"))
-	 ("MERGED" . (:inherit base-todo-keyword-face :foreground "#75AD18"
-			       :family "github-octicons"))
-	 ("GITHUB" . (:inherit base-todo-keyword-face :foreground "#BBBBBB"
-			       :family "github-octicons" :height 160))
-	 ("DONE" . (:inherit base-todo-keyword-face :foreground "#75AD18"))
-	 ("IDEA" . (:inherit base-todo-keyword-face :foreground "#85AAFF"))
-	 ("WRITE" . (:inherit base-todo-keyword-face :foreground "#FF8580"))
-	 ("WRITING" . (:inherit base-todo-keyword-face :foreground "#C7A941"))
-	 ))
+  ;; (use-package org-noter :ensure t)
+  ;; (use-package org-appear :ensure t)
+  (use-package org-superstar
+    :ensure t
+    :after org
+    :hook (org-mode . org-superstar-mode)
+    :config
+    (set-face-attribute 'org-superstar-header-bullet nil :inherit 'fixed-pitched :height 180)
+    :custom
+    (org-superstar-headline-bullets-list '("☀" "☪" "☯" "✿" "→"))
+    (setq org-ellipsis " ▼ "))
 
 #+END_SRC
 
 #+RESULTS:
-: xing/org-todo-bullet-faces
+| yas-minor-mode-on | auto-fill-mode | org-superstar-mode | org-fancy-priorities-mode | org-bullets-mode | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-show-all append local] 5] | #[0 \300\301\302\303\304$\207 [add-hook change-major-mode-hook org-babel-show-result-all append local] 5] | org-babel-result-hide-spec | org-babel-hide-all-hashes |
 
 ** 下载工具
 
