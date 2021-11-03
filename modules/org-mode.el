@@ -32,4 +32,4 @@
 (+xing-org-config)
 (+xing-enable-babel)
 
-(org-babel-load-file (dropbox-path "config/emacs/scratch/modules/+fancy-org-mode.org"))
+(org-babel-load-file "~/EnvSetup/config/evil-emacs/modules/+fancy-org-mode.org")
