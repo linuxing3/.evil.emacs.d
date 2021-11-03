@@ -16,7 +16,20 @@
 	   ("C-c L" . org-insert-link-global)
 	   ("C-c O" . org-open-at-point-global)
 	   ("C-M-|" . indent-rigidly))
+    :custom
+    (org-todo-keywords '((sequence "[学习](s!/@)" "[待办](t!/@)" "[等待](w!))" "|" "[完成](d!/@)" "[取消](c!@)")
+                       (sequence "[BUG](b!/@)" "[新事件](i/@)" "[已知问题](k!/@)" "[修改中](W!/@)" "|" "[已修复](f!)"))) 
     :config
+    (setq org-todo-keyword-faces '(("[学习]" . (:foreground "white" :background "#2ECC71" :weight bold))
+								 ("[待办]" . (:foreground "white" :background "#F1C40F" :weight bold))
+								 ("[等待]" . (:foreground "white" :background "#3498DB" :weight bold))
+								 ("[完成]" . (:foreground "black" :background "snow " :weight bold))
+								 ("[取消]" . (:foreground "white" :background "#566573" :weight bold))
+								 ("[BUG]" . (:foreground "white" :background "#E74C3C" :weight bold))
+								 ("[新事件]" . (:foreground "white" :background "#D35400" :weight bold))
+								 ("[已知问题]" . (:foreground "white" :background "#17A589" :weight bold))
+								 ("[修改中]" . (:foreground "white" :background "#BB8FCE" :weight bold))
+								 ("[已修复]" . (:foreground "white" :background "#566573" :weight bold))))
     (setq org-use-speed-commands t
 	  org-return-follows-link t
 	  org-hide-emphasis-markers t
@@ -26,41 +39,7 @@
 	  org-src-tab-acts-natively t
 	  org-confirm-babel-evaluate nil)
     ;; todo关键字
-    (setq org-todo-keywords
-        '((sequence
-           "TODO(t)"  ; A task that needs doing & is ready to do
-           "PROJ(p)"  ; A project, which usually contains other tasks
-           "LOOP(r)"  ; A recurring task
-           "STRT(s)"  ; A task that is in progress
-           "WAIT(w)"  ; Something external is holding up this task
-           "HOLD(h)"  ; This task is paused/on hold because of me
-           "IDEA(i)"  ; An unconfirmed and unapproved task or notion
-           "|"
-           "DONE(d)"  ; Task successfully completed
-           "KILL(k)") ; Task was cancelled, aborted or is no longer applicable
-          (sequence
-           "[ ](T)"   ; A task that needs doing
-           "[-](S)"   ; Task is in progress
-           "[?](W)"   ; Task is being held up or paused
-           "|"
-           "[X](D)")  ; Task was completed
-          (sequence
-           "|"
-           "OKAY(o)"
-           "YES(y)"
-           "NO(n)"))
-        org-todo-keyword-faces
-        '(("[-]"  . +org-todo-active)
-          ("STRT" . +org-todo-active)
-          ("[?]"  . +org-todo-onhold)
-          ("WAIT" . +org-todo-onhold)
-          ("HOLD" . +org-todo-onhold)
-          ("PROJ" . +org-todo-project)
-          ("NO"   . +org-todo-cancel)
-          ("KILL" . +org-todo-cancel)))
 
-    ;; 	org-todo-keywords '((sequence "TODO(t)" "WAIT(g)" "|" "DONE(d)")
-    ;; 			    (sequence "|" "CANCELED(c)")))
     (setq-default org-display-custom-times t)
     (setq org-time-stamp-custom-formats '("<%a %b %e %Y>" . "<%a %b %e %Y %H:%M>"))
     (setq org-columns-default-format "%80ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM")
@@ -516,6 +495,23 @@ block)))
   :config)
 
 (with-eval-after-load 'org-agenda
+    (defun evan/agenda-icon-material (name)
+      "返回一个all-the-icons-material图标"
+      (list (all-the-icons-material name)))
+    (setq org-agenda-category-icon-alist
+        `(
+          ;; 学习相关
+          ("待办" ,(evan/agenda-icon-material "check_box") nil nil :ascent center)
+          ("学习" ,(evan/agenda-icon-material "book") nil nil :ascent center)
+          ("等待" ,(evan/agenda-icon-material "ac_unit") nil nil :ascent center)
+          ("完成" ,(evan/agenda-icon-material "done") nil nil :ascent center)
+          ;; 代码相关
+          ("取消" ,(evan/agenda-icon-material "cancel") nil nil :ascent)
+          ("BUG" ,(evan/agenda-icon-material "bug_report") nil nil :ascent center)
+          ("新事件" ,(evan/agenda-icon-material "new_releases") nil nil :ascent center)
+          ("已知问题" ,(evan/agenda-icon-material "comment") nil nil :ascent center)
+          ("修改中" ,(evan/agenda-icon-material "adjust") nil nil :ascent center)
+          ("已修复" ,(evan/agenda-icon-material "thumb_up") nil nil :ascent center)))
   ;; agenda 里面时间块彩色显示
   ;; From: https://emacs-china.org/t/org-agenda/8679/3
   (defun ljg/org-agenda-time-grid-spacing ()
@@ -609,6 +605,10 @@ block)))
 #+END_SRC
 
 #+RESULTS:
+| u | My GTD view        | ((todo  ((org-agenda-overriding-header Get Things Done) (org-super-agenda-groups '((:name 马上去做 Quick Picks :effort< 0:30) (:name 重要任务 Important :priority A) (:priority<= B :scheduled today :order 1) (:discard (:anything t)))))) (todo  ((org-agenda-overriding-header All Projects) (org-super-agenda-groups '((:name none :children todo) (:discard (:anything t))))))) |
+| x | My Super view      | ((agenda  ((org-agenda-overriding-header Today Calendar) (org-super-agenda-groups '((:name Today :time-grid t))))))                                                                                                                                                                                                                                                                  |
+| d | Daniel's Task view | ((todo  ((org-agenda-overriding-header Daniel's Tasks) (org-super-agenda-groups '((:name daniel :tag (DANIEL daniel kids KIDS)) (:discard (:anything t)))))))                                                                                                                                                                                                                        |
+| e | Computer Related   | ((tags-todo  ((org-agenda-overriding-header Computer Related) (org-super-agenda-groups `((:name General Comupter Related :tag COMPUTER) (:name Emacs Related :tag COMPUTER :regexp (org emacs ,(rx bow emacs eow))))))))                                                                                                                                                             |
 
 **　大脑模拟
 
@@ -637,9 +637,12 @@ block)))
 *** 使用图标
 
 #+BEGIN_SRC elisp
-(use-package org-bullets
-  :ensure t
-  :init (add-hook 'org-mode-hook 'org-bullets-mode))
+;;(use-package org-bullets
+;;  :ensure t
+;;  :init (add-hook 'org-mode-hook 'org-bullets-mode)
+;;  :custom
+;;  ;;(org-bullets-bullet-list '("☰" "☷" "✿"  ">"))
+;;)
 #+END_SRC
 
 #+RESULTS:

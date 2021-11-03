@@ -84,19 +84,16 @@
 ;; ---------------------------------------------------------
 ;; 加载编程语言 
 ;; ---------------------------------------------------------
-(load-file (dropbox-path "config/emacs/scratch/modules/lang+go.el"))
+(load-file (private-module-path "lang+go.el"))
 
-(load-file (dropbox-path "config/emacs/scratch/modules/lang+c.el"))
+(load-file (private-module-path "lang+c.el"))
 
-(load-file (dropbox-path "config/emacs/scratch/modules/lang+rust.el"))
+(load-file (private-module-path "lang+rust.el"))
 
-(load-file (dropbox-path "config/emacs/scratch/modules/lang+js.el"))
+(load-file (private-module-path "lang+js.el"))
 
-(load-file (dropbox-path "config/emacs/scratch/modules/lang+python.el"))
+(load-file (private-module-path "lang+python.el"))
 
-(load-file (dropbox-path "config/emacs/scratch/modules/lang+plantuml.el"))
-
-(load-file (dropbox-path "config/emacs/scratch/modules/lang+markdown.el"))
 
 ;; ---------------------------------------------------------
 ;; 优化内存管理

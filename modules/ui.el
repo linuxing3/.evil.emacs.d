@@ -1,5 +1,29 @@
-;; Theme and Font
+ ;;;===========================================
+;;;					模块介绍
+;;; 用户交互界面模块
+;;;===========================================
 ;; ---------------------------------------------------------
+(global-hl-line-mode 1)
+
+;;; Code:
+
+;; 切换buffer焦点时高亮动画
+(use-package beacon
+  :disabled
+  :ensure t
+  :hook (after-init . beacon-mode))
+
+;; 表情符号
+(use-package emojify
+  :ensure t
+  :custom (emojify-emojis-dir (dropbox-path "config/emacs/emojis")))
+
+;; 浮动窗口支持
+(use-package posframe
+  :ensure t
+  :custom
+  (posframe-mouse-banish nil))
+
 (use-package doom-themes
   :ensure t
   :config
@@ -9,6 +33,43 @@
 ;; All The Icons
 (use-package all-the-icons :ensure t)
 
+;; dired模式图标支持
+(use-package all-the-icons-dired
+  :ensure t
+  :hook ('dired-mode . 'all-the-icons-dired-mode))
+
+;; 让info帮助信息中关键字有高亮
+(use-package info-colors
+  :ensure t
+  :hook ('Info-selection-hook . 'info-colors-fontify-node))
+
+;; 缩进线
+(use-package highlight-indent-guides
+  :ensure t
+  :hook (prog-mode . highlight-indent-guides-mode)
+  :config
+  (setq highlight-indent-guides-method 'bitmap))
+
+;; 彩虹猫进度条
+(use-package nyan-mode
+  :if (not (boundp 'awesome-tray-mode))
+  :ensure t
+  :hook (after-init . nyan-mode)
+  :config
+  (setq nyan-wavy-trail t
+		nyan-animate-nyancat t))
+;; 竖线
+(use-package page-break-lines
+  :ensure t
+  :hook (after-init . global-page-break-lines-mode)
+  :config
+  (set-fontset-font "fontset-default"
+                    (cons page-break-lines-char page-break-lines-char)
+                    (face-attribute 'default :family))
+  (let ((table (make-char-table nil)))                   ;; make a new empty table
+    (set-char-table-parent table char-width-table)       ;; make it inherit from the current char-width-table
+    (set-char-table-range table page-break-lines-char 1) ;; let the width of page-break-lines-char be 1
+    (setq char-width-table table)))
 ;; Powerline
 (use-package spaceline
   :ensure t
@@ -19,3 +80,6 @@
   (spaceline-toggle-minor-modes-off)
   (spaceline-toggle-buffer-size-off)
   (spaceline-toggle-evil-state-on))
+
+;; 为上层提供 init-ui 模块
+(provide 'linuxing3-init-ui)

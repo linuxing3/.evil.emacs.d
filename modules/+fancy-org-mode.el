@@ -268,6 +268,23 @@ block)))
   :config)
 
 (with-eval-after-load 'org-agenda
+    (defun evan/agenda-icon-material (name)
+      "返回一个all-the-icons-material图标"
+      (list (all-the-icons-material name)))
+    (setq org-agenda-category-icon-alist
+        `(
+          ;; 学习相关
+          ("待办" ,(evan/agenda-icon-material "check_box") nil nil :ascent center)
+          ("学习" ,(evan/agenda-icon-material "book") nil nil :ascent center)
+          ("等待" ,(evan/agenda-icon-material "ac_unit") nil nil :ascent center)
+          ("完成" ,(evan/agenda-icon-material "done") nil nil :ascent center)
+          ;; 代码相关
+          ("取消" ,(evan/agenda-icon-material "cancel") nil nil :ascent)
+          ("BUG" ,(evan/agenda-icon-material "bug_report") nil nil :ascent center)
+          ("新事件" ,(evan/agenda-icon-material "new_releases") nil nil :ascent center)
+          ("已知问题" ,(evan/agenda-icon-material "comment") nil nil :ascent center)
+          ("修改中" ,(evan/agenda-icon-material "adjust") nil nil :ascent center)
+          ("已修复" ,(evan/agenda-icon-material "thumb_up") nil nil :ascent center)))
   ;; agenda 里面时间块彩色显示
   ;; From: https://emacs-china.org/t/org-agenda/8679/3
   (defun ljg/org-agenda-time-grid-spacing ()
@@ -371,9 +388,12 @@ block)))
               org-capture-templates
               :key #'car :test #'equal))
 
-(use-package org-bullets
-  :ensure t
-  :init (add-hook 'org-mode-hook 'org-bullets-mode))
+;;(use-package org-bullets
+;;  :ensure t
+;;  :init (add-hook 'org-mode-hook 'org-bullets-mode)
+;;  :custom
+;;  ;;(org-bullets-bullet-list '("☰" "☷" "✿"  ">"))
+;;)
 
 (use-package org
   :config
