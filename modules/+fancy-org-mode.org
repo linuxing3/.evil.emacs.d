@@ -24,9 +24,43 @@
 	  org-outline-path-complete-in-steps nil
 	  org-src-fontify-natively t   ;; Pretty code blocks
 	  org-src-tab-acts-natively t
-	  org-confirm-babel-evaluate nil
-	  org-todo-keywords '((sequence "TODO(t)" "WAIT(g)" "|" "DONE(d)")
-			      (sequence "|" "CANCELED(c)")))
+	  org-confirm-babel-evaluate nil)
+    ;; todo关键字
+    (setq org-todo-keywords
+        '((sequence
+           "TODO(t)"  ; A task that needs doing & is ready to do
+           "PROJ(p)"  ; A project, which usually contains other tasks
+           "LOOP(r)"  ; A recurring task
+           "STRT(s)"  ; A task that is in progress
+           "WAIT(w)"  ; Something external is holding up this task
+           "HOLD(h)"  ; This task is paused/on hold because of me
+           "IDEA(i)"  ; An unconfirmed and unapproved task or notion
+           "|"
+           "DONE(d)"  ; Task successfully completed
+           "KILL(k)") ; Task was cancelled, aborted or is no longer applicable
+          (sequence
+           "[ ](T)"   ; A task that needs doing
+           "[-](S)"   ; Task is in progress
+           "[?](W)"   ; Task is being held up or paused
+           "|"
+           "[X](D)")  ; Task was completed
+          (sequence
+           "|"
+           "OKAY(o)"
+           "YES(y)"
+           "NO(n)"))
+        org-todo-keyword-faces
+        '(("[-]"  . +org-todo-active)
+          ("STRT" . +org-todo-active)
+          ("[?]"  . +org-todo-onhold)
+          ("WAIT" . +org-todo-onhold)
+          ("HOLD" . +org-todo-onhold)
+          ("PROJ" . +org-todo-project)
+          ("NO"   . +org-todo-cancel)
+          ("KILL" . +org-todo-cancel)))
+
+    ;; 	org-todo-keywords '((sequence "TODO(t)" "WAIT(g)" "|" "DONE(d)")
+    ;; 			    (sequence "|" "CANCELED(c)")))
     (setq-default org-display-custom-times t)
     (setq org-time-stamp-custom-formats '("<%a %b %e %Y>" . "<%a %b %e %Y %H:%M>"))
     (setq org-columns-default-format "%80ITEM(Task) %10Effort(Effort){:} %10CLOCKSUM")
@@ -97,6 +131,32 @@
 #+RESULTS:
 : t
 
+*** 链接缩略词
+    #+BEGIN_SRC elisp
+  (add-to-list 'org-link-abbrev-alist
+            '("github"      . "https://github.com/%s"))
+  (add-to-list 'org-link-abbrev-alist
+            '("youtube"     . "https://youtube.com/watch?v=%s"))
+  (add-to-list 'org-link-abbrev-alist
+            '("google"      . "https://google.com/search?q="))
+  (add-to-list 'org-link-abbrev-alist
+            '("gimages"     . "https://google.com/images?q=%s"))
+  (add-to-list 'org-link-abbrev-alist
+            '("gmap"        . "https://maps.google.com/maps?q=%s"))
+  (add-to-list 'org-link-abbrev-alist
+            '("duckduckgo"  . "https://duckduckgo.com/?q=%s"))
+  (add-to-list 'org-link-abbrev-alist
+            '("wikipedia"   . "https://en.wikipedia.org/wiki/%s"))
+  (add-to-list 'org-link-abbrev-alist
+            '("wolfram"     . "https://wolframalpha.com/input/?i=%s"))
+  (add-to-list 'org-link-abbrev-alist
+            '("doom-repo"   . "https://github.com/hlissner/doom-emacs/%s"))
+
+    #+END_SRC
+
+    #+RESULTS:
+    : ((doom-repo . https://github.com/hlissner/doom-emacs/%s) (wolfram . https://wolframalpha.com/input/?i=%s) (wikipedia . https://en.wikipedia.org/wiki/%s) (duckduckgo . https://duckduckgo.com/?q=%s) (gmap . https://maps.google.com/maps?q=%s) (gimages . https://google.com/images?q=%s) (google . https://google.com/search?q=) (youtube . https://youtube.com/watch?v=%s) (github . https://github.com/%s))
+
 ** Babel设置
 *** 基本设置
 #+BEGIN_SRC elisp
@@ -124,7 +184,7 @@
 
 =<l= 插入Lisp代码块
 
-#+begin_src elisp :tangle yes
+#+begin_src elisp :tangle no
 (setq org-structure-template-alist
 	'(("s" "#+begin_src ?\n\n#+end_src" "<src lang=\"?\">\n\n</src>")
 	("e" "#+begin_example\n?\n#+end_example" "<example>\n?\n</example>")
@@ -143,7 +203,7 @@
 #+end_src
 
 #+RESULTS:
-| s | #+begin_src ? |
+
 
 
 
@@ -160,6 +220,10 @@ block)))
 (eval-after-load 'ox
 '(add-to-list 'org-export-filter-special-block-functions 'my/org-html-quote2))
 #+end_src
+
+#+RESULTS:
+| my/org-html-quote2 |
+
 ** 抓取
 
    这里可以把抓取模板单独存储为文件，更容易修改和维护
@@ -545,10 +609,6 @@ block)))
 #+END_SRC
 
 #+RESULTS:
-| u | My GTD view        | ((todo  ((org-agenda-overriding-header Get Things Done) (org-super-agenda-groups '((:name 马上去做 Quick Picks :effort< 0:30) (:name 重要任务 Important :priority A) (:priority<= B :scheduled today :order 1) (:discard (:anything t)))))) (todo  ((org-agenda-overriding-header All Projects) (org-super-agenda-groups '((:name none :children todo) (:discard (:anything t))))))) |
-| x | My Super view      | ((agenda  ((org-agenda-overriding-header Today Calendar) (org-super-agenda-groups '((:name Today :time-grid t))))))                                                                                                                                                                                                                                                                  |
-| d | Daniel's Task view | ((todo  ((org-agenda-overriding-header Daniel's Tasks) (org-super-agenda-groups '((:name daniel :tag (DANIEL daniel kids KIDS)) (:discard (:anything t)))))))                                                                                                                                                                                                                        |
-| e | Computer Related   | ((tags-todo  ((org-agenda-overriding-header Computer Related) (org-super-agenda-groups `((:name General Comupter Related :tag COMPUTER) (:name Emacs Related :tag COMPUTER :regexp (org emacs ,(rx bow emacs eow))))))))                                                                                                                                                             |
 
 **　大脑模拟
 
@@ -606,37 +666,6 @@ block)))
     (font-lock-add-keywords 'org-mode
 			    '(("^ +\\([-*]\\) "
 			       (0 (prog1 () (compose-region (match-beginning 1) (match-end 1) "•")))))))
-#+END_SRC
-
-#+RESULTS:
-
-*** 包裹文字
-
-#+BEGIN_SRC elisp
-
-(use-package org
-  :config
-  (defun org-text-bold () "Wraps the region with asterisks."
-	 (interactive)
-	 (surround-text "*"))
-  (defun org-text-italics () "Wraps the region with slashes."
-	 (interactive)
-	 (surround-text "/"))
-  (defun org-text-code () "Wraps the region with equal signs."
-	 (interactive)
-	 (surround-text "="))
-  (bind-keys :map org-mode-map
-	     ("A-b" . (surround-text-with "+"))
-	     ("s-b" . (surround-text-with "*"))
-	     ("A-i" . (surround-text-with "/"))
-	     ("s-i" . (surround-text-with "/"))
-	     ("A-=" . (surround-text-with "="))
-	     ("s-=" . (surround-text-with "="))
-	     ("A-`" . (surround-text-with "~"))
-	     ("s-`" . (surround-text-with "~"))
-
-	     ("C-s-f" . forward-sentence)
-	     ("C-s-b" . backward-sentence)))
 #+END_SRC
 
 #+RESULTS:
@@ -702,6 +731,9 @@ block)))
   )
 
 #+END_SRC
+
+#+RESULTS:
+: t
 
 *** 超级星号
 
@@ -817,6 +849,7 @@ block)))
 #+END_SRC
 
 #+RESULTS:
+: t
 
 ** 番茄闹钟
 
@@ -871,7 +904,7 @@ block)))
 
 #+DESCRIPTION: 使用文学编程，对org模式进行终极设置 
 
-#+PROPERTY:    header-args:elisp  :tangle ~/OneDrive/config/emacs/scratch/modules/+fancy-org-mode.el
+#+PROPERTY:    header-args:elisp  :tangle ~/EnvSetup\config\evil-emacs/modules/+fancy-org-mode.el
 #+PROPERTY:    header-args:sh     :tangle no
 #+PROPERTY:    header-args:       :results silent   :eval no-export   :comments org
 

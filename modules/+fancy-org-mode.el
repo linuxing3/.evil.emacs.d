@@ -1,19 +1,3 @@
-(setq org-structure-template-alist
-	'(("s" "#+begin_src ?\n\n#+end_src" "<src lang=\"?\">\n\n</src>")
-	("e" "#+begin_example\n?\n#+end_example" "<example>\n?\n</example>")
-	("q" "#+begin_quote\n?\n#+end_quote" "<quote>\n?\n</quote>")
-	("v" "#+BEGIN_VERSE\n?\n#+END_VERSE" "<verse>\n?\n</verse>")
-	("c" "#+BEGIN_COMMENT\n?\n#+END_COMMENT")
-	("p" "#+BEGIN_PRACTICE\n?\n#+END_PRACTICE")
-	("l" "#+begin_src emacs-lisp\n?\n#+end_src" "<src lang=\"emacs-lisp\">\n?\n</src>")
-	("L" "#+latex: " "<literal style=\"latex\">?</literal>")
-	("h" "#+begin_html\n?\n#+end_html" "<literal style=\"html\">\n?\n</literal>")
-	("H" "#+html: " "<literal style=\"html\">?</literal>")
-	("a" "#+begin_ascii\n?\n#+end_ascii")
-	("A" "#+ascii: ")
-	("i" "#+index: ?" "#+index: ?")
-	("I" "#+include %file ?" "<include file=%file markup=\"?\">")))
-
 (defun my/org-html-quote2 (block backend info)
 (when (org-export-derived-backend-p backend 'html)
 (when (string-match "\\`<div class=\"quote2\">" block)
@@ -413,82 +397,58 @@ block)))
 
 (use-package org
   :config
-  (defun org-text-bold () "Wraps the region with asterisks."
-	 (interactive)
-	 (surround-text "*"))
-  (defun org-text-italics () "Wraps the region with slashes."
-	 (interactive)
-	 (surround-text "/"))
-  (defun org-text-code () "Wraps the region with equal signs."
-	 (interactive)
-	 (surround-text "="))
-  (bind-keys :map org-mode-map
-	     ("A-b" . (surround-text-with "+"))
-	     ("s-b" . (surround-text-with "*"))
-	     ("A-i" . (surround-text-with "/"))
-	     ("s-i" . (surround-text-with "/"))
-	     ("A-=" . (surround-text-with "="))
-	     ("s-=" . (surround-text-with "="))
-	     ("A-`" . (surround-text-with "~"))
-	     ("s-`" . (surround-text-with "~"))
-
-	     ("C-s-f" . forward-sentence)
-	     ("C-s-b" . backward-sentence)))
-
-(use-package org
-  :config
 
   (set-face-attribute 'org-link nil
-		      :weight 'normal
-		      :background nil)
+		  :weight 'normal
+		  :background nil)
   (set-face-attribute 'org-code nil
-		      :foreground "#a9a1e1"
-		      :background nil)
+		  :foreground "#a9a1e1"
+		  :background nil)
   (set-face-attribute 'org-date nil
-		      :foreground "#5B6268"
-		      :background nil)
+		  :foreground "#5B6268"
+		  :background nil)
   (set-face-attribute 'org-level-1 nil
-		      :foreground "steelblue2"
-		      :background nil
-		      :height 1.1
-		      :weight 'normal)
+		  :foreground "steelblue2"
+		  :background nil
+		  :height 1.1
+		  :weight 'normal)
   (set-face-attribute 'org-level-2 nil
-		      :foreground "slategray2"
-		      :background nil
-		      :height 1.0
-		      :weight 'normal)
+		  :foreground "slategray2"
+		  :background nil
+		  :height 1.0
+		  :weight 'normal)
   (set-face-attribute 'org-level-3 nil
-		      :foreground "SkyBlue2"
-		      :background nil
-		      :height 1.0
-		      :weight 'normal)
+		  :foreground "SkyBlue2"
+		  :background nil
+		  :height 1.0
+		  :weight 'normal)
   (set-face-attribute 'org-level-4 nil
-		      :foreground "DodgerBlue2"
-		      :background nil
-		      :height 1.0
-		      :weight 'normal)
+		  :foreground "DodgerBlue2"
+		  :background nil
+		  :height 1.0
+		  :weight 'normal)
   (set-face-attribute 'org-level-5 nil
-		      :weight 'normal)
+		  :weight 'normal)
   (set-face-attribute 'org-level-6 nil
-		      :weight 'normal)
+		  :weight 'normal)
   (set-face-attribute 'org-document-title nil
-		      :foreground "SlateGray1"
-		      :background nil
-		      :height 1.25
-		      :weight 'bold)
+		  :foreground "SlateGray1"
+		  :background nil
+		  :height 1.25
+		  :weight 'bold)
 
   (setq org-list-demote-modify-bullet (quote (("+" . "-")
-					      ("*" . "-")
-					      ("1." . "-")
-					      ("1)" . "-")
-					      ("A)" . "-")
-					      ("B)" . "-")
-					      ("a)" . "-")
-					      ("b)" . "-")
-					      ("A." . "-")
-					      ("B." . "-")
-					      ("a." . "-")
-					      ("b." . "-"))))
+					  ("*" . "-")
+					  ("1." . "-")
+					  ("1)" . "-")
+					  ("A)" . "-")
+					  ("B)" . "-")
+					  ("a)" . "-")
+					  ("b)" . "-")
+					  ("A." . "-")
+					  ("B." . "-")
+					  ("a." . "-")
+					  ("b." . "-"))))
 )
 
 ;; (use-package org-noter :ensure t)
@@ -504,11 +464,11 @@ block)))
   ;; ;; set the leading bullet to be a space. For alignment purposes I use an em-quad space (U+2001)
   ;; (org-superstar-headline-bullets-list '(" "))
   (org-superstar-todo-bullet-alist '(("DONE" . ?✔)
-				     ("TODO" . ?✍)
-				     ("WAIT" . ?✍)
-				     ("CANCELLED" . ?✍)
-				     ("IN-PROGRESS" . ?✍)
-				     ))
+				 ("TODO" . ?✍)
+				 ("WAIT" . ?✍)
+				 ("CANCELLED" . ?✍)
+				 ("IN-PROGRESS" . ?✍)
+				 ))
   (org-superstar-special-todo-items t)
   ;; (org-superstar-leading-bullet "")
   )
@@ -534,23 +494,23 @@ block)))
 
 (defvar xing/org-todo-bullet-faces
   '(("TODO" . (:inherit base-todo-keyword-face :foreground "#FF8580"))
-    ("ISSUE" . (:inherit base-todo-keyword-face :foreground "#FF8580"
+("ISSUE" . (:inherit base-todo-keyword-face :foreground "#FF8580"
 			 :family "github-octicons" :height 160))
-    ("BRANCH" . (:inherit base-todo-keyword-face :foreground "#D58422"
+("BRANCH" . (:inherit base-todo-keyword-face :foreground "#D58422"
 			  :family "github-octicons"))
-    ("FORK" . (:inherit base-todo-keyword-face :foreground "#D58422"
+("FORK" . (:inherit base-todo-keyword-face :foreground "#D58422"
 			:family "github-octicons"))
-    ("MR" . (:inherit base-todo-keyword-face :foreground "#C7A941"
-		      :family "github-octicons"))
-    ("MERGED" . (:inherit base-todo-keyword-face :foreground "#75AD18"
+("MR" . (:inherit base-todo-keyword-face :foreground "#C7A941"
+		  :family "github-octicons"))
+("MERGED" . (:inherit base-todo-keyword-face :foreground "#75AD18"
 			  :family "github-octicons"))
-    ("GITHUB" . (:inherit base-todo-keyword-face :foreground "#BBBBBB"
+("GITHUB" . (:inherit base-todo-keyword-face :foreground "#BBBBBB"
 			  :family "github-octicons" :height 160))
-    ("DONE" . (:inherit base-todo-keyword-face :foreground "#75AD18"))
-    ("IDEA" . (:inherit base-todo-keyword-face :foreground "#85AAFF"))
-    ("WRITE" . (:inherit base-todo-keyword-face :foreground "#FF8580"))
-    ("WRITING" . (:inherit base-todo-keyword-face :foreground "#C7A941"))
-    ))
+("DONE" . (:inherit base-todo-keyword-face :foreground "#75AD18"))
+("IDEA" . (:inherit base-todo-keyword-face :foreground "#85AAFF"))
+("WRITE" . (:inherit base-todo-keyword-face :foreground "#FF8580"))
+("WRITING" . (:inherit base-todo-keyword-face :foreground "#C7A941"))
+))
 
 (use-package org-download :ensure t)
 
