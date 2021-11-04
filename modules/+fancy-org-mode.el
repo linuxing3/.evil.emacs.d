@@ -271,6 +271,7 @@ block)))
     (defun evan/agenda-icon-material (name)
       "返回一个all-the-icons-material图标"
       (list (all-the-icons-material name)))
+    (org-super-agenda-mode)
     (setq org-agenda-category-icon-alist
         `(
           ;; 学习相关
@@ -291,62 +292,73 @@ block)))
     "Set different line spacing w.r.t. time duration."
     (save-excursion
       (let* ((background (alist-get 'background-mode (frame-parameters)))
-	     (background-dark-p (string= background "dark"))
-	     (colors (list "#1ABC9C" "#2ECC71" "#3498DB" "#9966ff"))
-	     pos
-	     duration)
-	(nconc colors colors)
-	(goto-char (point-min))
-	(while (setq pos (next-single-property-change (point) 'duration))
-	  (goto-char pos)
-	  (when (and (not (equal pos (point-at-eol)))
-		     (setq duration (org-get-at-bol 'duration)))
-	    (let ((line-height (if (< duration 30) 1.0 (+ 0.5 (/ duration 60))))
-		  (ov (make-overlay (point-at-bol) (1+ (point-at-eol)))))
-	      (overlay-put ov 'face `(:background ,(car colors)
-						  :foreground
-						  ,(if background-dark-p "black" "white")))
-	      (setq colors (cdr colors))
-	      (overlay-put ov 'line-height line-height)
-	      (overlay-put ov 'line-spacing (1- line-height))))))))
+         (background-dark-p (string= background "dark"))
+         (colors (list "#1ABC9C" "#2ECC71" "#3498DB" "#9966ff"))
+         pos
+         duration)
+    (nconc colors colors)
+    (goto-char (point-min))
+    (while (setq pos (next-single-property-change (point) 'duration))
+      (goto-char pos)
+      (when (and (not (equal pos (point-at-eol)))
+             (setq duration (org-get-at-bol 'duration)))
+        (let ((line-height (if (< duration 30) 1.0 (+ 0.5 (/ duration 60))))
+          (ov (make-overlay (point-at-bol) (1+ (point-at-eol)))))
+          (overlay-put ov 'face `(:background ,(car colors)
+                          :foreground
+                          ,(if background-dark-p "black" "white")))
+          (setq colors (cdr colors))
+          (overlay-put ov 'line-height line-height)
+          (overlay-put ov 'line-spacing (1- line-height))))))))
 
   (add-hook 'org-agenda-finalize-hook #'ljg/org-agenda-time-grid-spacing)
 
   (setq org-agenda-custom-commands
         '(
-          ;; My GTD tasks
-          ("u"
-           "My GTD view"
-           (
-            (todo "" (
-                      (org-agenda-overriding-header "Get Things Done")
-                      (org-super-agenda-groups
-                       '(
-                         (:name "马上去做 Quick Picks"
-                                :effort< "0:30")
-                         (:name "重要任务 Important"
-                                :priority "A")
-                         (:priority<= "B"
-                                      :scheduled today
-                                      :order 1)
-                         (:discard (:anything t))))))
-            (todo "" (
-                      (org-agenda-overriding-header "All Projects")
-                      (org-super-agenda-groups
-                       '(
-                         (:name none  ; Disable super group header
-                                :children todo)
-                         (:discard (:anything t))))))))
           ;; My grouped tasks
           ("x"
            "My Super view"
            (
             (agenda "" (
-                        (org-agenda-overriding-header "Today Calendar")
+                        (org-agenda-overriding-header "❉ 我的日程 ❉")
                         (org-super-agenda-groups
                          '(
-                           (:name "Today"
-                                  :time-grid t)))))))
+                         (:name "今天是个好天气 ▽"
+                                  :time-grid t)
+                         (:name "重要任务 Important ★"
+                                :priority "A")
+                         (:name "其他任务 Others ↑ ↓"
+                                      :priority<= "B"
+                                      :scheduled today
+                                      :order 1)
+
+           ))))))
+          ;; My GTD tasks
+          ("u"
+           "My GTD view"
+           (
+            (todo "" (
+                      (org-agenda-overriding-header "❉ Get Things Done ❉")
+                      (org-super-agenda-groups
+                       '(
+                         (:name "马上去做 Quick Picks"
+                                :effort< "0:30")
+                         (:name none)
+                         (:name "★ 重要任务 Important"
+                                :priority "A")
+                         (:name none)
+                         (:name "↑ ↓ 其他任务 Others"
+                                      :priority<= "B"
+                                      :scheduled today
+                                      :order 1)
+                         (:discard (:anything t))))))
+            (todo "" (
+                      (org-agenda-overriding-header "★ All Projects")
+                      (org-super-agenda-groups
+                       '(
+                         (:name none  ; Disable super group header
+                                :children todo)
+                         (:discard (:anything t))))))))
           ;; Daniel's tasks
           ("d"
            "Daniel's Task view"
@@ -362,9 +374,9 @@ block)))
            "Computer Related"
            (
             (tags-todo "" (
-			   (org-agenda-overriding-header "Computer Related")
-			   (org-super-agenda-groups
-			    `(
+               (org-agenda-overriding-header "Computer Related")
+               (org-super-agenda-groups
+                `(
                               (:name "General Comupter Related"
                                      :tag "COMPUTER"
                                      )
@@ -400,7 +412,7 @@ block)))
   :hook
   (org-mode . org-fancy-priorities-mode)
   :config
-  (setq org-fancy-priorities-list '("♥" "↑" "↓")))
+  (setq org-fancy-priorities-list '("★" "↑" "↓")))
 
 (use-package org
   :config
