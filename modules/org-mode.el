@@ -6,6 +6,8 @@
       (setq org-directory (expand-file-name "org" home-directory))
     (setq org-directory (dropbox-path "org")))
 
+  (setq org-todo-keywords '((sequence "[学习](s!/@)" "[待办](t!/@)" "[等待](w!))" "|" "[完成](d!/@)" "[取消](c!@)")
+                       (sequence "[BUG](b!/@)" "[新事件](i/@)" "[已知问题](k!/@)" "[修改中](W!/@)" "|" "[已修复](f!)"))) 
   (with-eval-after-load 'org
     (setq diary-file (dropbox-path "org/diary"))
     (setq

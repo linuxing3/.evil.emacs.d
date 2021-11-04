@@ -392,7 +392,7 @@ block)))
   :ensure t
   :init (add-hook 'org-mode-hook 'org-bullets-mode)
   :custom
-  (org-bullets-bullet-list '("☰" "☷"  "☯"  "✿" ">"))
+  (org-bullets-bullet-list '("☀" "☪"  "☯"  "✿" "→"))
 )
 
 (use-package org-fancy-priorities
@@ -400,7 +400,7 @@ block)))
   :hook
   (org-mode . org-fancy-priorities-mode)
   :config
-  (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")))
+  (setq org-fancy-priorities-list '("♥" "↑" "↓")))
 
 (use-package org
   :config
@@ -467,7 +467,7 @@ block)))
   :config
   (set-face-attribute 'org-superstar-header-bullet nil :inherit 'fixed-pitched :height 180)
   :custom
-  (org-superstar-headline-bullets-list '("☰" "☷" "☯" "✿" ">"))
+  (org-superstar-headline-bullets-list '("☀" "☪" "☯" "✿" "→"))
   (setq org-ellipsis " ▼ "))
 
 (use-package org-download :ensure t)

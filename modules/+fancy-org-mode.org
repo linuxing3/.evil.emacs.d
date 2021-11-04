@@ -550,14 +550,15 @@ block)))
                        '(
                          (:name "马上去做 Quick Picks"
                                 :effort< "0:30")
-                         (:name "重要任务 Important"
+                         (:name "★ 重要任务 Important"
                                 :priority "A")
-                         (:priority<= "B"
+                         (:name "↑ ↓ 其他任务 Others"
+                                      :priority<= "B"
                                       :scheduled today
                                       :order 1)
                          (:discard (:anything t))))))
             (todo "" (
-                      (org-agenda-overriding-header "All Projects")
+                      (org-agenda-overriding-header "★ All Projects")
                       (org-super-agenda-groups
                        '(
                          (:name none  ; Disable super group header
@@ -568,11 +569,19 @@ block)))
            "My Super view"
            (
             (agenda "" (
-                        (org-agenda-overriding-header "Today Calendar")
+                        (org-agenda-overriding-header "❉ 我的日程 ❉")
                         (org-super-agenda-groups
                          '(
-                           (:name "Today"
-                                  :time-grid t)))))))
+                         (:name "△ 今天是个好天气 ▽"
+                                  :time-grid t)
+                         (:name "★ 重要任务 Important"
+                                :priority "A")
+                         (:name "↑ ↓ 其他任务 Others"
+                                      :priority<= "B"
+                                      :scheduled today
+                                      :order 1)
+                           
+           ))))))
           ;; Daniel's tasks
           ("d"
            "Daniel's Task view"
@@ -653,7 +662,7 @@ block)))
     :hook
     (org-mode . org-fancy-priorities-mode)
     :config
-    (setq org-fancy-priorities-list '("♥" "↑" "↓")))
+    (setq org-fancy-priorities-list '("★" "↑" "↓")))
 
 #+END_SRC
 
