@@ -1,4 +1,4 @@
-(provide 'xing-key-bindings)
+(provide 'linuxing3-key-bindings)
 
 ;; Which Key
 (use-package which-key
@@ -89,6 +89,7 @@
    "wk"  '(windmove-up :which-key "move up")
    "wj"  '(windmove-down :which-key "move bottom")
    "w/"  '(split-window-right :which-key "split right")
+   "w."  '(split-window-right :which-key "split right")
    "w-"  '(split-window-below :which-key "split bottom")
    "wx"  '(delete-window :which-key "delete window")
    "qz"  '(delete-frame :which-key "delete frame")
@@ -99,7 +100,7 @@
    "[" '(text-scale-decrease :which-key "decrease text")
    "t" '(hl-todo-previous :which-key "highlight previous todo")
    "h" '(smart-backward :which-key "jump backward")
-   "b" '(prev-buffer :which-key "previous buffer"))
+   "b" '(switch-previous-buffer :which-key "previous buffer"))
   (general-define-key
    :states '(normal emacs)
    :prefix "]"
