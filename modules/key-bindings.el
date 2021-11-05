@@ -176,19 +176,6 @@
    :states '(normal emacs)
    :prefix "SPC"
    :non-normal-prefix "M-SPC"
-   "iy" '(yank-pop :which-key "From kill ring")
-   "is" '(insert-snippets :which-key "From snippets")
-   ))
-
-;; ---------------------------------------------------------
-;; Custom yank keybinding
-;; ---------------------------------------------------------
-(use-package general
-  :config
-  (general-define-key
-   :states '(normal emacs)
-   :prefix "SPC"
-   :non-normal-prefix "M-SPC"
    "ab" '(browse-url-of-file :which-key "Default Browser")
    "an" '(neotree :which-key "Neotree Browser")
    ))
