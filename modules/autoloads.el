@@ -37,10 +37,10 @@
 ;;;###autoload
 ;; 递归遍历加载路径
 (defun add-subdirs-to-load-path(dir)
-    "Recursive add directories to `load-path`."
-    (let ((default-directory (file-name-as-directory dir)))
-      (add-to-list 'load-path dir)
-      (normal-top-level-add-subdirs-to-load-path)))
+  "Recursive add directories to `load-path`."
+  (let ((default-directory (file-name-as-directory dir)))
+    (add-to-list 'load-path dir)
+    (normal-top-level-add-subdirs-to-load-path)))
 
 ;;;###autoload
 (defun org-global-props (&optional property buffer)
@@ -54,7 +54,43 @@
   "Get global org property KEY of current buffer."
   (org-element-property :value (car (org-global-props key))))
 
+;;;###autoload
+(defun +modern-org-journal-new-journal ()
+  "Create the journal in a specific directory, then your can export ..."
+  (interactive)
+  (progn
+	(setq journal-file-path (concat org-journal-base-dir "/" (format-time-string "%Y-%m-%d") ".org"))
+    (if (file-exists-p journal-file-path)
+        (find-file-other-window journal-file-path)
+      (progn
+        (find-file-other-window journal-file-path)
+        (goto-char (point-min))
+        (insert "---\n")
+        (insert (concat "#+TITLE: Journal Entry\n"))
+        (insert "#+AUTHOR: Xing Wenju\n")
+        (insert (concat "#+DATE: " (format-time-string "%Y-%m-%d") "\n"))
+        (insert "#+EXCERPT: org journal \n")
+        (insert "---\n")))))
+
+;;;###autoload
+(defun commom--org-headers (file)
+  "Return a draft org mode header string for a new article as FILE."
+  (let ((datetimezone
+         (concat
+          (format-time-string "%Y-%m-%d"))))
+    (concat
+     "#+TITLE: " file
+     "\n#+AUTHOR: "
+     "\n#+DATE: " datetimezone
+     "\n#+PUBLISHDATE: " datetimezone
+     "\n#+EXCERPT: nil"
+     "\n#+DRAFT: nil"
+     "\n#+TAGS: nil, nil"
+     "\n#+DESCRIPTION: Short description"
+     "\n\n")))
+
 ;; 切换代理
+;;;###autoload
 (defun linuxing3-toggle-proxy ()
   (interactive)
   (if (null url-proxy-services)
@@ -67,6 +103,7 @@
     (message "代理已关闭.")))
 
 ;; 使用外部应用打开
+;;;###autoload
 (defun open-with-external-app (&optional @fname)
   "Open the current file or dired marked files in external app.
 When called in Emacs Lisp, if @FNAME is given, open that."
@@ -106,7 +143,6 @@ When called in Emacs Lisp, if @FNAME is given, open that."
 ;; 核心设置
 ;; ===============================================
 
-
 ;; 常用变量
 (defconst EMACS28+   (> emacs-major-version 27))
 (defconst IS-MAC     (eq system-type 'darwin))
@@ -114,29 +150,6 @@ When called in Emacs Lisp, if @FNAME is given, open that."
 (defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
 (defconst IS-BSD     (or IS-MAC (eq system-type 'berkeley-unix)))
 
-(defcustom centaur-prettify-symbols-alist
-  '(("lambda" . ?λ)
-    ("<-" . ?←)
-    ("->" . ?→)
-    ("->>" . ?↠)
-    ("=>" . ?⇒)
-    ("map" . ?↦)
-    ("/=" . ?≠)
-    ("!=" . ?≠)
-    ("==" . ?≡)
-    ("<=" . ?≤)
-    (">=" . ?≥)
-    ("=<<" . (?= (Br . Bl) ?≪))
-    (">>=" . (?≫ (Br . Bl) ?=))
-    ("<=<" . ?↢)
-    (">=>" . ?↣)
-    ("&&" . ?∧)
-    ("||" . ?∨)
-    ("not" . ?¬))
-  "Alist of symbol prettifications.
-Nil to use font supports ligatures."
-  :group 'centaur
-  :type '(alist :key-type string :value-type (choice character sexp)))
 
 ;;; 文件目录设置
 (defgroup linuxing3 nil
@@ -181,6 +194,30 @@ in windows could be c:/Users/Administrator"
   "Normally I use EnvSetup directory to hold all my private lisp files"
   :group 'linuxing3
   :type 'string)
+
+(defcustom linuxing3-prettify-symbols-alist
+  '(("lambda" . ?λ)
+    ("<-" . ?←)
+    ("->" . ?→)
+    ("->>" . ?↠)
+    ("=>" . ?⇒)
+    ("map" . ?↦)
+    ("/=" . ?≠)
+    ("!=" . ?≠)
+    ("==" . ?≡)
+    ("<=" . ?≤)
+    (">=" . ?≥)
+    ("=<<" . (?= (Br . Bl) ?≪))
+    (">>=" . (?≫ (Br . Bl) ?=))
+    ("<=<" . ?↢)
+    (">=>" . ?↣)
+    ("&&" . ?∧)
+    ("||" . ?∨)
+    ("not" . ?¬))
+  "Alist of symbol prettifications.
+Nil to use font supports ligatures."
+  :group 'linuxing3
+  :type '(alist :key-type string :value-type (choice character sexp)))
 
 (defun +ensure-user-env ()
   "Check user env settings"
