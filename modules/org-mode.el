@@ -6,8 +6,10 @@
       (setq org-directory (expand-file-name "org" home-directory))
     (setq org-directory (dropbox-path "org")))
 
+  (defvar org-journal-base-dir nil
+    "Netlify gridsome base directory")
   (setq org-todo-keywords '((sequence "[学习](s!/@)" "[待办](t!/@)" "[等待](w!))" "|" "[完成](d!/@)" "[取消](c!@)")
-                       (sequence "[BUG](b!/@)" "[新事件](i/@)" "[已知问题](k!/@)" "[修改中](W!/@)" "|" "[已修复](f!)"))) 
+                            (sequence "[BUG](b!/@)" "[新事件](i/@)" "[已知问题](k!/@)" "[修改中](W!/@)" "|" "[已修复](f!)")))
   (with-eval-after-load 'org
     (setq diary-file (dropbox-path "org/diary"))
     (setq
@@ -21,14 +23,14 @@
     (org-babel-do-load-languages
      (quote org-babel-load-languages)
      (quote ((emacs-lisp . t)
-	     (java . t)
-	     (dot . t)
-	     (ditaa . t)
-	     (python . t)
-	     (gnuplot . t)
-	     (org . t)
-	     (plantuml . t)
-	     (latex . t))))))
+	         (java . t)
+	         (dot . t)
+	         (ditaa . t)
+	         (python . t)
+	         (gnuplot . t)
+	         (org . t)
+	         (plantuml . t)
+	         (latex . t))))))
 
 ;; Bootstrap Org
 (+xing-org-config)
