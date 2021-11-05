@@ -140,9 +140,9 @@
    :states '(normal)
    "zx" '(kill-this-buffer :which-key "杀死缓冲区")
    "zX" '(bury-buffer :which-key "去除缓冲区")
-   "gR" '(eval-buffer :which-key "去除缓冲区")
+   "eR" '(eval-buffer :which-key "运行缓冲区")
    :states '(visual)
-   "gr" '(eval-region :which-key "去除缓冲区")
+   "er" '(eval-region :which-key "运行选定区域")
    "gc" '(comment-or-uncomment-region :which-key "去除缓冲区")
    ))
 
@@ -173,15 +173,16 @@
 (use-package general
   :config
   (general-define-key
-   :states '(normal emacs)
    :prefix "SPC"
    :non-normal-prefix "M-SPC"
+   :states '(normal emacs)
    "eb" '(eval-buffer :which-key "Eval buffer")
    "ee" '(eval-last-sexp :which-key "Eval expression")
-   "er" '(eval-region :which-key "Eval region")
    "ef" '(eval-defun :which-key "Eval funtion")
    "ab" '(browse-url-of-file :which-key "Default Browser")
    "an" '(neotree :which-key "Neotree Browser")
+   :states '(normal visual)
+   "er" '(eval-region :which-key "Eval region")
    ))
 
 (use-package general
