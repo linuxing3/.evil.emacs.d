@@ -59,7 +59,7 @@
   "Create the journal in a specific directory, then your can export ..."
   (interactive)
   (progn
-	(setq journal-file-path (concat org-journal-base-dir "/" (format-time-string "%Y-%m-%d") ".org"))
+	(setq journal-file-path (concat org-journal-base-dir "/" (format-time-string "%Y%m%d") ".org"))
     (if (file-exists-p journal-file-path)
         (find-file-other-window journal-file-path)
       (progn

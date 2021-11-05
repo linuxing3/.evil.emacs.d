@@ -1,19 +1,39 @@
-(defun my/org-html-quote2 (block backend info)
-  (when (org-export-derived-backend-p backend 'html)
-    (when (string-match "\\`<div class=\"quote2\">" block)
-      (setq block (replace-match "<blockquote>" t nil block))
-      (string-match "</div>\n\\'" block)
-      (setq block (replace-match "</blockquote>\n" t nil block))
-      block)))
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+;; +fancy-org-model.el
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+
+
 (eval-after-load 'ox
   '(add-to-list 'org-export-filter-special-block-functions 'my/org-html-quote2))
 
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+;; 📂 Refile配置
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (use-package org
   :config
+  (setq org-reverse-note-order t)
+  (setq org-refile-use-outline-path nil)
+  (setq org-refile-allow-creating-parent-nodes 'confirm)
+  (setq org-refile-use-cache nil)
+  (setq org-refile-targets '((org-agenda-files . (:maxlevel . 3))))
+  (setq org-blank-before-new-entry nil)
+  )
+
+
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+;; 📷 Capture配置
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+(use-package org
+  :config
+  (defun +modern-org-html-quote2 (block backend info)
+    (when (org-export-derived-backend-p backend 'html)
+      (when (string-match "\\`<div class=\"quote2\">" block)
+        (setq block (replace-match "<blockquote>" t nil block))
+        (string-match "</div>\n\\'" block)
+        (setq block (replace-match "</blockquote>\n" t nil block))
+        block)))
   (defun get-year-and-month ()
     (list (format-time-string "%Y") (format-time-string "%m")))
-
-
   (defun find-month-tree ()
     (let* ((path (get-year-and-month))
            (level 1)
@@ -35,25 +55,19 @@
         (setq level (1+ level))
         (setq end (save-excursion (org-end-of-subtree t t))))
       (org-end-of-subtree)))
-
-
   (defun random-alphanum ()
     (let* ((charset "abcdefghijklmnopqrstuvwxyz0123456789")
            (x (random 36)))
       (char-to-string (elt charset x))))
-
   (defun create-password ()
     (let ((value ""))
       (dotimes (number 16 value)
         (setq value (concat value (random-alphanum))))))
-
-
   (defun get-or-create-password ()
     (setq password (read-string "Password: "))
     (if (string= password "")
         (create-password)
       password))
-
   (defun org-capture-template-goto-link ()
     (org-capture-put :target (list 'file+headline
                                    (nth 1 (org-capture-get :target))
@@ -68,7 +82,6 @@
         (goto-char (point-max))
         (or (bolp) (insert "\n"))
         (insert "* " hd "\n"))))
-
   (defun generate-anki-note-body ()
     (interactive)
     (message "Fetching note types...")
@@ -87,11 +100,11 @@
               (mapconcat (lambda (str) (concat "** " str))
                          fields
                          "\n\n"))))
-  ;; Capture template
-
+  ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+  ;; Capture template 以下是抓取模板
+  ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
   (setq org-capture-templates nil)
-
-  (add-to-list 'org-capture-templates '("x" "Extra → → → → → → "))
+  (add-to-list 'org-capture-templates '("x" "Extra → → → → → → → → → → →  → → → → "))
 
   (setq anki-org-file (dropbox-path "org/anki.org"))
   (add-to-list 'org-capture-templates
@@ -177,7 +190,7 @@
                  :empty-lines 1))
 
   ;; Task Group
-  (add-to-list 'org-capture-templates '("t" "Tasks → → → → →"))
+  (add-to-list 'org-capture-templates '("t" "Tasks → → → → → → → → → → → → → → →"))
 
   (setq daniel-org-file (dropbox-path "org/daniel.agenda.org"))
   (add-to-list 'org-capture-templates
@@ -261,8 +274,13 @@
                  (file "~/EnvSetup/config/org/capture-template/inbox.template")
                  ;; "* [#%^{Priority}] %^{Title} %^g\n SCHEDULED:%U %?\n"
                  :immediate-finish t
-                 :new-line 1)))
+                 :new-line 1))
+  ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+  )
 
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+;; 📅 Agenda 配置
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (use-package org-super-agenda
   :commands (org-super-agenda-mode)
   :config)
@@ -317,25 +335,38 @@
         '(
           ;; My grouped tasks
           ("x"
-           "My Super view"
+           "📅 My Super view"
            (
+            (todo "" ((org-agenda-overriding-header "********** 📅 *********** 📅 ************** 📅 *********** 📅 **************")
+                      (org-super-agenda-groups '((:discard (:anything))))))
             (agenda "" (
-                        (org-agenda-overriding-header "❉ 我的日程 ❉")
+                        (org-agenda-overriding-header "📅 我的日程 ")
                         (org-super-agenda-groups
                          '(
-                           (:name "今天是个好天气 ▽"
-                                  :time-grid t)
-                           (:name "重要任务 Important ★"
-                                  :priority "A")
-                           (:name "其他任务 Others ↑ ↓"
-                                  :priority<= "B"
-                                  :scheduled today
-                                  :order 1)
-
-                           ))))))
+                           (:name none :time-grid t)
+                           (:discard (:anything t))
+                           ))))
+            (todo "" ((org-agenda-overriding-header "Tips: [x]退出 [o]最大化 [d]日 [w]周 [m/u]标记/取消 [*/U]全标/取反 [r]重复")
+                      (org-super-agenda-groups '((:discard (:anything))))))
+            (todo "" ((org-agenda-overriding-header "Tips: [B]批处理 → [$]存档 [t]状态 [+/-]标签 [s]开始 [d]截止 [r]转存")
+                      (org-super-agenda-groups '((:discard (:anything))))))
+            (todo "" ((org-agenda-overriding-header "Tips: [t]状态 [,/+/-]优先级 [:]标签 [I/O]时钟 [e]耗时")
+                      (org-super-agenda-groups '((:discard (:anything))))))
+            (todo "" (
+                      (org-agenda-overriding-header "🐧 待办清单 ")
+                      (org-super-agenda-groups
+                       '(
+                         (:name "⚡ 重要任务 Important" :priority "A")
+                         (:name "🚀 其他任务 Others"
+                                :priority<= "B"
+                                :scheduled today
+                                :order 1)
+                         (:discard (:anything t))
+                         ))))
+            ))
           ;; My GTD tasks
           ("u"
-           "My GTD view"
+           "📆 My GTD view"
            (
             (todo "" (
                       (org-agenda-overriding-header "❉ Get Things Done ❉")
@@ -361,44 +392,37 @@
                          (:discard (:anything t))))))))
           ;; Daniel's tasks
           ("d"
-           "Daniel's Task view"
+           "👦 儿子的行事历"
            (
             (todo "" (
-                      (org-agenda-overriding-header "Daniel's Tasks")
+                      (org-agenda-overriding-header "👦 儿子的行事历")
                       (org-super-agenda-groups
                        '(
-                         (:name "daniel" :tag ("DANIEL" "daniel" "kids" "KIDS"))
+                         (:name "daniel" :tag ("@daniel" "@kid"))
                          (:discard (:anything t))))))))
           ;; End
           ("e"
-           "Computer Related"
+           "💻 电脑"
            (
-            (tags-todo "" (
-                           (org-agenda-overriding-header "Computer Related")
-                           (org-super-agenda-groups
-                            `(
-                              (:name "General Comupter Related"
-                                     :tag "COMPUTER"
-                                     )
-                              (:name "Emacs Related"
-                                     :tag "COMPUTER"
-                                     :regexp ("org" "emacs" ,(rx bow "emacs" eow))
-                                     )
-                              )))))))))
+            (todo "" (
+                      (org-agenda-overriding-header "💻 电脑")
+                      (org-super-agenda-groups
+                       `(
+                         (:name "电脑相关" :tag ("COMPUTER" "@computer"))
+                         (:discard (:anything t)))))))))))
 
-(use-package org-brain
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+;; ☀ 美化配置
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+(use-package org-superstar
   :ensure t
-  :init
-  (setq org-brain-visualize-default-choices 'all
-        org-brain-title-max-length 24
-        org-brain-include-file-entries nil
-        org-brain-file-entries-use-title nil)
-
+  :after org
+  :hook (org-mode . org-superstar-mode)
   :config
-  (cl-pushnew '("b" "Brain" plain (function org-brain-goto-end)
-                "* %i%?" :empty-lines 1)
-              org-capture-templates
-              :key #'car :test #'equal))
+  (set-face-attribute 'org-superstar-header-bullet nil :inherit 'fixed-pitched :height 180)
+  :custom
+  (org-superstar-headline-bullets-list '("☀" "☪" "☯" "✿" "→"))
+  (setq org-ellipsis " ▼ "))
 
 (use-package org-bullets
   :ensure t
@@ -416,6 +440,33 @@
 
 (use-package org
   :config
+  ;; 标签组
+  (setq org-tag-alist (quote ((:startgroup)
+                              ("@office" . ?o)
+                              ("@home" . ?h)
+                              ("@travel" . ?t)
+                              ("@errand" . ?e)
+                              ("PERSONAL" . ?p)
+                              ("ME" . ?m)
+                              ("KID" . ?k)
+                              ("DANIEL" . ?d)
+                              ("LULU" . ?l)
+                              ("WORK" . ?w)
+                              ("PROJECT" . ?p)
+                              ("COMPUTER" . ?c)
+                              ("PHONE" . ?P)
+                              ("HABIT" . ?H)
+                              (:endgroup)
+                              ("party" . ?1)
+                              ("internal" . ?2)
+                              ("hr" . ?3)
+                              ("finance" . ?4)
+                              ("security" . ?5)
+                              ("foreign" . ?6)
+                              ("study" . ?7)
+                              ("public" . ?8)
+                              ("protocol" . ?9)
+                              )))
 
   (set-face-attribute 'org-link nil
 		              :weight 'normal
@@ -470,20 +521,11 @@
 					                          ("b." . "-"))))
   )
 
-;; (use-package org-noter :ensure t)
-;; (use-package org-appear :ensure t)
-(use-package org-superstar
-  :ensure t
-  :after org
-  :hook (org-mode . org-superstar-mode)
-  :config
-  (set-face-attribute 'org-superstar-header-bullet nil :inherit 'fixed-pitched :height 180)
-  :custom
-  (org-superstar-headline-bullets-list '("☀" "☪" "☯" "✿" "→"))
-  (setq org-ellipsis " ▼ "))
 
-(use-package org-download :ensure t)
 
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+;; 日志 Journal
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (use-package org-journal
   :ensure t
   :defer t
@@ -512,6 +554,9 @@
   ;; interpret it as anything other than a date.
   (setq org-journal-carryover-items  "TODO=\"TODO\"|TODO=\"PROJ\"|TODO=\"STRT\"|TODO=\"WAIT\"|TODO=\"HOLD\""))
 
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+;; 番茄时钟
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (use-package org-pomodoro
   :ensure t
   :config
@@ -530,6 +575,9 @@
 				                  'libnotify)
 				                 (alert-default-style)))))
 
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+;; 信息聚合
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (use-package elfeed-org
   :config
   (setq rmh-elfeed-org-files (list
@@ -540,17 +588,34 @@
   (setq elfeed-search-filter "@3-month-ago +unread")
   )
 
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+;; ✿ 演示文稿
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (use-package ox-reveal
   :init
   (setq org-reveal-root (dropbox-path "shared/ppt/reveal.js"))
   (setq org-reveal-postamble "Xing Wenju"))
 
-(use-package org
+
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+;; ✿ Brain配置
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+(use-package org-brain
+  :ensure t
+  :init
+  (setq org-brain-visualize-default-choices 'all
+        org-brain-title-max-length 24
+        org-brain-include-file-entries nil
+        org-brain-file-entries-use-title nil)
+
   :config
-  (setq org-reverse-note-order t)
-  (setq org-refile-use-outline-path nil)
-  (setq org-refile-allow-creating-parent-nodes 'confirm)
-  (setq org-refile-use-cache nil)
-  (setq org-refile-targets '((org-agenda-files . (:maxlevel . 3))))
-  (setq org-blank-before-new-entry nil)
-  )
+  (cl-pushnew '("b" "Brain" plain (function org-brain-goto-end)
+                "* %i%?" :empty-lines 1)
+              org-capture-templates
+              :key #'car :test #'equal))
+
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+;; (use-package org-noter :ensure t)
+;; (use-package org-appear :ensure t)
+
+(use-package org-download :ensure t)

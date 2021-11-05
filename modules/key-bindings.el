@@ -65,7 +65,7 @@
    "C-w" #'kill-this-buffer
    "C-p" #'counsel-buffer-or-recentf
    "C-f" #'counsel-buffer-or-recentf
-   "C-z" #'undo
+   "C-z" #'evil-undo
    ))
 
 ;; ---------------------------------------------------------
@@ -138,13 +138,19 @@
 (use-package general
   :config
   (general-define-key
-   :states '(normal)
+   :states '(normal visual)
+   "gc" '(evilnc-comment-operator :which-key "切换注释")
+   "g0" '(imenu :which-key "互动菜单")
+   "gx" '(evil-exchange-point-and-mark :which-key "互换文字")
+   "g="  #'evil-numbers/inc-at-pt
+   "g-"  #'evil-numbers/dec-at-pt
    "zx" '(kill-this-buffer :which-key "杀死缓冲区")
    "zX" '(bury-buffer :which-key "去除缓冲区")
    "eR" '(eval-buffer :which-key "运行缓冲区")
    :states '(visual)
    "er" '(eval-region :which-key "运行选定区域")
-   "gc" '(comment-or-uncomment-region :which-key "去除缓冲区")
+   "g="  #'evil-numbers/inc-at-pt-incremental
+   "g-"  #'evil-numbers/dec-at-pt-incremental
    ))
 
 ;; ---------------------------------------------------------
@@ -194,4 +200,15 @@
    "c" '(neotree-create-node :which-key "创建")
    "r" '(neotree-rename-node :which-key "更名")
    "d" '(neotree-delete-node :which-key "删除")
+   ))
+
+(use-package general
+  :config
+  (general-define-key
+   ;; window management (prefix "C-w")
+   :keymaps '(evil-window-map)
+   :prefix "m"
+   "m"       #'maximize-window
+   "u"       #'winner-undo
+   "C-u"     #'winner-undo
    ))
