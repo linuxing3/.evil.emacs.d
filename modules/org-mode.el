@@ -1,5 +1,5 @@
-(defun +xing-org-config()
-  (interactive)
+(defun +modern-org-config()
+  (intermodernve)
   (defvar org-directory-default nil
     "whether use org directory in default location")
   (if org-directory-default
@@ -19,7 +19,7 @@
      org-agenda-files (directory-files org-directory t "\\.agenda\\.org$" t))
     (setq org-archive-location (dropbox-path "org/archived/%s_archive::"))))
 
-(defun +xing-enable-babel()
+(defun +modern-babel-config()
   (interactive)
   (with-eval-after-load 'org
     (org-babel-do-load-languages
@@ -28,14 +28,16 @@
 	         (java . t)
 	         (dot . t)
 	         (ditaa . t)
+	         (plantuml . t)
 	         (python . t)
+	         (go . t)
+	         (rust . t)
 	         (gnuplot . t)
 	         (org . t)
-	         (plantuml . t)
 	         (latex . t))))))
 
 ;; Bootstrap Org
-(+xing-org-config)
-(+xing-enable-babel)
+(+modern-org-config)
+(+modern-babel-config)
 
-(org-babel-load-file "~/EnvSetup/config/evil-emacs/modules/+fancy-org-mode.org")
+(load-file "~/EnvSetup/config/evil-emacs/modules/+fancy-org-mode.el")

@@ -1,12 +1,12 @@
 (defun my/org-html-quote2 (block backend info)
-(when (org-export-derived-backend-p backend 'html)
-(when (string-match "\\`<div class=\"quote2\">" block)
-(setq block (replace-match "<blockquote>" t nil block))
-(string-match "</div>\n\\'" block)
-(setq block (replace-match "</blockquote>\n" t nil block))
-block)))
+  (when (org-export-derived-backend-p backend 'html)
+    (when (string-match "\\`<div class=\"quote2\">" block)
+      (setq block (replace-match "<blockquote>" t nil block))
+      (string-match "</div>\n\\'" block)
+      (setq block (replace-match "</blockquote>\n" t nil block))
+      block)))
 (eval-after-load 'ox
-'(add-to-list 'org-export-filter-special-block-functions 'my/org-html-quote2))
+  '(add-to-list 'org-export-filter-special-block-functions 'my/org-html-quote2))
 
 (use-package org
   :config
@@ -107,7 +107,7 @@ block)))
                  "Snippets"
                  entry
                  (file snippets-org-file)
-                 (file "~/.doom.d/templates/capture-template/snippet.template")
+                 (file "~/EnvSetup/config/org/capture-template/snippet.template")
                  ;; "* %?\t%^g\n #+BEGIN_SRC %^{language}\n\n#+END_SRC"
                  :kill-buffer t))
   (setq billing-org-file (dropbox-path "org/billing.org"))
@@ -116,7 +116,7 @@ block)))
                  "Billing"
                  plain
                  (file+function billing-org-file find-month-tree)
-                 (file "~/.doom.d/templates/capture-template/billing.template")
+                 (file "~/EnvSetup/config/org/capture-template/billing.template")
                  ;; " | %U | %^{类别} | %^{描述} | %^{金额} |"
                  :kill-buffer t))
 
@@ -126,7 +126,7 @@ block)))
                  "Contacts"
                  entry
                  (file contacts-org-file)
-                 (file "~/.doom.d/templates/capture-template/contact.template")
+                 (file "~/EnvSetup/config/org/capture-template/contact.template")
                  ;; "* %^{姓名} %^{手机号}p %^{邮箱}p %^{住址}p %^{微信}p %^{微博}p %^{whatsapp}p\n\n  %?"
                  :empty-lines 1 :kill-buffer t))
 
@@ -185,14 +185,14 @@ block)))
                  "Son Daniel's Task"                               ; title
                  entry                                             ; type
                  (file+headline daniel-org-file "Task") ; target
-                 (file "~/.doom.d/templates/capture-template/todo.template")))
+                 (file "~/EnvSetup/config/org/capture-template/todo.template")))
   (setq lulu-org-file (dropbox-path "org/lulu.agenda.org"))
   (add-to-list 'org-capture-templates
                '("tl"
                  "Wife Lulu's Task"
                  entry
                  (file+headline lulu-org-file "Task")
-                 (file "~/.doom.d/templates/capture-template/todo.template")))
+                 (file "~/EnvSetup/config/org/capture-template/todo.template")))
   (setq my-org-file (dropbox-path "org/xingwenju.agenda.org"))
   (add-to-list 'org-capture-templates
                '("tr"
@@ -207,7 +207,7 @@ block)))
                  "My Work Projects"
                  entry
                  (file projects-org-file)
-                 (file "~/.doom.d/templates/capture-template/project.template")
+                 (file "~/EnvSetup/config/org/capture-template/project.template")
                  :empty-line 1))
   (setq works-org-file (dropbox-path "org/works.agenda.org"))
   (add-to-list 'org-capture-templates
@@ -215,7 +215,7 @@ block)))
                  "My Work Task"
                  entry
                  (file+headline works-org-file "Work")
-                 (file "~/.doom.d/templates/capture-template/basic.template")
+                 (file "~/EnvSetup/config/org/capture-template/basic.template")
                  :immediate-finish t))
 
   ;; Most often used"
@@ -225,7 +225,7 @@ block)))
                  "My Phone calls"
                  entry
                  (file+headline phone-org-file "Phone Calls")
-                 (file "~/.doom.d/templates/capture-template/phone.template")
+                 (file "~/EnvSetup/config/org/capture-template/phone.template")
                  ;; "* %^{Habit cards|music|balls|games}\n  %?"
                  :immediate-finish t
                  :new-line 1))
@@ -236,7 +236,7 @@ block)))
                  "My Habit"
                  entry
                  (file habit-org-file)
-                 (file "~/.doom.d/templates/capture-template/habit.template")
+                 (file "~/EnvSetup/config/org/capture-template/habit.template")
                  ;; "* %^{Habit cards|music|balls|games}\n  %?"
                  :immediate-finish t
                  :new-line 1))
@@ -247,7 +247,7 @@ block)))
                  "My Notes"
                  entry
                  (file notes-org-file)
-                 (file "~/.doom.d/templates/capture-template/notes.template")
+                 (file "~/EnvSetup/config/org/capture-template/notes.template")
                  ;; "* %^{Loggings For...} %t %^g\n  %?"
                  :immediate-finish t
                  :new-line 1))
@@ -258,7 +258,7 @@ block)))
                  "My GTD Inbox"
                  entry
                  (file inbox-org-file)
-                 (file "~/.doom.d/templates/capture-template/inbox.template")
+                 (file "~/EnvSetup/config/org/capture-template/inbox.template")
                  ;; "* [#%^{Priority}] %^{Title} %^g\n SCHEDULED:%U %?\n"
                  :immediate-finish t
                  :new-line 1)))
@@ -268,11 +268,11 @@ block)))
   :config)
 
 (with-eval-after-load 'org-agenda
-    (defun evan/agenda-icon-material (name)
-      "返回一个all-the-icons-material图标"
-      (list (all-the-icons-material name)))
-    (org-super-agenda-mode)
-    (setq org-agenda-category-icon-alist
+  (defun evan/agenda-icon-material (name)
+    "返回一个all-the-icons-material图标"
+    (list (all-the-icons-material name)))
+  (org-super-agenda-mode)
+  (setq org-agenda-category-icon-alist
         `(
           ;; 学习相关
           ("待办" ,(evan/agenda-icon-material "check_box") nil nil :ascent center)
@@ -292,24 +292,24 @@ block)))
     "Set different line spacing w.r.t. time duration."
     (save-excursion
       (let* ((background (alist-get 'background-mode (frame-parameters)))
-         (background-dark-p (string= background "dark"))
-         (colors (list "#1ABC9C" "#2ECC71" "#3498DB" "#9966ff"))
-         pos
-         duration)
-    (nconc colors colors)
-    (goto-char (point-min))
-    (while (setq pos (next-single-property-change (point) 'duration))
-      (goto-char pos)
-      (when (and (not (equal pos (point-at-eol)))
-             (setq duration (org-get-at-bol 'duration)))
-        (let ((line-height (if (< duration 30) 1.0 (+ 0.5 (/ duration 60))))
-          (ov (make-overlay (point-at-bol) (1+ (point-at-eol)))))
-          (overlay-put ov 'face `(:background ,(car colors)
-                          :foreground
-                          ,(if background-dark-p "black" "white")))
-          (setq colors (cdr colors))
-          (overlay-put ov 'line-height line-height)
-          (overlay-put ov 'line-spacing (1- line-height))))))))
+             (background-dark-p (string= background "dark"))
+             (colors (list "#1ABC9C" "#2ECC71" "#3498DB" "#9966ff"))
+             pos
+             duration)
+        (nconc colors colors)
+        (goto-char (point-min))
+        (while (setq pos (next-single-property-change (point) 'duration))
+          (goto-char pos)
+          (when (and (not (equal pos (point-at-eol)))
+                     (setq duration (org-get-at-bol 'duration)))
+            (let ((line-height (if (< duration 30) 1.0 (+ 0.5 (/ duration 60))))
+                  (ov (make-overlay (point-at-bol) (1+ (point-at-eol)))))
+              (overlay-put ov 'face `(:background ,(car colors)
+                                                  :foreground
+                                                  ,(if background-dark-p "black" "white")))
+              (setq colors (cdr colors))
+              (overlay-put ov 'line-height line-height)
+              (overlay-put ov 'line-spacing (1- line-height))))))))
 
   (add-hook 'org-agenda-finalize-hook #'ljg/org-agenda-time-grid-spacing)
 
@@ -323,16 +323,16 @@ block)))
                         (org-agenda-overriding-header "❉ 我的日程 ❉")
                         (org-super-agenda-groups
                          '(
-                         (:name "今天是个好天气 ▽"
+                           (:name "今天是个好天气 ▽"
                                   :time-grid t)
-                         (:name "重要任务 Important ★"
-                                :priority "A")
-                         (:name "其他任务 Others ↑ ↓"
-                                      :priority<= "B"
-                                      :scheduled today
-                                      :order 1)
+                           (:name "重要任务 Important ★"
+                                  :priority "A")
+                           (:name "其他任务 Others ↑ ↓"
+                                  :priority<= "B"
+                                  :scheduled today
+                                  :order 1)
 
-           ))))))
+                           ))))))
           ;; My GTD tasks
           ("u"
            "My GTD view"
@@ -348,9 +348,9 @@ block)))
                                 :priority "A")
                          (:name none)
                          (:name "↑ ↓ 其他任务 Others"
-                                      :priority<= "B"
-                                      :scheduled today
-                                      :order 1)
+                                :priority<= "B"
+                                :scheduled today
+                                :order 1)
                          (:discard (:anything t))))))
             (todo "" (
                       (org-agenda-overriding-header "★ All Projects")
@@ -374,9 +374,9 @@ block)))
            "Computer Related"
            (
             (tags-todo "" (
-               (org-agenda-overriding-header "Computer Related")
-               (org-super-agenda-groups
-                `(
+                           (org-agenda-overriding-header "Computer Related")
+                           (org-super-agenda-groups
+                            `(
                               (:name "General Comupter Related"
                                      :tag "COMPUTER"
                                      )
@@ -405,7 +405,7 @@ block)))
   :init (add-hook 'org-mode-hook 'org-bullets-mode)
   :custom
   (org-bullets-bullet-list '("☀" "☪"  "☯"  "✿" "→"))
-)
+  )
 
 (use-package org-fancy-priorities
   :ensure t
@@ -418,57 +418,57 @@ block)))
   :config
 
   (set-face-attribute 'org-link nil
-		  :weight 'normal
-		  :background nil)
+		              :weight 'normal
+		              :background nil)
   (set-face-attribute 'org-code nil
-		  :foreground "#a9a1e1"
-		  :background nil)
+		              :foreground "#a9a1e1"
+		              :background nil)
   (set-face-attribute 'org-date nil
-		  :foreground "#5B6268"
-		  :background nil)
+		              :foreground "#5B6268"
+		              :background nil)
   (set-face-attribute 'org-level-1 nil
-		  :foreground "steelblue2"
-		  :background nil
-		  :height 1.1
-		  :weight 'normal)
+		              :foreground "steelblue2"
+		              :background nil
+		              :height 1.1
+		              :weight 'normal)
   (set-face-attribute 'org-level-2 nil
-		  :foreground "slategray2"
-		  :background nil
-		  :height 1.0
-		  :weight 'normal)
+		              :foreground "slategray2"
+		              :background nil
+		              :height 1.0
+		              :weight 'normal)
   (set-face-attribute 'org-level-3 nil
-		  :foreground "SkyBlue2"
-		  :background nil
-		  :height 1.0
-		  :weight 'normal)
+		              :foreground "SkyBlue2"
+		              :background nil
+		              :height 1.0
+		              :weight 'normal)
   (set-face-attribute 'org-level-4 nil
-		  :foreground "DodgerBlue2"
-		  :background nil
-		  :height 1.0
-		  :weight 'normal)
+		              :foreground "DodgerBlue2"
+		              :background nil
+		              :height 1.0
+		              :weight 'normal)
   (set-face-attribute 'org-level-5 nil
-		  :weight 'normal)
+		              :weight 'normal)
   (set-face-attribute 'org-level-6 nil
-		  :weight 'normal)
+		              :weight 'normal)
   (set-face-attribute 'org-document-title nil
-		  :foreground "SlateGray1"
-		  :background nil
-		  :height 1.25
-		  :weight 'bold)
+		              :foreground "SlateGray1"
+		              :background nil
+		              :height 1.25
+		              :weight 'bold)
 
   (setq org-list-demote-modify-bullet (quote (("+" . "-")
-					  ("*" . "-")
-					  ("1." . "-")
-					  ("1)" . "-")
-					  ("A)" . "-")
-					  ("B)" . "-")
-					  ("a)" . "-")
-					  ("b)" . "-")
-					  ("A." . "-")
-					  ("B." . "-")
-					  ("a." . "-")
-					  ("b." . "-"))))
-)
+					                          ("*" . "-")
+					                          ("1." . "-")
+					                          ("1)" . "-")
+					                          ("A)" . "-")
+					                          ("B)" . "-")
+					                          ("a)" . "-")
+					                          ("b)" . "-")
+					                          ("A." . "-")
+					                          ("B." . "-")
+					                          ("a." . "-")
+					                          ("b." . "-"))))
+  )
 
 ;; (use-package org-noter :ensure t)
 ;; (use-package org-appear :ensure t)
@@ -518,27 +518,27 @@ block)))
   (with-eval-after-load 'org-pomodoro
     ;; prefer PulseAudio to ALSA in $current_year
     (setq org-pomodoro-audio-player (or (executable-find "paplay")
-					org-pomodoro-audio-player))
+					                    org-pomodoro-audio-player))
 
     ;; configure pomodoro alerts to use growl or libnotify
     (alert-add-rule :category "org-pomodoro"
-		    :style (cond (alert-growl-command
-				  'growl)
-				 (alert-notifier-command
-				  'notifier)
-				 (alert-libnotify-command
-				  'libnotify)
-				 (alert-default-style)))))
+		            :style (cond (alert-growl-command
+				                  'growl)
+				                 (alert-notifier-command
+				                  'notifier)
+				                 (alert-libnotify-command
+				                  'libnotify)
+				                 (alert-default-style)))))
 
 (use-package elfeed-org
-   :config
-      (setq rmh-elfeed-org-files (list
-			      (concat org-directory "/elfeed1.org")
-			      (concat org-directory "/elfeed2.org")))
+  :config
+  (setq rmh-elfeed-org-files (list
+			                  (concat org-directory "/elfeed1.org")
+			                  (concat org-directory "/elfeed2.org")))
   (setq elfeed-db-directory (concat org-directory "/elfeed/db/"))
   (setq elfeed-enclosure-default-dir (concat org-directory "/elfeed/enclosures/"))
   (setq elfeed-search-filter "@3-month-ago +unread")
-)
+  )
 
 (use-package ox-reveal
   :init
@@ -546,11 +546,11 @@ block)))
   (setq org-reveal-postamble "Xing Wenju"))
 
 (use-package org
-	:config
-	(setq org-reverse-note-order t)
-	(setq org-refile-use-outline-path nil)
-	(setq org-refile-allow-creating-parent-nodes 'confirm)
-	(setq org-refile-use-cache nil)
-	(setq org-refile-targets '((org-agenda-files . (:maxlevel . 3))))
-	(setq org-blank-before-new-entry nil)
-)
+  :config
+  (setq org-reverse-note-order t)
+  (setq org-refile-use-outline-path nil)
+  (setq org-refile-allow-creating-parent-nodes 'confirm)
+  (setq org-refile-use-cache nil)
+  (setq org-refile-targets '((org-agenda-files . (:maxlevel . 3))))
+  (setq org-blank-before-new-entry nil)
+  )
