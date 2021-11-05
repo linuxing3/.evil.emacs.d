@@ -100,11 +100,11 @@
    "[" '(text-scale-decrease :which-key "decrease text")
    "t" '(hl-todo-previous :which-key "highlight previous todo")
    "h" '(smart-backward :which-key "jump backward")
-   "b" '(switch-previous-buffer :which-key "previous buffer"))
+   "b" '(switch-to-prev-buffer :which-key "previous buffer"))
   (general-define-key
    :states '(normal emacs)
    :prefix "]"
-   "[" '(text-scale-increase :which-key "next buffer")
+   "]" '(text-scale-increase :which-key "next buffer")
    "t" '(hl-todo-next :which-key "highlight next todo")
    "l" '(smart-forward :which-key "jump forward")
    "b" '(switch-to-next-buffer :which-key "next buffer"))
@@ -132,7 +132,7 @@
    "bo" '(kill-this-buffer :which-key "杀死它缓冲")
    "bs" '(save-buffer :which-key "保存缓冲区")
    "b]" '(next-buffer :which-key "下一缓冲区")
-   "b[" '(previous-buffer :which-key "上一缓冲区")
+   "b[" '(switch-to-prev-buffer :which-key "上一缓冲区")
    ))
 
 (use-package general
