@@ -91,12 +91,12 @@
 
   (setq org-capture-templates nil)
 
-  (add-to-list 'org-capture-templates '("x" "Extra"))
+  (add-to-list 'org-capture-templates '("x" "Extra → → → → → → "))
 
   (setq anki-org-file (dropbox-path "org/anki.org"))
   (add-to-list 'org-capture-templates
                `("xv"
-                 "Vocabulary"
+                 "🏁 Vocabulary"
                  entry
                  (file+headline anki-org-file "Vocabulary")
                  ,(concat "* %^{heading} :note:\n"
@@ -104,7 +104,7 @@
   (setq snippets-org-file (dropbox-path "org/snippets.org"))
   (add-to-list 'org-capture-templates
                '("xs"
-                 "Snippets"
+                 "🐞 Snippets"
                  entry
                  (file snippets-org-file)
                  (file "~/EnvSetup/config/org/capture-template/snippet.template")
@@ -113,7 +113,7 @@
   (setq billing-org-file (dropbox-path "org/billing.org"))
   (add-to-list 'org-capture-templates
                '("xb"
-                 "Billing"
+                 "💰 Billing"
                  plain
                  (file+function billing-org-file find-month-tree)
                  (file "~/EnvSetup/config/org/capture-template/billing.template")
@@ -123,7 +123,7 @@
   (setq contacts-org-file (dropbox-path "org/contacts.org"))
   (add-to-list 'org-capture-templates
                '("xc"
-                 "Contacts"
+                 "😂 Contacts"
                  entry
                  (file contacts-org-file)
                  (file "~/EnvSetup/config/org/capture-template/contact.template")
@@ -142,7 +142,7 @@
   (setq blog-org-file (dropbox-path "org/blog.org"))
   (add-to-list 'org-capture-templates
                `("xx"
-                 "Blog"
+                 "🏁 Blog"
                  plain
                  (file ,(concat blog-org-file (format-time-string "%Y-%m-%d.org")))
                  ,(concat "#+startup: showall\n"
@@ -162,7 +162,7 @@
   (setq links-org-file (dropbox-path "org/links.org"))
   (add-to-list 'org-capture-templates
                '("l"
-                 "Temp Links from the interwebs"
+                 "❉ Temp Links from the interwebs"
                  entry
                  (file+headline links-org-file "Bookmarks")
                  "* %t %:description\nlink: %l \n\n%i\n"
@@ -170,33 +170,33 @@
 
   (add-to-list 'org-capture-templates
                '("a"
-                 "Protocol Annotation"
+                 "❉ Protocol Annotation"
                  plain
                  (file+function links-org-file org-capture-template-goto-link)
                  " %^{Title}\n  %U - %?\n\n  %:initial"
                  :empty-lines 1))
 
   ;; Task Group
-  (add-to-list 'org-capture-templates '("t" "Tasks"))
+  (add-to-list 'org-capture-templates '("t" "Tasks → → → → →"))
 
   (setq daniel-org-file (dropbox-path "org/daniel.agenda.org"))
   (add-to-list 'org-capture-templates
                '("ts"                                              ; hotkey
-                 "Son Daniel's Task"                               ; title
+                 "👦 Son's Task"                               ; title
                  entry                                             ; type
                  (file+headline daniel-org-file "Task") ; target
                  (file "~/EnvSetup/config/org/capture-template/todo.template")))
   (setq lulu-org-file (dropbox-path "org/lulu.agenda.org"))
   (add-to-list 'org-capture-templates
                '("tl"
-                 "Wife Lulu's Task"
+                 "👩 Wife Lulu's Task"
                  entry
                  (file+headline lulu-org-file "Task")
                  (file "~/EnvSetup/config/org/capture-template/todo.template")))
   (setq my-org-file (dropbox-path "org/xingwenju.agenda.org"))
   (add-to-list 'org-capture-templates
                '("tr"
-                 "My Book Reading Task"
+                 "☠ My Book Reading Task"
                  entry
                  (file+headline my-org-file "Reading")
                  "** TODO %^{书名}\n%u\n%a\n"
@@ -204,7 +204,7 @@
   (setq projects-org-file (dropbox-path "org/projects.agenda.org"))
   (add-to-list 'org-capture-templates
                '("tp"
-                 "My Work Projects"
+                 "📓 My Work Projects"
                  entry
                  (file projects-org-file)
                  (file "~/EnvSetup/config/org/capture-template/project.template")
@@ -212,7 +212,7 @@
   (setq works-org-file (dropbox-path "org/works.agenda.org"))
   (add-to-list 'org-capture-templates
                '("tw"
-                 "My Work Task"
+                 "⏰ My Work Task"
                  entry
                  (file+headline works-org-file "Work")
                  (file "~/EnvSetup/config/org/capture-template/basic.template")
@@ -222,7 +222,7 @@
   (setq phone-org-file (dropbox-path "org/phone.org"))
   (add-to-list 'org-capture-templates
                '("P"
-                 "My Phone calls"
+                 "📱 My Phone calls"
                  entry
                  (file+headline phone-org-file "Phone Calls")
                  (file "~/EnvSetup/config/org/capture-template/phone.template")
@@ -233,7 +233,7 @@
   (setq habit-org-file (dropbox-path "org/habit.org"))
   (add-to-list 'org-capture-templates
                '("h"
-                 "My Habit"
+                 "🎶 My Habit"
                  entry
                  (file habit-org-file)
                  (file "~/EnvSetup/config/org/capture-template/habit.template")
@@ -244,7 +244,7 @@
   (setq notes-org-file (dropbox-path "org/notes.org"))
   (add-to-list 'org-capture-templates
                '("n"
-                 "My Notes"
+                 "❉ My Notes"
                  entry
                  (file notes-org-file)
                  (file "~/EnvSetup/config/org/capture-template/notes.template")
@@ -255,7 +255,7 @@
   (setq inbox-org-file (dropbox-path "org/inbox.agenda.org"))
   (add-to-list 'org-capture-templates
                '("i"
-                 "My GTD Inbox"
+                 "⏰ My GTD Inbox"
                  entry
                  (file inbox-org-file)
                  (file "~/EnvSetup/config/org/capture-template/inbox.template")

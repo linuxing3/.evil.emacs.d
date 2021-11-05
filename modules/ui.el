@@ -8,51 +8,52 @@
 ;;; Code:
 
 (defun +modern-ui-emojify-h ()
- "Set Font for Emoji and symbol"
- (set-fontset-font
- t
- '(#x1f300 . #x1fad0)
- (cond
-  ((member "Noto Color Emoji" (font-family-list)) "Noto Color Emoji")
-  ((member "Noto Emoji" (font-family-list)) "Noto Emoji")
-  ((member "Segoe UI Emoji" (font-family-list)) "Segoe UI Emoji")
-  ((member "Symbola" (font-family-list)) "Symbola")
-  ((member "Apple Color Emoji" (font-family-list)) "Apple Color Emoji"))
- )
- (set-fontset-font
- t
- 'symbol
- (cond
-  ((string-equal system-type "windows-nt")
+  "Set Font for Emoji and symbol"
+  (set-fontset-font
+   t
+   '(#x1f300 . #x1fad0)
    (cond
-    ((member "Segoe UI Symbol" (font-family-list)) "Segoe UI Symbol")))
-  ((string-equal system-type "darwin")
+    ((member "Noto Color Emoji" (font-family-list)) "Noto Color Emoji")
+    ((member "Noto Emoji" (font-family-list)) "Noto Emoji")
+    ((member "Segoe UI Emoji" (font-family-list)) "Segoe UI Emoji")
+    ((member "Symbola" (font-family-list)) "Symbola")
+    ((member "Apple Color Emoji" (font-family-list)) "Apple Color Emoji"))
+   )
+  (set-fontset-font
+   t
+   'symbol
    (cond
-    ((member "Apple Symbols" (font-family-list)) "Apple Symbols")))
-  ((string-equal system-type "gnu/linux")
-   (cond
-    ((member "Symbola" (font-family-list)) "Symbola")))))
- )
+    ((string-equal system-type "windows-nt")
+     (cond
+      ((member "Symbola" (font-family-list)) "Symbola")))
+    ((string-equal system-type "darwin")
+     (cond
+      ((member "Apple Symbols" (font-family-list)) "Apple Symbols")))
+    ((string-equal system-type "gnu/linux")
+     (cond
+      ((member "Symbola" (font-family-list)) "Symbola")))))
+  )
 
 (defun +modern-ui-chinese-h ()
- "Set Font for chinese language"
-(set-fontset-font
- t
- 'han
- (cond
-  ((string-equal system-type "windows-nt")
+  "Set Font for chinese language"
+  (set-fontset-font
+   t
+   'han
    (cond
-    ((member "Microsoft YaHei" (font-family-list)) "Microsoft YaHei")
-    ((member "Microsoft JhengHei" (font-family-list)) "Microsoft JhengHei")
-    ((member "SimHei" (font-family-list)) "SimHei")))
-  ((string-equal system-type "darwin")
-   (cond
-    ((member "Hei" (font-family-list)) "Hei")
-    ((member "Heiti SC" (font-family-list)) "Heiti SC")
-    ((member "Heiti TC" (font-family-list)) "Heiti TC")))
-  ((string-equal system-type "gnu/linux")
-   (cond
-    ((member "WenQuanYi Micro Hei" (font-family-list)) "WenQuanYi Micro Hei"))))))
+    ((string-equal system-type "windows-nt")
+     (cond
+      ((member "Microsoft YaHei UI" (font-family-list)) "Microsoft YaHei UI")
+      ;;((member "SimHei" (font-family-list)) "SimHei")
+      ;;((member "Microsoft JhengHei" (font-family-list)) "Microsoft JhengHei")
+      ))
+    ((string-equal system-type "darwin")
+     (cond
+      ((member "Hei" (font-family-list)) "Hei")
+      ((member "Heiti SC" (font-family-list)) "Heiti SC")
+      ((member "Heiti TC" (font-family-list)) "Heiti TC")))
+    ((string-equal system-type "gnu/linux")
+     (cond
+      ((member "WenQuanYi Micro Hei" (font-family-list)) "WenQuanYi Micro Hei"))))))
 ;; (set-fontset-font "fontset-default" 'han "Microsoft YaHei UI")
 
 ;; 切换buffer焦点时高亮动画

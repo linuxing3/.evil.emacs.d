@@ -1,5 +1,5 @@
 (defun +modern-org-config()
-  (intermodernve)
+  (interactive)
   (defvar org-directory-default nil
     "whether use org directory in default location")
   (if org-directory-default
@@ -31,7 +31,6 @@
 	         (plantuml . t)
 	         (python . t)
 	         (go . t)
-	         (rust . t)
 	         (gnuplot . t)
 	         (org . t)
 	         (latex . t))))))

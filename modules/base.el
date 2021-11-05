@@ -114,7 +114,8 @@
   ;;(set-keyboard-coding-system 'utf-8)
   ;;(set-terminal-coding-system 'utf-8)
   ;;(set-selection-coding-system 'utf-8)
-  ;;(modify-coding-system-alist 'process "*" 'utf-8)))
+  ;;(modify-coding-system-alist 'process "*" 'utf-8)
+  ))
 
 ;; 启动设置
 (+better-defaults-h)
