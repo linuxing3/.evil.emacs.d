@@ -176,6 +176,10 @@
    :states '(normal emacs)
    :prefix "SPC"
    :non-normal-prefix "M-SPC"
+   "eb" '(eval-buffer :which-key "Eval buffer")
+   "ee" '(eval-last-sexp :which-key "Eval expression")
+   "er" '(eval-region :which-key "Eval region")
+   "ef" '(eval-defun :which-key "Eval funtion")
    "ab" '(browse-url-of-file :which-key "Default Browser")
    "an" '(neotree :which-key "Neotree Browser")
    ))

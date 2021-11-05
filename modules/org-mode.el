@@ -8,6 +8,7 @@
 
   (defvar org-journal-base-dir nil
     "Netlify gridsome base directory")
+  (setq org-journal-base-dir (dropbox-path "org/journal"))
   (setq org-todo-keywords '((sequence "[学习](s!/@)" "[待办](t!/@)" "[等待](w!))" "|" "[完成](d!/@)" "[取消](c!@)")
                             (sequence "[BUG](b!/@)" "[新事件](i/@)" "[已知问题](k!/@)" "[修改中](W!/@)" "|" "[已修复](f!)")))
 
