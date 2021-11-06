@@ -51,6 +51,21 @@
   (setq org-ellipsis " ▼ "
         org-bullets-bullet-list '(" ○ " " ◆ ")
         org-tags-column -80)
+
+  (setq org-todo-keyword-faces
+        '(
+          ("[学习]" . (:foreground "GoldenRod" :weight bold))
+          ("[待办]" . (:foreground "IndianRed1" :weight bold))
+          ("[等待]" . (:foreground "OrangeRed" :weight bold))
+          ("[完成]" . (:foreground "coral" :weight bold))
+          ("[取消]" . (:foreground "LimeGreen" :weight bold))
+          ("[BUG]" . (:foreground "GoldenRod" :weight bold))
+          ("[新事件]" . (:foreground "IndianRed1" :weight bold))
+          ("[已知问题]" . (:foreground "OrangeRed" :weight bold))
+          ("[修改中]" . (:foreground "coral" :weight bold))
+          ("[已修复]" . (:foreground "LimeGreen" :weight bold))
+          ))
+
   (setq-default org-display-custom-times t)
   (setq org-time-stamp-custom-formats '("<%a %b %e %Y>" . "<%a %b %e %Y %H:%M>"))
   (setq org-indirect-buffer-display 'current-window
