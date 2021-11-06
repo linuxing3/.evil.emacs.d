@@ -584,13 +584,15 @@
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; ✿ 发布网站
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
-(use-package org-mode
+(use-package org
   :config
   (setq org-publish-project-alist
-        '(("orgfiles"
-           :base-directory (dropbox-path "org")
+        '(
+          ;; 将`org-blog'发布到`html'
+          ("orgfiles"
+           :base-directory "~/OneDrive/org/journal"
            :base-extension "org"
-           :publishing-directory "/ssh:vagrant@localhost:~/html/notebook/"
+           :publishing-directory "~/html/journal/"
            :publishing-function org-html-publish-to-html
            :exclude "PrivatePage.org" ;; regexp
            :headline-levels 3
@@ -600,25 +602,42 @@
                        href=\"../css/mystyle.css\" type=\"text/css\"/>"
            :html-preamble t)
 
+          ;; 将`emacs配置'发布到`OneDrive'
+          ("emacs-config"
+           :base-directory "~/EnvSetup/config/evil-emacs/"
+           :base-extension "el\\|org"
+           :recursive t
+           :publishing-directory "~/OneDrive/config/emacs/scratch/"
+           :publishing-function org-publish-attachment)
+
+          ;; 将`assets'发布到`html'
           ("images"
-           :base-directory (dropbox-path "org/assets/images")
-           :base-extension "jpg\\|gif\\|png"
-           :publishing-directory "/ssh:vagrant@localhost:~/html/assets/images/"
+           :base-directory "~/OneDrive/org/assets/images/"
+           :base-extension "jpg\\|jpeg\\|gif\\|png"
+           :publishing-directory "~/html/assets/images/"
+           :publishing-function org-publish-attachment)
+
+          ("attach"
+           :base-directory "~/OneDrive/org/attach/"
+           :base-extension "html\\|xml\\|css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|zip\\|gz\\|csv\\|m\\|R\\|el"
+           :publishing-directory "~/html/assets/attach/"
            :publishing-function org-publish-attachment)
 
           ("css"
-           :base-directory (dropbox-path "org/assets/css")
-           :base-extension "css\\|el"
-           :publishing-directory "/ssh:vagrant@localhost:~/html/assets/css/"
+           :base-directory "~/OneDrive/shared/assets/css"
+           :base-extension "css"
+           :publishing-directory "~/html/assets/css/"
            :publishing-function org-publish-attachment)
 
           ("js"
-           :base-directory (dropbox-path "org/assets/js")
-           :base-extension "js\\|el"
-           :publishing-directory "/ssh:vagrant@localhost:~/html/assets/js/"
+           :base-directory "~/OneDrive/shared/assets/js"
+           :base-extension "js"
+           :publishing-directory "~/html/assets/js/"
            :publishing-function org-publish-attachment)
 
-          ("website" :components ("orgfiles" "images" "css" "js"))))
+          ("website" :components ("orgfiles" "images" "css" "js"))
+          ("emacs" :components ("emacs-config"))
+          ))
 
   )
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂

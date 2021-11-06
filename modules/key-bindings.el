@@ -59,6 +59,7 @@
  "C-k"     #'evil-window-up
  "C-l"     #'evil-window-right
  "C-w"     #'ace-window
+ "C-q"     #'delete-window
  "C-S-w"   #'ace-swap-window
  ;; Delete window
  "M-c"   #'evil-yank     ;; 粘贴
@@ -103,7 +104,7 @@
 ;; 以下快捷键需要先按SPC后出现
 (global-definer
   "SPC" '(execute-extended-command :which-key "extended Command")
-  "."   '(find-file :which-key "project find file")
+  "."   '(counsel-find-file :which-key "project find file")
   "/" '(swiper :which-key "swiper")
   "#"   '(bookmark-set :which-key "set bookmark") ;; 设置书签
   "RET" '(counsel-bookmark :which-key "search bookmark") ;; 搜索书签
@@ -115,6 +116,7 @@
   "i" '(imenu :which-key "imenu")
   "I" '(imenu-anywhare :which-key "imenu across buffers")
   "t"   '(load-theme :which-key "load theme")
+  "s"   '(save-buffer :which-key "load theme")
   "q"  '(kill-emacs :which-key "kill emacs"))
 
 ;; 嵌套菜单宏:
@@ -155,8 +157,8 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
           :which-key "其他缓冲区"))
 
 (+general-global-menu! "file" "f"
-  "f" '(find-file :which-key "找到打开文件")
-  "." '(find-file :which-key "找到打开文件")
+  "f" '(counsel-find-file :which-key "找到打开文件")
+  "." '(counsel-find-file :which-key "找到打开文件")
   "/" '(projectile-find-file :which-key "找到项目文件")
   "?" '(counsel-file-jump :which-key "查找本地文件")
   "d" '(dired :which-key "文件目录浏览")
@@ -331,5 +333,28 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
     "p" #'org-priority
     "u" #'org-priority-up
     ))
+
+(defun +ivy-bindings-h()
+  ;; `Ivy-based' interface to shell and system tools
+  (global-set-key (kbd "C-c c") 'counsel-compile)
+  (global-set-key (kbd "C-c g") 'counsel-git)
+  (global-set-key (kbd "C-c j") 'counsel-git-grep)
+  (global-set-key (kbd "C-c L") 'counsel-git-log)
+  (global-set-key (kbd "C-c k") 'counsel-rg)
+  (global-set-key (kbd "C-c m") 'counsel-linux-app)
+  (global-set-key (kbd "C-c n") 'counsel-fzf)
+  (global-set-key (kbd "C-x l") 'counsel-locate)
+  (global-set-key (kbd "C-c J") 'counsel-file-jump)
+  (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+  (global-set-key (kbd "C-c w") 'counsel-wmctrl)
+  ;; `Ivy-resume' and other commands
+  (global-set-key (kbd "C-c C-r") 'ivy-resume)
+  (global-set-key (kbd "C-c b") 'counsel-bookmark)
+  (global-set-key (kbd "C-c d") 'counsel-descbinds)
+  (global-set-key (kbd "C-c g") 'counsel-git)
+  (global-set-key (kbd "C-c o") 'counsel-outline)
+  (global-set-key (kbd "C-c t") 'counsel-load-theme)
+  (global-set-key (kbd "C-c F") 'counsel-org-file)
+  )
 
 (provide 'linuxing3-key-bindings)

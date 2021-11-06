@@ -76,7 +76,9 @@
 (use-package doom-themes
   :ensure t
   :config
-  (load-theme 'doom-dracula t))
+  (load-theme 'doom-opera-light t))
+
+(use-package spacemacs-theme)
 
 ;; All The Icons
 (use-package all-the-icons :ensure t)
