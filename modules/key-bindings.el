@@ -179,6 +179,9 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "q"  '(delete-frame :which-key "delete frame"))
 
 (+general-global-menu! "org" "o"
+  "S" '((lambda () (interactive) (org-publish-project "emacs-config"))
+        :which-key "Publish emacs config")
+  "P" '(org-publish-project :which-key "Org Publish")
   "c"  '(org-capture :which-key "Org Capture")
   "a"  '(org-agenda :which-key "Org agenda"))
 
