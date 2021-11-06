@@ -13,10 +13,10 @@
    t
    '(#x1f300 . #x1fad0)
    (cond
+    ((member "Symbola" (font-family-list)) "Symbola")
     ((member "Noto Color Emoji" (font-family-list)) "Noto Color Emoji")
     ((member "Noto Emoji" (font-family-list)) "Noto Emoji")
     ((member "Segoe UI Emoji" (font-family-list)) "Segoe UI Emoji")
-    ((member "Symbola" (font-family-list)) "Symbola")
     ((member "Apple Color Emoji" (font-family-list)) "Apple Color Emoji"))
    )
   (set-fontset-font

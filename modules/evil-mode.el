@@ -11,6 +11,9 @@
   (evil-leader/set-leader ",")
   (global-evil-leader-mode))
 
+;; (use-package evil-multiedit
+;;   :ensure t)
+
 (use-package evil-escape
   :ensure t)
 
