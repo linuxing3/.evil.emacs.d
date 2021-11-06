@@ -603,24 +603,39 @@
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; ✿ 发布网站
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+
+(use-package htmlize)
+
+(defvar nico-website-html-head
+  "<link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic' rel='stylesheet' type='text/css'>
+<link rel='stylesheet' href='css/site.css' type='text/css'/>")
+
+(defvar nico-website-html-blog-head
+  "<link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic' rel='stylesheet' type='text/css'>
+<link rel='stylesheet' href='../css/site.css' type='text/css'/>")
+
+(defvar nico-website-html-preamble
+  "<div class='nav'>
+<ul>
+<li><a href='/'>Home</a></li>
+<li><a href='/blog/index.html'>Blog</a></li>
+<li><a href='http://github.com/linuxing3'>GitHub</a></li>
+<li><a href='http://twitter.com/linuxing3'>Twitter</a></li>
+<li><a href='/contact.html'>Contact</a></li>
+</ul>
+</div>")
+
+(defvar nico-website-html-postamble
+  "<div class='footer'>
+Copyright 2013 %a (%v HTML).<br>
+Last updated %C. <br>
+Built with %c.
+</div>")
+
 (use-package org
   :config
   (setq org-publish-project-alist
         '(
-          ;; 将`org-blog'发布到`html'
-          ("orgfiles"
-           :base-directory "~/OneDrive/org/journal"
-           :base-extension "org"
-           :publishing-directory "~/html/journal/"
-           :publishing-function org-html-publish-to-html
-           :exclude "PrivatePage.org" ;; regexp
-           :headline-levels 3
-           :section-numbers nil
-           :with-toc nil
-           :html-head "<link rel=\"stylesheet\"
-                       href=\"../css/mystyle.css\" type=\"text/css\"/>"
-           :html-preamble t)
-
           ;; 将`emacs配置'发布到`OneDrive'
           ("emacs-config"
            :base-directory "~/EnvSetup/config/evil-emacs/"
@@ -629,32 +644,72 @@
            :publishing-directory "~/OneDrive/config/emacs/scratch/"
            :publishing-function org-publish-attachment)
 
-          ;; 将`assets'发布到`html'
+          ;; 将`org'目录下org文件发布到网站根目录
+          ("webroot"
+           :base-directory "~/EnvSetup/org/"
+           :base-extension "org"
+           :publishing-directory "~/workspace/github.io/"
+           :publishing-function org-html-publish-to-html
+           :section-numbers nil
+           :with-toc nil
+           :html-head ,nico-website-html-head
+           :html-preamble ,nico-website-html-preamble
+           :html-postamble ,nico-website-html-postamble)
+
+          ;; 将`org/blog'发布到网站的`blog'目录
+          ("blog"
+           :base-directory "~/OneDrive/org/blog/"
+           :base-extension "org"
+           :publishing-directory "~/workspace/github.io/blog/"
+           :publishing-function org-html-publish-to-html
+           :exclude "PrivatePage.org" ;; regexp
+           :headline-levels 3
+           :section-numbers nil
+           :with-toc nil
+           :section-numbers nil
+           :with-toc nil
+           :html-head ,nico-website-html-head
+           :html-head-extra
+           "<link rel=\"alternate\" type=\"application/rss+xml\"
+                href=\"http://github.io/linuxing3/blog.xml\"
+                title=\"RSS feed\">"
+           :html-preamble ,nico-website-html-preamble
+           :html-postamble ,nico-website-html-postamble)
+
+          ;; 将`assets'发布到`网站根目录'
           ("images"
            :base-directory "~/OneDrive/org/assets/images/"
            :base-extension "jpg\\|jpeg\\|gif\\|png"
-           :publishing-directory "~/html/assets/images/"
+           :publishing-directory "~/workspace/github.io/assets/images/"
            :publishing-function org-publish-attachment)
 
           ("attach"
            :base-directory "~/OneDrive/org/attach/"
            :base-extension "html\\|xml\\|css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|zip\\|gz\\|csv\\|m\\|R\\|el"
-           :publishing-directory "~/html/assets/attach/"
+           :publishing-directory "~/workspace/github.io/assets/attach/"
            :publishing-function org-publish-attachment)
 
           ("css"
-           :base-directory "~/OneDrive/shared/assets/css"
+           :base-directory "~/OneDrive/org/assets/css"
            :base-extension "css"
-           :publishing-directory "~/html/assets/css/"
+           :publishing-directory "~/workspace/github.io/assets/css/"
            :publishing-function org-publish-attachment)
 
           ("js"
-           :base-directory "~/OneDrive/shared/assets/js"
+           :base-directory "~/OneDrive/org/assets/js"
            :base-extension "js"
-           :publishing-directory "~/html/assets/js/"
+           :publishing-directory "~/workspace/github.io/assets/js/"
            :publishing-function org-publish-attachment)
 
-          ("website" :components ("orgfiles" "images" "css" "js"))
+          ("rss"
+           :base-directory "~/OneDrive/org/blog"
+           :base-extension "org"
+           :publishing-directory "~/workspace/github.io/blog"
+           :publishing-function (org-rss-publish-to-rss)
+           :html-link-home "http://github.io/linuxing3/"
+           :html-link-use-abs-url t)
+
+          ("website" :components ("images" "css" "js" "attach" "css" "rss" "blog"))
           ("emacs" :components ("emacs-config"))
           ))
 

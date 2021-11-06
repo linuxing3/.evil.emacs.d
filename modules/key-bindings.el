@@ -116,7 +116,7 @@
   "i" '(imenu :which-key "imenu")
   "I" '(imenu-anywhare :which-key "imenu across buffers")
   "t"   '(load-theme :which-key "load theme")
-  "s"   '(save-buffer :which-key "load theme")
+  "s"   '(save-buffer :which-key "save buffer")
   "q"  '(kill-emacs :which-key "kill emacs"))
 
 ;; 嵌套菜单宏:
@@ -219,6 +219,18 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
  "g="  #'evil-numbers/inc-at-pt-incremental
  "g-"  #'evil-numbers/dec-at-pt-incremental
  )
+
+(+general-global-menu! "search" "s"
+  "b" '(counsel-bookmark :which-key "bookmark")
+  "r" '(counsel-rg :which-key "ripgrep")
+  "s" '(counsel-fonts :which-key "fonts")
+  "c" '(counsel-colors-emacs :which-key "colors")
+  "u" '(counsel-unicode-char :which-key "unicode")
+  "p" '(counsel-package :which-key "package")
+  "v" '(counsel-describe-variable :which-key "variable")
+  "F" '(counsel-describe-face :which-key "face")
+  "f" '(counsel-describe-function :which-key "function")
+  "t" '(counsel-load-theme :which-key "themes"))
 
 (+general-global-menu! "project" "p"
   "/" '(projectile-find-file :which-key "打开项目文件")
