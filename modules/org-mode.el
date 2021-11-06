@@ -1,22 +1,22 @@
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
-;; 现代基本配置
+;; `现代基本配置'
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (defun +modern-org-config-h()
   (interactive)
-  ;; 设定org的目录
+  ;; 设定`org的目录'
   (defvar org-directory-default nil
     "whether use org directory in default location")
   (if org-directory-default
       (setq org-directory (expand-file-name "org" home-directory))
     (setq org-directory (dropbox-path "org")))
-  ;; 设定journal的目录
+  ;; 设定`journal的目录'
   (defvar org-journal-base-dir nil
     "Netlify gridsome base directory")
   (setq org-journal-base-dir (dropbox-path "org/journal"))
-  ;; 设定todo关键字
+  ;; 设定`todo关键字'
   (setq org-todo-keywords '((sequence "[学习](s)" "[待办](t)" "[等待](w)" "|" "[完成](d)" "[取消](c)")
                             (sequence "[BUG](b)" "[新事件](i)" "[已知问题](k)" "[修改中](W)" "|" "[已修复](f)")))
-  ;; 设定agenda相关目录
+  ;; 设定`agenda相关目录'
   (with-eval-after-load 'org
     (setq diary-file (dropbox-path "org/diary"))
     (setq
@@ -25,7 +25,7 @@
     (setq org-archive-location (dropbox-path "org/archived/%s_archive::"))))
 
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
-;; 现代Babel配置
+;; `现代Babel配置'
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (defun +modern-babel-config-h()
   (interactive)
@@ -45,6 +45,14 @@
 
 (defun +org-init-appearance-h ()
   "Configures the UI for `org-mode'."
+  (setq
+   org-modules (quote (org-habit org-protocol org-man org-toc org-bookmark)))
+
+  (setq org-ellipsis " ▼ "
+        org-bullets-bullet-list '(" ○ " " ◆ ")
+        org-tags-column -80)
+  (setq-default org-display-custom-times t)
+  (setq org-time-stamp-custom-formats '("<%a %b %e %Y>" . "<%a %b %e %Y %H:%M>"))
   (setq org-indirect-buffer-display 'current-window
         org-eldoc-breadcrumb-separator " → "
         org-enforce-todo-dependencies t
@@ -91,7 +99,7 @@
   (define-key org-src-mode-map (kbd "C-c C-c") #'org-edit-src-exit))
 
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
-;; 启动配置
+;; `启动配置'
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (add-hook 'org-load-hook #'+org-init-appearance-h)
 (add-hook 'org-load-hook #'+org-init-babel-h)
@@ -99,6 +107,6 @@
 (add-hook 'org-load-hook #'+modern-babel-config-h)
 
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
-;; 加载现代美化配置
+;; `加载现代美化配置'
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (load-file "~/EnvSetup/config/evil-emacs/modules/+fancy-org-mode.el")

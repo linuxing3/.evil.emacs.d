@@ -1,4 +1,4 @@
-;; ~general.el~ provides a more convenient method for binding keys in emacs (for
+;; `general.el' provides a more convenient method for binding keys in emacs (for
 ;; both evil and non-evil users). Like use-package, which provides a convenient,
 ;; unified interface for managing packages, general.el is intended to provide a
 ;; convenient, unified interface for key definitions.
@@ -8,7 +8,7 @@
 ;; vim-style keybindings under non-prefix keys with an optional timeout), its
 ;; primary purpose is to build on existing functionality to make key definition
 ;; more clear and concise.
-;; general-define-key is user-extensible and supports
+;; `general-define-key' is user-extensible and supports
 ;; defining multiple keys in multiple keymaps at once, implicitly wrapping key
 ;; strings with (kbd ...), using named prefix key sequences (like the leader key
 ;; in vim), and much more.
@@ -49,7 +49,7 @@
  "<f6>"  #'kill-buffer-and-window
  "<f7>"  #'split-window-right
  "<f8>"  #'format-all-buffer
- "<f9>"  #'org-capture
+ "<f9>"  #'counsel-org-capture
  "<f10>"  #'org-agenda
  "<f11>"  #'make-frame
  "<f12>"  #'xref-find-definitions-other-window
@@ -62,17 +62,27 @@
  "C-S-w"   #'ace-swap-window
  ;; Delete window
  "M-c"   #'evil-yank     ;; 粘贴
- "M-q"   (if (daemonp) #'delete-frame #'evil-quit-all)
  "M-f"   #'swiper        ;; 查找
  "M-z"   #'fill-paragraph ;; 折行
  "M-s"   #'save-buffer   ;; 保存
  "M-r"   #'format-all-buffer
+ "C-S-p"   #'eshell
+ ;; increase font size
+ "M-="       #'text-scale-increase
+ "M--"       #'text-scale-decrease
+ "M-N"       #'make-frame ;;创建新的帧
+ "M-n"       #'evil-buffer-new ;;创建新缓存区
+ "M-q"       #'evil-delete-buffer  ;; 删除缓冲区
+ "C-M-f"     #'toggle-frame-fullscreen ;;全屏切换
+ "M-w"       #'delete-window ;; 删除窗口
+ "M-2"       #'split-window-right ;; 垂直分割窗口
+ "M-1"       #'delete-window ;; 删除窗口
+ "M-W"   (if (daemonp) #'delete-frame #'evil-quit-all) ;; 删除帧
  )
 
 (general-define-key
  :states '(normal visual insert emacs)
  "M-/" #'comment-or-uncomment-region
- "M-q" (if (daemonp) #'delete-frame #'evil-quit-all)
  "M-a" #'mark-whole-buffer
  "M-c" #'evil-yank
  "M-v" #'evil-paste-after
@@ -94,15 +104,17 @@
 (global-definer
   "SPC" '(execute-extended-command :which-key "extended Command")
   "."   '(find-file :which-key "project find file")
-  "#"   '(bookmark-set :which-key "set bookmark") ;; 设置书签
   "/" '(swiper :which-key "swiper")
-  "i" '(imenu :which-key "imenu")
-  "I" '(imenu-anywhare :which-key "imenu across buffers")
+  "#"   '(bookmark-set :which-key "set bookmark") ;; 设置书签
   "RET" '(counsel-bookmark :which-key "search bookmark") ;; 搜索书签
   "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
+  "<" '(switch-to-buffer :which-key "switch buffer")
   "!"    '(shell-command :which-key "shell command")
   "`"   '(eval-expression :which-key "eval expression")
   ":"   '(eval-expression :which-key "eval expression")
+  "i" '(imenu :which-key "imenu")
+  "I" '(imenu-anywhare :which-key "imenu across buffers")
+  "t"   '(load-theme :which-key "load theme")
   "q"  '(kill-emacs :which-key "kill emacs"))
 
 ;; 嵌套菜单宏:
@@ -172,7 +184,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
 (general-define-key
  :states '(normal emacs)
  :prefix "["
- "[" '(text-scale-decrease :which-key "decrease text")
+ "[" '(text-scale-decrease :which-key "decrease text scale")
  "t" '(hl-todo-previous :which-key "highlight previous todo")
  "h" '(smart-backward :which-key "jump backward")
  "b" '(switch-to-prev-buffer :which-key "previous buffer"))
@@ -181,7 +193,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
 (general-define-key
  :states '(normal emacs)
  :prefix "]"
- "]" '(text-scale-increase :which-key "next buffer")
+ "]" '(text-scale-increase :which-key "increase text scale")
  "t" '(hl-todo-next :which-key "highlight next todo")
  "l" '(smart-forward :which-key "jump forward")
  "b" '(switch-to-next-buffer :which-key "next buffer"))

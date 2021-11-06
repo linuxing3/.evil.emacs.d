@@ -2,8 +2,6 @@
 ;; +fancy-org-model.el
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 
-(eval-after-load 'ox
-  '(add-to-list 'org-export-filter-special-block-functions 'my/org-html-quote2))
 
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; 📷 Capture配置
@@ -17,6 +15,8 @@
         (string-match "</div>\n\\'" block)
         (setq block (replace-match "</blockquote>\n" t nil block))
         block)))
+  (eval-after-load 'ox
+    '(add-to-list 'org-export-filter-special-block-functions '+modern-org-html-quote2))
   (defun get-year-and-month ()
     (list (format-time-string "%Y") (format-time-string "%m")))
   (defun find-month-tree ()
@@ -224,11 +224,10 @@
                  entry
                  (file+headline phone-org-file "Phone Calls")
                  (file "~/EnvSetup/config/org/capture-template/phone.template")
-                 ;; "* %^{Habit cards|music|balls|games}\n  %?"
                  :immediate-finish t
                  :new-line 1))
 
-  (setq habit-org-file (dropbox-path "org/habit.org"))
+  (setq habit-org-file (dropbox-path "org/habit.agenda.org"))
   (add-to-list 'org-capture-templates
                '("h"
                  "🎶 My Habit"
@@ -582,6 +581,46 @@
   (setq org-reveal-postamble "Xing Wenju"))
 
 
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+;; ✿ 发布网站
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+(use-package org-mode
+  :config
+  (setq org-publish-project-alist
+        '(("orgfiles"
+           :base-directory (dropbox-path "org")
+           :base-extension "org"
+           :publishing-directory "/ssh:vagrant@localhost:~/html/notebook/"
+           :publishing-function org-html-publish-to-html
+           :exclude "PrivatePage.org" ;; regexp
+           :headline-levels 3
+           :section-numbers nil
+           :with-toc nil
+           :html-head "<link rel=\"stylesheet\"
+                       href=\"../css/mystyle.css\" type=\"text/css\"/>"
+           :html-preamble t)
+
+          ("images"
+           :base-directory (dropbox-path "org/assets/images")
+           :base-extension "jpg\\|gif\\|png"
+           :publishing-directory "/ssh:vagrant@localhost:~/html/assets/images/"
+           :publishing-function org-publish-attachment)
+
+          ("css"
+           :base-directory (dropbox-path "org/assets/css")
+           :base-extension "css\\|el"
+           :publishing-directory "/ssh:vagrant@localhost:~/html/assets/css/"
+           :publishing-function org-publish-attachment)
+
+          ("js"
+           :base-directory (dropbox-path "org/assets/js")
+           :base-extension "js\\|el"
+           :publishing-directory "/ssh:vagrant@localhost:~/html/assets/js/"
+           :publishing-function org-publish-attachment)
+
+          ("website" :components ("orgfiles" "images" "css" "js"))))
+
+  )
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; ✿ Brain配置
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
