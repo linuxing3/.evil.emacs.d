@@ -634,6 +634,7 @@ Built with %c.
 
 (use-package org
   :config
+  (require 'ox-publish)
   (setq org-publish-project-alist
         '(
           ;; 将`emacs配置'发布到`OneDrive'
@@ -652,9 +653,26 @@ Built with %c.
            :publishing-function org-html-publish-to-html
            :section-numbers nil
            :with-toc nil
-           :html-head ,nico-website-html-head
-           :html-preamble ,nico-website-html-preamble
-           :html-postamble ,nico-website-html-postamble)
+           :html-head "
+<link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic' rel='stylesheet' type='text/css'>
+<link rel='stylesheet' href='assets/css/site.css' type='text/css'/>"
+           :html-preamble "
+<div class='nav'><ul>
+<li><a href='/'>Home</a></li>
+<li><a href='/blog/index.html'>Blog</a></li>
+<li><a href='http://github.com/linuxing3'>GitHub</a></li>
+<li><a href='http://twitter.com/linuxing3'>Twitter</a></li>
+<li><a href='/contact.html'>Contact</a></li>
+</ul>
+</div>"
+           ;; :html-preamble ,nico-website-html-preamble
+           :html-postamble "
+<div class='footer'>
+Copyright 2013 %a (%v HTML).<br>
+Last updated %C. <br>
+Built with %c.
+</div>"
+           )
 
           ;; 将`org/blog'发布到网站的`blog'目录
           ("blog"
@@ -668,13 +686,27 @@ Built with %c.
            :with-toc nil
            :section-numbers nil
            :with-toc nil
-           :html-head ,nico-website-html-head
-           :html-head-extra
-           "<link rel=\"alternate\" type=\"application/rss+xml\"
-                href=\"http://github.io/linuxing3/blog.xml\"
-                title=\"RSS feed\">"
-           :html-preamble ,nico-website-html-preamble
-           :html-postamble ,nico-website-html-postamble)
+           :html-head "
+<link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic' rel='stylesheet' type='text/css'>
+<link rel='stylesheet' href='../assets/css/site.css' type='text/css'/>"
+           :html-head-extra "
+<link rel=\"alternate\" type=\"application/rss+xml\" href=\"http://github.io/linuxing3/blog.xml\" title=\"RSS feed\">"
+           :html-preamble "
+<div class='nav'><ul>
+<li><a href='/'>Home</a></li>
+<li><a href='/blog/index.html'>Blog</a></li>
+<li><a href='http://github.com/linuxing3'>GitHub</a></li>
+<li><a href='http://twitter.com/linuxing3'>Twitter</a></li>
+<li><a href='/contact.html'>Contact</a></li>
+</ul>
+</div>"
+           :html-postamble "
+<div class='footer'>
+Copyright 2013 %a (%v HTML).<br>
+Last updated %C. <br>
+Built with %c.
+</div>"
+           ) ;; end of blog configuration
 
           ;; 将`assets'发布到`网站根目录'
           ("images"
