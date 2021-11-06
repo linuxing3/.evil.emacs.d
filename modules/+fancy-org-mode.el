@@ -451,6 +451,25 @@
                               ("public" . ?8)
                               ("protocol" . ?9)
                               )))
+  (setq org-tag-faces
+        '(
+          ("@home" . (:foreground "MediumBlue" :weight bold))
+          ("@office" . (:foreground "Red" :weight bold))
+          ("@travel" . (:foreground "ForestGreen" :weight bold))
+          ("@erranda" . (:foreground "OrangeRed" :weight bold))
+          ("DANIEL" . (:foreground "MediumBlue" :weight bold))
+          ("LULU" . (:foreground "DeepPink" :weight bold))
+          ("WORK" . (:foreground "OrangeRed" :weight bold))
+          ("PROJECT" . (:foreground "OrangeRed" :weight bold))
+          ("HABIT" . (:foreground "DarkGreen" :weight bold))
+          ("COMPUTER" . (:foreground "ForestGreen" :weight bold))
+          ("internal" . (:foreground "ForestGreen" :weight bold))
+          ("party" . (:foreground "ForestGreen" :weight bold))
+          ("hr" . (:foreground "ForestGreen" :weight bold))
+          ("finance" . (:foreground "LimeGreen" :weight bold))
+          ("study" . (:foreground "LimeGreen" :weight bold))
+          ("public" . (:foreground "LimeGreen" :weight bold))
+          ("protocol" . (:foreground "LimeGreen" :weight bold))))
 
   (set-face-attribute 'org-link nil
 		              :weight 'normal
