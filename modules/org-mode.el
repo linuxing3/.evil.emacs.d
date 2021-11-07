@@ -38,7 +38,7 @@
 	         (ditaa . t)
 	         (plantuml . t)
 	         (python . t)
-	         (go . t)
+	         ;; (go . t)
 	         (gnuplot . t)
 	         (org . t)
 	         (latex . t))))))

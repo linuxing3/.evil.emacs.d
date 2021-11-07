@@ -143,19 +143,22 @@
                  "🏁 Blog"
                  plain
                  (file ,(concat blog-org-dir (format-time-string "%Y%m%d.org")))
-                 ,(concat "#+DATE:
+                 ,(concat "#+TITLE: %^{Title}
 #+AUTHOR: linuxing3
 #+EMAIL: linuxing3@qq.com
+#+DATE: %U
 #+OPTIONS: ':t *:t -:t ::t <:t H:3 \\n:nil ^:t arch:headline author:t c:nil
 #+OPTIONS: creator:comment d:(not LOGBOOK) date:t e:t email:nil f:t inline:t
 #+OPTIONS: num:t p:nil pri:nil stat:t tags:t tasks:t tex:t timestamp:t toc:t
 #+OPTIONS: todo:t |:t
-#+CREATOR: Emacs 24.3.50.3 (Org mode 8.0.3)
+#+CREATOR: Emacs 26.3.50.3 (Org mode 8.0.3)
 #+DESCRIPTION:
 #+EXCLUDE_TAGS: noexport
 #+KEYWORDS:
 #+LANGUAGE: en
-#+SELECT_TAGS: export ")))
+#+SELECT_TAGS: export
+
+%?")))
 
   ;; Protocol Group
   (setq links-org-file (dropbox-path "org/links.org"))

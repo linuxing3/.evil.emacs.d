@@ -2,6 +2,7 @@
 ;; Vim mode
 ;; ---------------------------------------------------------
 (use-package evil
+  :commands (evil-mode)
   :ensure t
   :config
   (evil-mode 1))
