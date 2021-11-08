@@ -35,7 +35,7 @@
 ;; ---------------------------------------------------------
 ;; 自动加载帮助器
 ;; ---------------------------------------------------------
-(load-file (expand-file-name "~/EnvSetup/config/evil-emacs/modules/autoloads.el"))
+(load-file (expand-file-name "~/.evil.emacs.d/modules/autoloads.el"))
 
 ;; ---------------------------------------------------------
 ;; 包管理器

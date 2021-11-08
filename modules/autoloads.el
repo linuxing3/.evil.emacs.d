@@ -156,7 +156,7 @@ in windows could be c:/Users/Administrator"
   :group 'linuxing3
   :type 'string)
 
-(defcustom linuxing3-private-modules "~/EnvSetup/config/evil-emacs/modules"
+(defcustom linuxing3-private-modules "~/.evil.emacs.d/modules"
   "Normally I use EnvSetup directory to hold all my private lisp files"
   :group 'linuxing3
   :type 'string)
