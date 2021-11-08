@@ -66,7 +66,7 @@
 (load-file (private-module-path "format.el"))
 (load-file (private-module-path "lang+plantuml.el"))
 (load-file (private-module-path "lang+markdown.el"))
-;; (load-file (private-module-path "coding-mode.el"))
+(load-file (private-module-path "coding-mode.el"))
 
 ;; ---------------------------------------------------------
 ;; 快捷键绑定

@@ -239,6 +239,7 @@ Built with %c.
            :publishing-directory "~/workspace/github.io/assets/images/"
            :publishing-function org-publish-attachment)
 
+
           ("attach"
            :base-directory "~/OneDrive/org/assets/attach/"
            :base-extension "html\\|xml\\|css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|zip\\|gz\\|csv\\|m\\|R\\|el"
@@ -246,21 +247,21 @@ Built with %c.
            :publishing-function org-publish-attachment)
 
           ("css"
-           :base-directory "~/OneDrive/org/assets/css"
+           :base-directory "~/OneDrive/org/assets/css/"
            :base-extension "css"
            :publishing-directory "~/workspace/github.io/assets/css/"
            :publishing-function org-publish-attachment)
 
           ("js"
-           :base-directory "~/OneDrive/org/assets/js"
+           :base-directory "~/OneDrive/org/assets/js/"
            :base-extension "js"
            :publishing-directory "~/workspace/github.io/assets/js/"
            :publishing-function org-publish-attachment)
 
           ("rss"
-           :base-directory "~/OneDrive/org/blog"
+           :base-directory "~/OneDrive/org/blog/"
            :base-extension "org"
-           :publishing-directory "~/workspace/github.io/blog"
+           :publishing-directory "~/workspace/github.io/blog/"
            :publishing-function (org-rss-publish-to-rss)
            :html-link-home "http://github.io/linuxing3/"
            :html-link-use-abs-url t)
