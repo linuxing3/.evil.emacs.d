@@ -1,13 +1,3 @@
-;; `general.el' provides a more convenient method for binding keys in emacs (for
-;; both evil and non-evil users). Like use-package, which provides a convenient,
-;; unified interface for managing packages, general.el is intended to provide a
-;; convenient, unified interface for key definitions.
-
-;; While this package does
-;; implement some completely new functionality (such as the ability to make
-;; vim-style keybindings under non-prefix keys with an optional timeout), its
-;; primary purpose is to build on existing functionality to make key definition
-;; more clear and concise.
 ;; `general-define-key' is user-extensible and supports
 ;; defining multiple keys in multiple keymaps at once, implicitly wrapping key
 ;; strings with (kbd ...), using named prefix key sequences (like the leader key
@@ -24,14 +14,14 @@
   :config
   (which-key-mode))
 
-;; 全局启动键，绑定SPC
+;; `全局启动键'，绑定SPC
 (general-create-definer global-definer
   :keymaps 'override
   :states  '(insert emacs normal hybrid motion visual operator)
   :prefix  "SPC"
   :non-normal-prefix "S-SPC")
 
-;; 全局leader键，使用SPC-m，获取特定major-mode的按键绑定
+;; `全局leader'键，使用SPC-m，获取特定major-mode的按键绑定
 (general-create-definer global-leader
   :keymaps 'override
   :states '(emacs normal hybrid motion visual operator)
@@ -96,6 +86,7 @@
  "C-o" #'open-with-external-app
  "C-s" #'save-buffer
  "C-w" #'kill-this-buffer
+ "C-d" #'kill-this-buffer
  "C-p" #'counsel-buffer-or-recentf
  "C-f" #'counsel-buffer-or-recentf
  "C-z" #'evil-undo
@@ -179,9 +170,10 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "q"  '(delete-frame :which-key "delete frame"))
 
 (+general-global-menu! "org" "o"
-  "S" '((lambda () (interactive) (org-publish-project "emacs-config"))
+  "b" '((lambda () (interactive) (org-publish-project "emacs-config"))
         :which-key "Publish emacs config")
-  "P" '(org-publish-project :which-key "Org Publish")
+  "d" '(org-publish-project :which-key "Org Publish")
+  "p" '(org-hugo-export-to-md :which-key "Org export Hugo")
   "c"  '(org-capture :which-key "Org Capture")
   "a"  '(org-agenda :which-key "Org agenda"))
 

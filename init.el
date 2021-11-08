@@ -68,6 +68,8 @@
 (load-file (private-module-path "lang+markdown.el"))
 (load-file (private-module-path "coding-mode.el"))
 
+(load-file (private-module-path "app+vagrant.el"))
+(load-file (private-module-path "app+translator.el"))
 ;; ---------------------------------------------------------
 ;; 快捷键绑定
 ;; ---------------------------------------------------------

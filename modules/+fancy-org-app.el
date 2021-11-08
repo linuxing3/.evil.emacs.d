@@ -1,4 +1,42 @@
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+;; 博客 blog
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+;; for Hugo
+(defvar blog-hugo-process "Hugo Server"
+  "Name of 'gridsome develop' process process")
+
+(defun +modern-blog-hugo-find-dir ()
+  "Open hugo blog files"
+  (interactive)
+  (find-file (workspace-path "awesome-hugo-blog/content/posts")))
+
+(defun +modern-blog-hugo-deploy ()
+  "Run gridsome cli and push changes upstream."
+  (interactive)
+  (with-dir org-hugo-base-dir
+            ;; deploy to github for ci
+            (shell-command "cd " org-hugo-base-dir)
+            (shell-command "git add .")
+            (--> (current-time-string)
+                 (concat "git commit -m \"" it "\"")
+                 (shell-command it))
+            (shell-command "git push")))
+
+(defun +modern-blog-hugo-start-server ()
+  "Run gridsome server if not already running and open its webpage."
+  (interactive)
+  (with-dir org-hugo-base-dir
+            (shell-command "cd " org-hugo-base-dir)
+            (unless (get-process blog-hugo-process)
+              (start-process blog-hugo-process nil "hugo" "server"))))
+
+(defun +modern-blog-hugo-end-server ()
+  "End gridsome server process if running."
+  (interactive)
+  (--when-let (get-process blog-hugo-process)
+    (delete-process it)))
+
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; 日志 Journal
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (defun +modern-org-journal-new-journal ()
@@ -18,7 +56,6 @@
         (insert "#+EXCERPT: org journal \n")
         (insert "---\n")))))
 
-;;;###autoload
 (defun commom--org-headers (file)
   "Return a draft org mode header string for a new article as FILE."
   (let ((datetimezone
@@ -169,6 +206,7 @@ Built with %c.
            :publishing-directory "~/OneDrive/config/emacs/scratch/"
            :publishing-function org-publish-attachment)
 
+          ;; 关于`org-native-blog'的配置
           ;; 将`org'目录下org文件发布到网站根目录
           ("webroot"
            :base-directory "~/EnvSetup/org/"
@@ -200,7 +238,7 @@ Built with %c.
 
           ;; 将`org/journal'发布到网站的`blog'目录
           ("blog"
-           :base-directory "~/OneDrive/org/journal/" 
+           :base-directory "~/OneDrive/org/journal/"
            :base-extension "org"
            :publishing-directory "~/workspace/github.io/blog/"
            :publishing-function org-html-publish-to-html
@@ -214,13 +252,13 @@ Built with %c.
 <link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic' rel='stylesheet' type='text/css'>
 <link rel='stylesheet' href='../assets/css/site.css' type='text/css'/>"
            :html-head-extra "
-<link rel=\"alternate\" type=\"application/rss+xml\" href=\"http://github.io/linuxing3/blog.xml\" title=\"RSS feed\">"
+<link rel=\"alternate\" type=\"application/rss+xml\" href=\"http://linuxing3.github.io/blog.xml\" title=\"RSS feed\">"
            :html-preamble "
 <div class='nav'><ul>
 <li><a href='/'>Home</a></li>
 <li><a href='/blog/index.html'>Blog</a></li>
-<li><a href='http://github.com/linuxing3'>GitHub</a></li>
-<li><a href='http://twitter.com/linuxing3'>Twitter</a></li>
+<li><a href='https://github.com/linuxing3'>GitHub</a></li>
+<li><a href='https://twitter.com/linuxing3'>Twitter</a></li>
 <li><a href='/contact.html'>Contact</a></li>
 </ul>
 </div>"
@@ -236,6 +274,7 @@ Built with %c.
           ("images"
            :base-directory "~/OneDrive/org/assets/images/"
            :base-extension "jpg\\|jpeg\\|gif\\|png"
+           :recursive t
            :publishing-directory "~/workspace/github.io/assets/images/"
            :publishing-function org-publish-attachment)
 
@@ -243,31 +282,63 @@ Built with %c.
           ("attach"
            :base-directory "~/OneDrive/org/assets/attach/"
            :base-extension "html\\|xml\\|css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|zip\\|gz\\|csv\\|m\\|R\\|el"
+           :recursive t
            :publishing-directory "~/workspace/github.io/assets/attach/"
            :publishing-function org-publish-attachment)
 
           ("css"
            :base-directory "~/OneDrive/org/assets/css/"
            :base-extension "css"
+           :recursive t
            :publishing-directory "~/workspace/github.io/assets/css/"
            :publishing-function org-publish-attachment)
 
           ("js"
            :base-directory "~/OneDrive/org/assets/js/"
            :base-extension "js"
+           :recursive t
            :publishing-directory "~/workspace/github.io/assets/js/"
            :publishing-function org-publish-attachment)
 
           ("rss"
            :base-directory "~/OneDrive/org/blog/"
            :base-extension "org"
-           :publishing-directory "~/workspace/github.io/blog/"
+           :publishing-directory "~/workspace/github.io/blog"
+           :recursive t
            :publishing-function (org-rss-publish-to-rss)
            :html-link-home "http://github.io/linuxing3/"
            :html-link-use-abs-url t)
 
-          ("website" :components ("images" "css" "js" "css" "attach" "rss" "blog"))
-          ("emacs" :components ("emacs-config"))
+          ;; 关于github网页的配置
+          ;; 将`journal'发布到`awesome-hugo-blog'
+          ("hugo-blog"
+           :base-directory "~/OneDrive/org/journal/"
+           :base-extension "org\\|md\\|\\MD\\|markdown"
+           :recursive t
+           :publishing-directory "~/workspace/awesome-hugo-blog/content/journal/"
+           :publishing-function org-publish-attachment)
+
+          ;; 将`images'发布到`网站根目录'
+          ("hugo-images"
+           :base-directory "~/OneDrive/org/assets/images/"
+           :base-extension "jpg\\|jpeg\\|gif\\|png\\|mp4\\|mov\\|pdf\\|zip\\|gz\\|doc\\|docx\\|csv"
+           :recursive t
+           :publishing-directory "~/workspace/awesome-hugo-blog/static/images/"
+           :publishing-function org-publish-attachment)
+
+          ;; 将`assets'发布到`网站根目录'
+          ("hugo-assets"
+           :base-directory "~/OneDrive/org/assets/css/"
+           :base-extension "css\\|mp4\\|mov\\|pdf\\|zip\\|gz\\|doc\\|docx\\|csv"
+           :recursive t
+           :publishing-directory "~/workspace/awesome-hugo-blog/assets/css/"
+           :publishing-function org-publish-attachment)
+
+          ("[Blog] Org native" :components ("images" "css" "js" "css" "attach" "rss" "blog"))
+          ("[Emacs] Fast evil emacs config" :components ("emacs-config"))
+          ("[Blog] Github Page Hugo" :components ("hugo-blog" "hugo-images" "hugo-assets"))
           ))
 
   )
+
+(use-package simple-httpd)

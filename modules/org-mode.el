@@ -16,6 +16,10 @@
   ;; 设定`todo关键字'
   (setq org-todo-keywords '((sequence "[学习](s)" "[待办](t)" "[等待](w)" "|" "[完成](d)" "[取消](c)")
                             (sequence "[BUG](b)" "[新事件](i)" "[已知问题](k)" "[修改中](W)" "|" "[已修复](f)")))
+
+  ;; 设定`hugo的目录'
+  (setq org-hugo-base-dir (workspace-path "workspace/awesome-hugo-blog"))
+
   ;; 设定`agenda相关目录'
   (with-eval-after-load 'org
     (setq diary-file (dropbox-path "org/diary"))
