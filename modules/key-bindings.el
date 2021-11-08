@@ -1,5 +1,4 @@
 ;; `general.el' provides a more convenient method for binding keys in emacs (for
-"C-p" #'counsel-buffer-or-recentf
 ;; both evil and non-evil users). Like use-package, which provides a convenient,
 ;; unified interface for managing packages, general.el is intended to provide a
 ;; convenient, unified interface for key definitions.
