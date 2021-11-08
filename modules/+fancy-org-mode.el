@@ -106,7 +106,7 @@
                  "🐞 Snippets"
                  entry
                  (file snippets-org-file)
-                 (file "~/EnvSetup/config/org/capture-template/snippet.template")
+                 (file "~/.evil.emacs.d/assets/capture-template/snippet.template")
                  ;; "* %?\t%^g\n #+BEGIN_SRC %^{language}\n\n#+END_SRC"
                  :kill-buffer t))
   (setq billing-org-file (dropbox-path "org/billing.org"))
@@ -115,7 +115,7 @@
                  "💰 Billing"
                  plain
                  (file+function billing-org-file find-month-tree)
-                 (file "~/EnvSetup/config/org/capture-template/billing.template")
+                 (file "~/.evil.emacs.d/assets/capture-template/billing.template")
                  ;; " | %U | %^{类别} | %^{描述} | %^{金额} |"
                  :kill-buffer t))
 
@@ -125,7 +125,7 @@
                  "😂 Contacts"
                  entry
                  (file contacts-org-file)
-                 (file "~/EnvSetup/config/org/capture-template/contact.template")
+                 (file "~/.evil.emacs.d/assets/capture-template/contact.template")
                  ;; "* %^{姓名} %^{手机号}p %^{邮箱}p %^{住址}p %^{微信}p %^{微博}p %^{whatsapp}p\n\n  %?"
                  :empty-lines 1 :kill-buffer t))
 
@@ -204,14 +204,14 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  "👦 Son's Task"                               ; title
                  entry                                             ; type
                  (file+headline daniel-org-file "Task") ; target
-                 (file "~/EnvSetup/config/org/capture-template/todo.template")))
+                 (file "~/.evil.emacs.d/assets/capture-template/todo.template")))
   (setq lulu-org-file (dropbox-path "org/lulu.agenda.org"))
   (add-to-list 'org-capture-templates
                '("tl"
                  "👩 Wife Lulu's Task"
                  entry
                  (file+headline lulu-org-file "Task")
-                 (file "~/EnvSetup/config/org/capture-template/todo.template")))
+                 (file "~/.evil.emacs.d/assets/capture-template/todo.template")))
   (setq my-org-file (dropbox-path "org/xingwenju.agenda.org"))
   (add-to-list 'org-capture-templates
                '("tr"
@@ -226,7 +226,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  "📓 My Work Projects"
                  entry
                  (file projects-org-file)
-                 (file "~/EnvSetup/config/org/capture-template/project.template")
+                 (file "~/.evil.emacs.d/assets/capture-template/project.template")
                  :empty-line 1))
   (setq works-org-file (dropbox-path "org/works.agenda.org"))
   (add-to-list 'org-capture-templates
@@ -234,7 +234,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  "⏰ My Work Task"
                  entry
                  (file+headline works-org-file "Work")
-                 (file "~/EnvSetup/config/org/capture-template/basic.template")
+                 (file "~/.evil.emacs.d/assets/capture-template/basic.template")
                  :immediate-finish t))
 
   ;; `常用快捷抓取模板'
@@ -244,7 +244,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  "📱 My Phone calls"
                  entry
                  (file+headline phone-org-file "Phone Calls")
-                 (file "~/EnvSetup/config/org/capture-template/phone.template")
+                 (file "~/.evil.emacs.d/assets/capture-template/phone.template")
                  :immediate-finish t
                  :new-line 1))
 
@@ -254,7 +254,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  "🎶 My Habit"
                  entry
                  (file habit-org-file)
-                 (file "~/EnvSetup/config/org/capture-template/habit.template")
+                 (file "~/.evil.emacs.d/assets/capture-template/habit.template")
                  ;; "* %^{Habit cards|music|balls|games}\n  %?"
                  :immediate-finish t
                  :new-line 1))
@@ -265,7 +265,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  "❉ My Notes"
                  entry
                  (file notes-org-file)
-                 (file "~/EnvSetup/config/org/capture-template/notes.template")
+                 (file "~/.evil.emacs.d/assets/capture-template/notes.template")
                  ;; "* %^{Loggings For...} %t %^g\n  %?"
                  :immediate-finish t
                  :new-line 1))
@@ -276,7 +276,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  "⏰ My GTD Inbox"
                  entry
                  (file inbox-org-file)
-                 (file "~/EnvSetup/config/org/capture-template/inbox.template")
+                 (file "~/.evil.emacs.d/assets/capture-template/inbox.template")
                  ;; "* [#%^{Priority}] %^{Title} %^g\n SCHEDULED:%U %?\n"
                  :immediate-finish t
                  :new-line 1))

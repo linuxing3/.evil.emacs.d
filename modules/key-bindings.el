@@ -57,6 +57,7 @@
  "M-z"   #'fill-paragraph ;; 折行
  "M-s"   #'save-buffer   ;; 保存
  "M-r"   #'format-all-buffer
+ "M-o"   #'ivy-occur-mode
  "C-S-p"   #'eshell
  ;; increase font size
  "M-="       #'text-scale-increase

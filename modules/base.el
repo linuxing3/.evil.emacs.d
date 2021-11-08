@@ -29,6 +29,7 @@
 
    ;; Show matching parens
    (setq show-paren-delay 0)
+   (setq dired-dwim-target t)
 
    ;; Make modern look
    (show-paren-mode  1)
