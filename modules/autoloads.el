@@ -37,10 +37,10 @@
 ;;;###autoload
 ;; 递归遍历加载路径
 (defun add-subdirs-to-load-path(dir)
-    "Recursive add directories to `load-path`."
-    (let ((default-directory (file-name-as-directory dir)))
-      (add-to-list 'load-path dir)
-      (normal-top-level-add-subdirs-to-load-path)))
+  "Recursive add directories to `load-path`."
+  (let ((default-directory (file-name-as-directory dir)))
+    (add-to-list 'load-path dir)
+    (normal-top-level-add-subdirs-to-load-path)))
 
 ;;;###autoload
 (defun org-global-props (&optional property buffer)
@@ -54,7 +54,9 @@
   "Get global org property KEY of current buffer."
   (org-element-property :value (car (org-global-props key))))
 
+
 ;; 切换代理
+;;;###autoload
 (defun linuxing3-toggle-proxy ()
   (interactive)
   (if (null url-proxy-services)
@@ -66,10 +68,46 @@
     (setq url-proxy-services nil)
     (message "代理已关闭.")))
 
+;; 使用外部应用打开
+;;;###autoload
+(defun open-with-external-app (&optional @fname)
+  "Open the current file or dired marked files in external app.
+When called in Emacs Lisp, if @FNAME is given, open that."
+  (interactive)
+  (let* (
+         ($file-list
+          (if @fname
+              (progn (list @fname))
+            (if (string-equal major-mode "dired-mode")
+                (dired-get-marked-files)
+              (list (buffer-file-name)))))
+         ($do-it-p (if (<= (length $file-list) 5)
+                       t
+                     (y-or-n-p "Open more than 5 files? "))))
+    (when $do-it-p
+      (cond
+       ((string-equal system-type "windows-nt")
+        (mapc
+         (lambda ($fpath)
+           (shell-command
+            (concat "PowerShell -Command \"Invoke-Item -LiteralPath\" " "'"
+                    (shell-quote-argument (expand-file-name $fpath )) "'")))
+         $file-list))
+       ((string-equal system-type "darwin")
+        (mapc
+         (lambda ($fpath)
+           (shell-command
+            (concat "open " (shell-quote-argument $fpath))))
+         $file-list))
+       ((string-equal system-type "gnu/linux")
+        (mapc
+         (lambda ($fpath)
+           (let ((process-connection-type nil))
+             (start-process "" nil "xdg-open" $fpath)))
+         $file-list))))))
 ;; ===============================================
 ;; 核心设置
 ;; ===============================================
-
 
 ;; 常用变量
 (defconst EMACS28+   (> emacs-major-version 27))
@@ -78,29 +116,6 @@
 (defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
 (defconst IS-BSD     (or IS-MAC (eq system-type 'berkeley-unix)))
 
-(defcustom centaur-prettify-symbols-alist
-  '(("lambda" . ?λ)
-    ("<-" . ?←)
-    ("->" . ?→)
-    ("->>" . ?↠)
-    ("=>" . ?⇒)
-    ("map" . ?↦)
-    ("/=" . ?≠)
-    ("!=" . ?≠)
-    ("==" . ?≡)
-    ("<=" . ?≤)
-    (">=" . ?≥)
-    ("=<<" . (?= (Br . Bl) ?≪))
-    (">>=" . (?≫ (Br . Bl) ?=))
-    ("<=<" . ?↢)
-    (">=>" . ?↣)
-    ("&&" . ?∧)
-    ("||" . ?∨)
-    ("not" . ?¬))
-  "Alist of symbol prettifications.
-Nil to use font supports ligatures."
-  :group 'centaur
-  :type '(alist :key-type string :value-type (choice character sexp)))
 
 ;;; 文件目录设置
 (defgroup linuxing3 nil
@@ -145,6 +160,30 @@ in windows could be c:/Users/Administrator"
   "Normally I use EnvSetup directory to hold all my private lisp files"
   :group 'linuxing3
   :type 'string)
+
+(defcustom linuxing3-prettify-symbols-alist
+  '(("lambda" . ?λ)
+    ("<-" . ?←)
+    ("->" . ?→)
+    ("->>" . ?↠)
+    ("=>" . ?⇒)
+    ("map" . ?↦)
+    ("/=" . ?≠)
+    ("!=" . ?≠)
+    ("==" . ?≡)
+    ("<=" . ?≤)
+    (">=" . ?≥)
+    ("=<<" . (?= (Br . Bl) ?≪))
+    (">>=" . (?≫ (Br . Bl) ?=))
+    ("<=<" . ?↢)
+    (">=>" . ?↣)
+    ("&&" . ?∧)
+    ("||" . ?∨)
+    ("not" . ?¬))
+  "Alist of symbol prettifications.
+Nil to use font supports ligatures."
+  :group 'linuxing3
+  :type '(alist :key-type string :value-type (choice character sexp)))
 
 (defun +ensure-user-env ()
   "Check user env settings"

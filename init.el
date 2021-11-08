@@ -1,6 +1,6 @@
 ﻿;;; init.el --- A Fancy and Fast Emacs Configuration.	-*- lexical-binding: t no-byte-compile: t -*-
 
-;; Copyright (C) 2006-2021 Vincent Zhang
+;; Copyright (C) 2006-2021 linuxing3
 
 ;; Author: Xing Wenju <xingwenju@gmail.com>
 ;; URL: https://github.com/linuxing3/evil-emacs-config
@@ -8,38 +8,7 @@
 ;; Keywords: .emacs.d
 
 ;;
-;;                          `..`
-;;                        ````+ `.`
-;;                    /o:``   :+ ``
-;;                .+//dho......y/..`
-;;                `sdddddhysso+h` ``
-;;                  /ddd+`..` +. .`
-;;                 -hos+    `.:```
-;;               `./dddyo+//osso/:`
-;;             `/o++dddddddddddddod-
-;;            `// -y+:sdddddsddsy.dy
-;;                /o   `..```h+`y+/h+`
-;;                .s       `++``o:  ``
-;;                        `:- `:-
-;;
-;;   CENTAUR EMACS - Enjoy Programming & Writing
-
-;; This file is not part of GNU Emacs.
-;;
-;; This program is free software; you can redistribute it and/or
-;; modify it under the terms of the GNU General Public License as
-;; published by the Free Software Foundation; either version 2, or
-;; (at your option) any later version.
-;;
-;; This program is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-;; General Public License for more details.
-;;
-;; You should have received a copy of the GNU General Public License
-;; along with this program; see the file COPYING.  If not, write to
-;; the Free Software Foundation, Inc., 51 Franklin Street, Fifth
-;; Floor, Boston, MA 02110-1301, USA.
+;;   Evil EMACS - Enjoy Programming & Writing
 ;;
 
 ;;; Commentary:
@@ -53,25 +22,25 @@
   (error "This requires Emacs 25.1 and above!"))
 
 ;; Speed up startup
-(setq auto-mode-case-fold nil)
-(setq warning-minimum-level :emergency)
 (global-font-lock-mode t)
 (transient-mark-mode t)
-;; 全屏
-;; (toggle-frame-fullscreen)
-
-(setq gc-cons-threshold most-positive-fixnum
-      gc-cons-percentage 0.5)
+(setq auto-mode-case-fold nil)
+(setq warning-minimum-level :emergency)
+(when (eq system-type 'windows-nt)
+  (setq gc-cons-threshold (* 512 1024 1024))
+  (setq gc-cons-percentage 0.5)
+  (run-with-idle-timer 5 t #'garbage-collect) ;; 显示垃圾回收信息，这个可以作为调试用 ;;
+  (setq garbage-collection-messages t))
 
 ;; ---------------------------------------------------------
 ;; 自动加载帮助器
 ;; ---------------------------------------------------------
-(load-file (expand-file-name "~/EnvSetup/config/evil-emacs/modules/autoloads.el")) 
+(load-file (expand-file-name "~/EnvSetup/config/evil-emacs/modules/autoloads.el"))
 
 ;; ---------------------------------------------------------
 ;; 包管理器
 ;; ---------------------------------------------------------
-(load-file (private-module-path "packages.el")) 
+(load-file (private-module-path "packages.el"))
 
 ;; ---------------------------------------------------------
 ;; 功能模块

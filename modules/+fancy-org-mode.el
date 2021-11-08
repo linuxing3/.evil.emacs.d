@@ -1,19 +1,24 @@
-(defun my/org-html-quote2 (block backend info)
-(when (org-export-derived-backend-p backend 'html)
-(when (string-match "\\`<div class=\"quote2\">" block)
-(setq block (replace-match "<blockquote>" t nil block))
-(string-match "</div>\n\\'" block)
-(setq block (replace-match "</blockquote>\n" t nil block))
-block)))
-(eval-after-load 'ox
-'(add-to-list 'org-export-filter-special-block-functions 'my/org-html-quote2))
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+;; +fancy-org-model.el
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 
+
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+;; 📷 Capture配置
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (use-package org
   :config
+  (defun +modern-org-html-quote2 (block backend info)
+    (when (org-export-derived-backend-p backend 'html)
+      (when (string-match "\\`<div class=\"quote2\">" block)
+        (setq block (replace-match "<blockquote>" t nil block))
+        (string-match "</div>\n\\'" block)
+        (setq block (replace-match "</blockquote>\n" t nil block))
+        block)))
+  (eval-after-load 'ox
+    '(add-to-list 'org-export-filter-special-block-functions '+modern-org-html-quote2))
   (defun get-year-and-month ()
     (list (format-time-string "%Y") (format-time-string "%m")))
-
-
   (defun find-month-tree ()
     (let* ((path (get-year-and-month))
            (level 1)
@@ -35,25 +40,19 @@ block)))
         (setq level (1+ level))
         (setq end (save-excursion (org-end-of-subtree t t))))
       (org-end-of-subtree)))
-
-
   (defun random-alphanum ()
     (let* ((charset "abcdefghijklmnopqrstuvwxyz0123456789")
            (x (random 36)))
       (char-to-string (elt charset x))))
-
   (defun create-password ()
     (let ((value ""))
       (dotimes (number 16 value)
         (setq value (concat value (random-alphanum))))))
-
-
   (defun get-or-create-password ()
     (setq password (read-string "Password: "))
     (if (string= password "")
         (create-password)
       password))
-
   (defun org-capture-template-goto-link ()
     (org-capture-put :target (list 'file+headline
                                    (nth 1 (org-capture-get :target))
@@ -68,7 +67,6 @@ block)))
         (goto-char (point-max))
         (or (bolp) (insert "\n"))
         (insert "* " hd "\n"))))
-
   (defun generate-anki-note-body ()
     (interactive)
     (message "Fetching note types...")
@@ -87,16 +85,16 @@ block)))
               (mapconcat (lambda (str) (concat "** " str))
                          fields
                          "\n\n"))))
-  ;; Capture template
-
+  ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+  ;; Capture template 以下是抓取模板
+  ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
   (setq org-capture-templates nil)
-
-  (add-to-list 'org-capture-templates '("x" "Extra"))
+  (add-to-list 'org-capture-templates '("x" "Extra → → → → → → → → → → →  → → → → "))
 
   (setq anki-org-file (dropbox-path "org/anki.org"))
   (add-to-list 'org-capture-templates
                `("xv"
-                 "Vocabulary"
+                 "🏁 Vocabulary"
                  entry
                  (file+headline anki-org-file "Vocabulary")
                  ,(concat "* %^{heading} :note:\n"
@@ -104,29 +102,29 @@ block)))
   (setq snippets-org-file (dropbox-path "org/snippets.org"))
   (add-to-list 'org-capture-templates
                '("xs"
-                 "Snippets"
+                 "🐞 Snippets"
                  entry
                  (file snippets-org-file)
-                 (file "~/.doom.d/templates/capture-template/snippet.template")
+                 (file "~/EnvSetup/config/org/capture-template/snippet.template")
                  ;; "* %?\t%^g\n #+BEGIN_SRC %^{language}\n\n#+END_SRC"
                  :kill-buffer t))
   (setq billing-org-file (dropbox-path "org/billing.org"))
   (add-to-list 'org-capture-templates
                '("xb"
-                 "Billing"
+                 "💰 Billing"
                  plain
                  (file+function billing-org-file find-month-tree)
-                 (file "~/.doom.d/templates/capture-template/billing.template")
+                 (file "~/EnvSetup/config/org/capture-template/billing.template")
                  ;; " | %U | %^{类别} | %^{描述} | %^{金额} |"
                  :kill-buffer t))
 
   (setq contacts-org-file (dropbox-path "org/contacts.org"))
   (add-to-list 'org-capture-templates
                '("xc"
-                 "Contacts"
+                 "😂 Contacts"
                  entry
                  (file contacts-org-file)
-                 (file "~/.doom.d/templates/capture-template/contact.template")
+                 (file "~/EnvSetup/config/org/capture-template/contact.template")
                  ;; "* %^{姓名} %^{手机号}p %^{邮箱}p %^{住址}p %^{微信}p %^{微博}p %^{whatsapp}p\n\n  %?"
                  :empty-lines 1 :kill-buffer t))
 
@@ -139,30 +137,31 @@ block)))
                  "* %U - %^{title} %^G\n\n  - 用户名: %^{用户名}\n  - 密码: %(get-or-create-password)"
                  :empty-lines 1 :kill-buffer t))
 
-  (setq blog-org-file (dropbox-path "org/blog.org"))
+  (setq blog-org-dir (dropbox-path "org/journal/"))
   (add-to-list 'org-capture-templates
                `("xx"
-                 "Blog"
+                 "🏁 Blog"
                  plain
-                 (file ,(concat blog-org-file (format-time-string "%Y-%m-%d.org")))
-                 ,(concat "#+startup: showall\n"
-                          "#+options: toc:nil\n"
-                          "#+begin_export html\n"
-                          "---\n"
-                          "layout     : post\n"
-                          "title      : %^{标题}\n"
-                          "categories : %^{类别}\n"
-                          "tags       : %^{标签}\n"
-                          "---\n"
-                          "#+end_export\n"
-                          "#+TOC: headlines 2\n")
-                 ))
+                 (file ,(concat blog-org-dir (format-time-string "%Y%m%d.org")))
+                 ,(concat "#+DATE:
+#+AUTHOR: linuxing3
+#+EMAIL: linuxing3@qq.com
+#+OPTIONS: ':t *:t -:t ::t <:t H:3 \\n:nil ^:t arch:headline author:t c:nil
+#+OPTIONS: creator:comment d:(not LOGBOOK) date:t e:t email:nil f:t inline:t
+#+OPTIONS: num:t p:nil pri:nil stat:t tags:t tasks:t tex:t timestamp:t toc:t
+#+OPTIONS: todo:t |:t
+#+CREATOR: Emacs 24.3.50.3 (Org mode 8.0.3)
+#+DESCRIPTION:
+#+EXCLUDE_TAGS: noexport
+#+KEYWORDS:
+#+LANGUAGE: en
+#+SELECT_TAGS: export ")))
 
   ;; Protocol Group
   (setq links-org-file (dropbox-path "org/links.org"))
   (add-to-list 'org-capture-templates
                '("l"
-                 "Temp Links from the interwebs"
+                 "❉ Temp Links from the interwebs"
                  entry
                  (file+headline links-org-file "Bookmarks")
                  "* %t %:description\nlink: %l \n\n%i\n"
@@ -170,33 +169,33 @@ block)))
 
   (add-to-list 'org-capture-templates
                '("a"
-                 "Protocol Annotation"
+                 "❉ Protocol Annotation"
                  plain
                  (file+function links-org-file org-capture-template-goto-link)
                  " %^{Title}\n  %U - %?\n\n  %:initial"
                  :empty-lines 1))
 
   ;; Task Group
-  (add-to-list 'org-capture-templates '("t" "Tasks"))
+  (add-to-list 'org-capture-templates '("t" "Tasks → → → → → → → → → → → → → → →"))
 
   (setq daniel-org-file (dropbox-path "org/daniel.agenda.org"))
   (add-to-list 'org-capture-templates
                '("ts"                                              ; hotkey
-                 "Son Daniel's Task"                               ; title
+                 "👦 Son's Task"                               ; title
                  entry                                             ; type
                  (file+headline daniel-org-file "Task") ; target
-                 (file "~/.doom.d/templates/capture-template/todo.template")))
+                 (file "~/EnvSetup/config/org/capture-template/todo.template")))
   (setq lulu-org-file (dropbox-path "org/lulu.agenda.org"))
   (add-to-list 'org-capture-templates
                '("tl"
-                 "Wife Lulu's Task"
+                 "👩 Wife Lulu's Task"
                  entry
                  (file+headline lulu-org-file "Task")
-                 (file "~/.doom.d/templates/capture-template/todo.template")))
+                 (file "~/EnvSetup/config/org/capture-template/todo.template")))
   (setq my-org-file (dropbox-path "org/xingwenju.agenda.org"))
   (add-to-list 'org-capture-templates
                '("tr"
-                 "My Book Reading Task"
+                 "☠ My Book Reading Task"
                  entry
                  (file+headline my-org-file "Reading")
                  "** TODO %^{书名}\n%u\n%a\n"
@@ -204,39 +203,38 @@ block)))
   (setq projects-org-file (dropbox-path "org/projects.agenda.org"))
   (add-to-list 'org-capture-templates
                '("tp"
-                 "My Work Projects"
+                 "📓 My Work Projects"
                  entry
                  (file projects-org-file)
-                 (file "~/.doom.d/templates/capture-template/project.template")
+                 (file "~/EnvSetup/config/org/capture-template/project.template")
                  :empty-line 1))
   (setq works-org-file (dropbox-path "org/works.agenda.org"))
   (add-to-list 'org-capture-templates
                '("tw"
-                 "My Work Task"
+                 "⏰ My Work Task"
                  entry
                  (file+headline works-org-file "Work")
-                 (file "~/.doom.d/templates/capture-template/basic.template")
+                 (file "~/EnvSetup/config/org/capture-template/basic.template")
                  :immediate-finish t))
 
   ;; Most often used"
   (setq phone-org-file (dropbox-path "org/phone.org"))
   (add-to-list 'org-capture-templates
                '("P"
-                 "My Phone calls"
+                 "📱 My Phone calls"
                  entry
                  (file+headline phone-org-file "Phone Calls")
-                 (file "~/.doom.d/templates/capture-template/phone.template")
-                 ;; "* %^{Habit cards|music|balls|games}\n  %?"
+                 (file "~/EnvSetup/config/org/capture-template/phone.template")
                  :immediate-finish t
                  :new-line 1))
 
-  (setq habit-org-file (dropbox-path "org/habit.org"))
+  (setq habit-org-file (dropbox-path "org/habit.agenda.org"))
   (add-to-list 'org-capture-templates
                '("h"
-                 "My Habit"
+                 "🎶 My Habit"
                  entry
                  (file habit-org-file)
-                 (file "~/.doom.d/templates/capture-template/habit.template")
+                 (file "~/EnvSetup/config/org/capture-template/habit.template")
                  ;; "* %^{Habit cards|music|balls|games}\n  %?"
                  :immediate-finish t
                  :new-line 1))
@@ -244,10 +242,10 @@ block)))
   (setq notes-org-file (dropbox-path "org/notes.org"))
   (add-to-list 'org-capture-templates
                '("n"
-                 "My Notes"
+                 "❉ My Notes"
                  entry
                  (file notes-org-file)
-                 (file "~/.doom.d/templates/capture-template/notes.template")
+                 (file "~/EnvSetup/config/org/capture-template/notes.template")
                  ;; "* %^{Loggings For...} %t %^g\n  %?"
                  :immediate-finish t
                  :new-line 1))
@@ -255,23 +253,29 @@ block)))
   (setq inbox-org-file (dropbox-path "org/inbox.agenda.org"))
   (add-to-list 'org-capture-templates
                '("i"
-                 "My GTD Inbox"
+                 "⏰ My GTD Inbox"
                  entry
                  (file inbox-org-file)
-                 (file "~/.doom.d/templates/capture-template/inbox.template")
+                 (file "~/EnvSetup/config/org/capture-template/inbox.template")
                  ;; "* [#%^{Priority}] %^{Title} %^g\n SCHEDULED:%U %?\n"
                  :immediate-finish t
-                 :new-line 1)))
+                 :new-line 1))
+  ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+  )
 
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+;; 📅 Agenda 配置
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (use-package org-super-agenda
   :commands (org-super-agenda-mode)
   :config)
 
 (with-eval-after-load 'org-agenda
-    (defun evan/agenda-icon-material (name)
-      "返回一个all-the-icons-material图标"
-      (list (all-the-icons-material name)))
-    (setq org-agenda-category-icon-alist
+  (defun evan/agenda-icon-material (name)
+    "返回一个all-the-icons-material图标"
+    (list (all-the-icons-material name)))
+  (org-super-agenda-mode)
+  (setq org-agenda-category-icon-alist
         `(
           ;; 学习相关
           ("待办" ,(evan/agenda-icon-material "check_box") nil nil :ascent center)
@@ -291,175 +295,110 @@ block)))
     "Set different line spacing w.r.t. time duration."
     (save-excursion
       (let* ((background (alist-get 'background-mode (frame-parameters)))
-	     (background-dark-p (string= background "dark"))
-	     (colors (list "#1ABC9C" "#2ECC71" "#3498DB" "#9966ff"))
-	     pos
-	     duration)
-	(nconc colors colors)
-	(goto-char (point-min))
-	(while (setq pos (next-single-property-change (point) 'duration))
-	  (goto-char pos)
-	  (when (and (not (equal pos (point-at-eol)))
-		     (setq duration (org-get-at-bol 'duration)))
-	    (let ((line-height (if (< duration 30) 1.0 (+ 0.5 (/ duration 60))))
-		  (ov (make-overlay (point-at-bol) (1+ (point-at-eol)))))
-	      (overlay-put ov 'face `(:background ,(car colors)
-						  :foreground
-						  ,(if background-dark-p "black" "white")))
-	      (setq colors (cdr colors))
-	      (overlay-put ov 'line-height line-height)
-	      (overlay-put ov 'line-spacing (1- line-height))))))))
+             (background-dark-p (string= background "dark"))
+             (colors (list "#1ABC9C" "#2ECC71" "#3498DB" "#9966ff"))
+             pos
+             duration)
+        (nconc colors colors)
+        (goto-char (point-min))
+        (while (setq pos (next-single-property-change (point) 'duration))
+          (goto-char pos)
+          (when (and (not (equal pos (point-at-eol)))
+                     (setq duration (org-get-at-bol 'duration)))
+            (let ((line-height (if (< duration 30) 1.0 (+ 0.5 (/ duration 60))))
+                  (ov (make-overlay (point-at-bol) (1+ (point-at-eol)))))
+              (overlay-put ov 'face `(:background ,(car colors)
+                                                  :foreground
+                                                  ,(if background-dark-p "black" "white")))
+              (setq colors (cdr colors))
+              (overlay-put ov 'line-height line-height)
+              (overlay-put ov 'line-spacing (1- line-height))))))))
 
   (add-hook 'org-agenda-finalize-hook #'ljg/org-agenda-time-grid-spacing)
 
   (setq org-agenda-custom-commands
         '(
+          ;; My grouped tasks
+          ("x"
+           "📅 My Super view"
+           (
+            (todo "" ((org-agenda-overriding-header "********** 📅 *********** 📅 ************** 📅 *********** 📅 **************")
+                      (org-super-agenda-groups '((:discard (:anything))))))
+            (agenda "" (
+                        (org-agenda-overriding-header "📅 我的日程 ")
+                        (org-super-agenda-groups
+                         '(
+                           (:name none :time-grid t)
+                           (:discard (:anything t))
+                           ))))
+            (todo "" ((org-agenda-overriding-header "Tips: [x]退出 [o]最大化 [d]日 [w]周 [m/u]标记/取消 [*/U]全标/取反 [r]重复")
+                      (org-super-agenda-groups '((:discard (:anything))))))
+            (todo "" ((org-agenda-overriding-header "Tips: [B]批处理 → [$]存档 [t]状态 [+/-]标签 [s]开始 [d]截止 [r]转存")
+                      (org-super-agenda-groups '((:discard (:anything))))))
+            (todo "" ((org-agenda-overriding-header "Tips: [t]状态 [,/+/-]优先级 [:]标签 [I/O]时钟 [e]耗时")
+                      (org-super-agenda-groups '((:discard (:anything))))))
+            (todo "" (
+                      (org-agenda-overriding-header "🐧 待办清单 ")
+                      (org-super-agenda-groups
+                       '(
+                         (:name "⚡ 重要任务 Important" :priority "A")
+                         (:name "🚀 其他任务 Others"
+                                :priority<= "B"
+                                :scheduled today
+                                :order 1)
+                         (:discard (:anything t))
+                         ))))
+            ))
           ;; My GTD tasks
           ("u"
-           "My GTD view"
+           "📆 My GTD view"
            (
             (todo "" (
-                      (org-agenda-overriding-header "Get Things Done")
+                      (org-agenda-overriding-header "❉ Get Things Done ❉")
                       (org-super-agenda-groups
                        '(
                          (:name "马上去做 Quick Picks"
                                 :effort< "0:30")
-                         (:name "重要任务 Important"
+                         (:name none)
+                         (:name "★ 重要任务 Important"
                                 :priority "A")
-                         (:priority<= "B"
-                                      :scheduled today
-                                      :order 1)
+                         (:name none)
+                         (:name "↑ ↓ 其他任务 Others"
+                                :priority<= "B"
+                                :scheduled today
+                                :order 1)
                          (:discard (:anything t))))))
             (todo "" (
-                      (org-agenda-overriding-header "All Projects")
+                      (org-agenda-overriding-header "★ All Projects")
                       (org-super-agenda-groups
                        '(
                          (:name none  ; Disable super group header
                                 :children todo)
                          (:discard (:anything t))))))))
-          ;; My grouped tasks
-          ("x"
-           "My Super view"
-           (
-            (agenda "" (
-                        (org-agenda-overriding-header "Today Calendar")
-                        (org-super-agenda-groups
-                         '(
-                           (:name "Today"
-                                  :time-grid t)))))))
           ;; Daniel's tasks
           ("d"
-           "Daniel's Task view"
+           "👦 儿子的行事历"
            (
             (todo "" (
-                      (org-agenda-overriding-header "Daniel's Tasks")
+                      (org-agenda-overriding-header "👦 儿子的行事历")
                       (org-super-agenda-groups
                        '(
-                         (:name "daniel" :tag ("DANIEL" "daniel" "kids" "KIDS"))
+                         (:name "daniel" :tag ("@daniel" "@kid"))
                          (:discard (:anything t))))))))
           ;; End
           ("e"
-           "Computer Related"
+           "💻 电脑"
            (
-            (tags-todo "" (
-			   (org-agenda-overriding-header "Computer Related")
-			   (org-super-agenda-groups
-			    `(
-                              (:name "General Comupter Related"
-                                     :tag "COMPUTER"
-                                     )
-                              (:name "Emacs Related"
-                                     :tag "COMPUTER"
-                                     :regexp ("org" "emacs" ,(rx bow "emacs" eow))
-                                     )
-                              )))))))))
+            (todo "" (
+                      (org-agenda-overriding-header "💻 电脑")
+                      (org-super-agenda-groups
+                       `(
+                         (:name "电脑相关" :tag ("COMPUTER" "@computer"))
+                         (:discard (:anything t)))))))))))
 
-(use-package org-brain
-  :ensure t
-  :init
-  (setq org-brain-visualize-default-choices 'all
-        org-brain-title-max-length 24
-        org-brain-include-file-entries nil
-        org-brain-file-entries-use-title nil)
-
-  :config
-  (cl-pushnew '("b" "Brain" plain (function org-brain-goto-end)
-                "* %i%?" :empty-lines 1)
-              org-capture-templates
-              :key #'car :test #'equal))
-
-(use-package org-bullets
-  :ensure t
-  :init (add-hook 'org-mode-hook 'org-bullets-mode)
-  :custom
-  (org-bullets-bullet-list '("☰" "☷"  "☯"  "✿" ">"))
-)
-
-(use-package org-fancy-priorities
-  :ensure t
-  :hook
-  (org-mode . org-fancy-priorities-mode)
-  :config
-  (setq org-fancy-priorities-list '("⚡" "⬆" "⬇" "☕")))
-
-(use-package org
-  :config
-
-  (set-face-attribute 'org-link nil
-		  :weight 'normal
-		  :background nil)
-  (set-face-attribute 'org-code nil
-		  :foreground "#a9a1e1"
-		  :background nil)
-  (set-face-attribute 'org-date nil
-		  :foreground "#5B6268"
-		  :background nil)
-  (set-face-attribute 'org-level-1 nil
-		  :foreground "steelblue2"
-		  :background nil
-		  :height 1.1
-		  :weight 'normal)
-  (set-face-attribute 'org-level-2 nil
-		  :foreground "slategray2"
-		  :background nil
-		  :height 1.0
-		  :weight 'normal)
-  (set-face-attribute 'org-level-3 nil
-		  :foreground "SkyBlue2"
-		  :background nil
-		  :height 1.0
-		  :weight 'normal)
-  (set-face-attribute 'org-level-4 nil
-		  :foreground "DodgerBlue2"
-		  :background nil
-		  :height 1.0
-		  :weight 'normal)
-  (set-face-attribute 'org-level-5 nil
-		  :weight 'normal)
-  (set-face-attribute 'org-level-6 nil
-		  :weight 'normal)
-  (set-face-attribute 'org-document-title nil
-		  :foreground "SlateGray1"
-		  :background nil
-		  :height 1.25
-		  :weight 'bold)
-
-  (setq org-list-demote-modify-bullet (quote (("+" . "-")
-					  ("*" . "-")
-					  ("1." . "-")
-					  ("1)" . "-")
-					  ("A)" . "-")
-					  ("B)" . "-")
-					  ("a)" . "-")
-					  ("b)" . "-")
-					  ("A." . "-")
-					  ("B." . "-")
-					  ("a." . "-")
-					  ("b." . "-"))))
-)
-
-;; (use-package org-noter :ensure t)
-;; (use-package org-appear :ensure t)
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+;; ☀ 美化配置
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (use-package org-superstar
   :ensure t
   :after org
@@ -467,78 +406,121 @@ block)))
   :config
   (set-face-attribute 'org-superstar-header-bullet nil :inherit 'fixed-pitched :height 180)
   :custom
-  (org-superstar-headline-bullets-list '("☰" "☷" "☯" "✿" ">"))
+  (org-superstar-headline-bullets-list '("☀" "☪" "☯" "✿" "→"))
   (setq org-ellipsis " ▼ "))
 
-(use-package org-download :ensure t)
-
-(use-package org-journal
+(use-package org-bullets
   :ensure t
-  :defer t
-  :init
-  (add-to-list 'magic-mode-alist '(+org-journal-p . org-journal-mode))
+  :init (add-hook 'org-mode-hook 'org-bullets-mode)
+  :custom
+  (org-bullets-bullet-list '("☀" "☪"  "☯"  "✿" "→"))
+  )
 
-  (defun +org-journal-p ()
-    "Wrapper around `org-journal-is-journal' to lazy load `org-journal'."
-    (when-let (buffer-file-name (buffer-file-name (buffer-base-buffer)))
-      (if (or (featurep 'org-journal)
-              (and (file-in-directory-p
-                    buffer-file-name (expand-file-name org-journal-dir org-directory))
-                   (require 'org-journal nil t)))
-          (org-journal-is-journal))))
-
-  (setq org-journal-dir (dropbox-path "org/journal/")
-        org-journal-cache-file (dropbox-path "org/journal/"))
-
-  :config
-  ;; Remove the orginal journal file detector and rely on `+org-journal-p'
-  ;; instead, to avoid loading org-journal until the last possible moment.
-  (setq magic-mode-alist (assq-delete-all 'org-journal-is-journal magic-mode-alist))
-
-  ;; Setup carryover to include all configured TODO states. We cannot carry over
-  ;; [ ] keywords because `org-journal-carryover-items's syntax cannot correctly
-  ;; interpret it as anything other than a date.
-  (setq org-journal-carryover-items  "TODO=\"TODO\"|TODO=\"PROJ\"|TODO=\"STRT\"|TODO=\"WAIT\"|TODO=\"HOLD\""))
-
-(use-package org-pomodoro
+(use-package org-fancy-priorities
   :ensure t
+  :hook
+  (org-mode . org-fancy-priorities-mode)
   :config
-  (with-eval-after-load 'org-pomodoro
-    ;; prefer PulseAudio to ALSA in $current_year
-    (setq org-pomodoro-audio-player (or (executable-find "paplay")
-					org-pomodoro-audio-player))
-
-    ;; configure pomodoro alerts to use growl or libnotify
-    (alert-add-rule :category "org-pomodoro"
-		    :style (cond (alert-growl-command
-				  'growl)
-				 (alert-notifier-command
-				  'notifier)
-				 (alert-libnotify-command
-				  'libnotify)
-				 (alert-default-style)))))
-
-(use-package elfeed-org
-   :config
-      (setq rmh-elfeed-org-files (list
-			      (concat org-directory "/elfeed1.org")
-			      (concat org-directory "/elfeed2.org")))
-  (setq elfeed-db-directory (concat org-directory "/elfeed/db/"))
-  (setq elfeed-enclosure-default-dir (concat org-directory "/elfeed/enclosures/"))
-  (setq elfeed-search-filter "@3-month-ago +unread")
-)
-
-(use-package ox-reveal
-  :init
-  (setq org-reveal-root (dropbox-path "shared/ppt/reveal.js"))
-  (setq org-reveal-postamble "Xing Wenju"))
+  (setq org-fancy-priorities-list '("⚡" "↑" "↓")))
 
 (use-package org
-	:config
-	(setq org-reverse-note-order t)
-	(setq org-refile-use-outline-path nil)
-	(setq org-refile-allow-creating-parent-nodes 'confirm)
-	(setq org-refile-use-cache nil)
-	(setq org-refile-targets '((org-agenda-files . (:maxlevel . 3))))
-	(setq org-blank-before-new-entry nil)
-)
+  :config
+  ;; 标签组
+  (setq org-tag-alist (quote ((:startgroup)
+                              ("@office" . ?o)
+                              ("@home" . ?h)
+                              ("@travel" . ?t)
+                              ("@errand" . ?e)
+                              ("PERSONAL" . ?p)
+                              ("ME" . ?m)
+                              ("KID" . ?k)
+                              ("DANIEL" . ?d)
+                              ("LULU" . ?l)
+                              ("WORK" . ?w)
+                              ("PROJECT" . ?p)
+                              ("COMPUTER" . ?c)
+                              ("PHONE" . ?P)
+                              ("HABIT" . ?H)
+                              (:endgroup)
+                              ("party" . ?1)
+                              ("internal" . ?2)
+                              ("hr" . ?3)
+                              ("finance" . ?4)
+                              ("security" . ?5)
+                              ("foreign" . ?6)
+                              ("study" . ?7)
+                              ("public" . ?8)
+                              ("protocol" . ?9)
+                              )))
+  (setq org-tag-faces
+        '(
+          ("@home" . (:foreground "MediumBlue" :weight bold))
+          ("@office" . (:foreground "Red" :weight bold))
+          ("@travel" . (:foreground "ForestGreen" :weight bold))
+          ("@erranda" . (:foreground "OrangeRed" :weight bold))
+          ("DANIEL" . (:foreground "MediumBlue" :weight bold))
+          ("LULU" . (:foreground "DeepPink" :weight bold))
+          ("WORK" . (:foreground "OrangeRed" :weight bold))
+          ("PROJECT" . (:foreground "OrangeRed" :weight bold))
+          ("HABIT" . (:foreground "DarkGreen" :weight bold))
+          ("COMPUTER" . (:foreground "ForestGreen" :weight bold))
+          ("internal" . (:foreground "ForestGreen" :weight bold))
+          ("party" . (:foreground "ForestGreen" :weight bold))
+          ("hr" . (:foreground "ForestGreen" :weight bold))
+          ("finance" . (:foreground "LimeGreen" :weight bold))
+          ("study" . (:foreground "LimeGreen" :weight bold))
+          ("public" . (:foreground "LimeGreen" :weight bold))
+          ("protocol" . (:foreground "LimeGreen" :weight bold))))
+
+  (set-face-attribute 'org-link nil
+		              :weight 'normal
+		              :background nil)
+  (set-face-attribute 'org-code nil
+		              :foreground "#a9a1e1"
+		              :background nil)
+  (set-face-attribute 'org-date nil
+		              :foreground "#5B6268"
+		              :background nil)
+  (set-face-attribute 'org-level-1 nil
+		              :foreground "steelblue2"
+		              :background nil
+		              :height 1.1
+		              :weight 'normal)
+  (set-face-attribute 'org-level-2 nil
+		              :foreground "slategray2"
+		              :background nil
+		              :height 1.0
+		              :weight 'normal)
+  (set-face-attribute 'org-level-3 nil
+		              :foreground "SkyBlue2"
+		              :background nil
+		              :height 1.0
+		              :weight 'normal)
+  (set-face-attribute 'org-level-4 nil
+		              :foreground "DodgerBlue2"
+		              :background nil
+		              :height 1.0
+		              :weight 'normal)
+  (set-face-attribute 'org-level-5 nil
+		              :weight 'normal)
+  (set-face-attribute 'org-level-6 nil
+		              :weight 'normal)
+  (set-face-attribute 'org-document-title nil
+		              :foreground "SlateGray1"
+		              :background nil
+		              :height 1.25
+		              :weight 'bold)
+
+  (setq org-list-demote-modify-bullet (quote (("+" . "-")
+					                          ("*" . "-")
+					                          ("1." . "-")
+					                          ("1)" . "-")
+					                          ("A)" . "-")
+					                          ("B)" . "-")
+					                          ("a)" . "-")
+					                          ("b)" . "-")
+					                          ("A." . "-")
+					                          ("B." . "-")
+					                          ("a." . "-")
+					                          ("b." . "-"))))
+  )

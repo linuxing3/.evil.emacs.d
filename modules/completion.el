@@ -1,4 +1,7 @@
+;; ---------------------------------------------------------
+;; 自动补全 
 ;; Company mode
+;; ---------------------------------------------------------
 (use-package company
   :ensure t
   :init
@@ -19,3 +22,5 @@
   (defun company-complete-common-wrapper ()
     (let ((completion-at-point-functions completion-at-point-functions-saved))
       (company-complete-common))))
+
+(use-package flycheck :ensure t)
