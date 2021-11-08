@@ -91,6 +91,7 @@
   (setq org-capture-templates nil)
   (add-to-list 'org-capture-templates '("x" "Extra → → → → → → → → → → →  → → → → "))
 
+  ;; `生活学习相关模板'
   (setq anki-org-file (dropbox-path "org/anki.org"))
   (add-to-list 'org-capture-templates
                `("xv"
@@ -137,13 +138,29 @@
                  "* %U - %^{title} %^G\n\n  - 用户名: %^{用户名}\n  - 密码: %(get-or-create-password)"
                  :empty-lines 1 :kill-buffer t))
 
+  ;; `发布博客和日志相关'
   (setq blog-org-dir (dropbox-path "org/journal/"))
+  (add-to-list 'org-capture-templates
+               `("xh"
+                 "🏁 Hugo"
+                 plain
+                 (file ,(concat blog-org-dir (format-time-string "%Y%m%d.md"))) ;; Markdown file
+                 ,(concat "---
+title: %^{Title}
+date: %U
+author: %^{Author}
+tags: %^{Tags | emacs | code | vim | study | life | misc }
+---
+
+** %?")))
+
   (add-to-list 'org-capture-templates
                `("xx"
                  "🏁 Blog"
                  plain
-                 (file ,(concat blog-org-dir (format-time-string "%Y%m%d.org")))
-                 ,(concat "#+DATE:
+                 (file ,(concat blog-org-dir (format-time-string "%Y%m%d.org"))) ;; Org file
+                 ,(concat "#+DATE: %U
+#+TITLE: %^{Title}
 #+AUTHOR: linuxing3
 #+EMAIL: linuxing3@qq.com
 #+OPTIONS: ':t *:t -:t ::t <:t H:3 \\n:nil ^:t arch:headline author:t c:nil
@@ -175,7 +192,7 @@
                  " %^{Title}\n  %U - %?\n\n  %:initial"
                  :empty-lines 1))
 
-  ;; Task Group
+  ;; `工作+个人+家人+行事历相关'
   (add-to-list 'org-capture-templates '("t" "Tasks → → → → → → → → → → → → → → →"))
 
   (setq daniel-org-file (dropbox-path "org/daniel.agenda.org"))
@@ -217,7 +234,7 @@
                  (file "~/EnvSetup/config/org/capture-template/basic.template")
                  :immediate-finish t))
 
-  ;; Most often used"
+  ;; `常用快捷抓取模板'
   (setq phone-org-file (dropbox-path "org/phone.org"))
   (add-to-list 'org-capture-templates
                '("P"
@@ -239,7 +256,7 @@
                  :immediate-finish t
                  :new-line 1))
 
-  (setq notes-org-file (dropbox-path "org/notes.org"))
+  (setq notes-org-file (dropbox-path "org/notes.agenda.org"))
   (add-to-list 'org-capture-templates
                '("n"
                  "❉ My Notes"
