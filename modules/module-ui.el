@@ -186,13 +186,13 @@
     (custom-theme-set-faces
      'zerodark
      `(org-document-title
-       ((,class (:foreground ,orange :height 1.3))))
+       ((,class (:height 1.3))))
      `(outline-1
-       ((,class (:foreground ,peach :weight bold :height 1.2))))
+       ((,class (:weight bold :height 1.2))))
      `(outline-2
-       ((,class (:foreground ,purple :weight bold :height 1.1))))
+       ((,class (:weight bold :height 1.1))))
      `(outline-3
-       ((,class (:foreground ,blue :weight bold))))
+       ((,class (:weight bold))))
      `(selectrum-current-candidate
        ((,class (:background "#48384c"
                              :weight bold
@@ -202,7 +202,8 @@
      `(selectrum-prescient-secondary-highlight
        ((,class (:foreground "#98be65"))))))
   (enable-theme 'zerodark)
-  (zerodark-setup-modeline-format))
+  ;; (zerodark-setup-modeline-format)
+  )
 
 ;; All The Icons
 (use-package all-the-icons :ensure t)
