@@ -1,12 +1,89 @@
+;;; module-ui.el -*- lexical-binding: t; -*-
+
+;;; Code:
 ;;;===========================================
 ;;;					模块介绍
 ;;; 用户交互界面模块
 ;;;===========================================
 ;; ---------------------------------------------------------
+;;
+;;; General UX
+
+;; Don't prompt for confirmation when we create a new file or buffer (assume the
+;; user knows what they're doing).
+(setq confirm-nonexistent-file-or-buffer nil)
+
+(setq uniquify-buffer-name-style 'forward
+      ;; no beeping or blinking please
+      ring-bell-function #'ignore
+      visible-bell nil)
+
+;; middle-click paste at point, not at click
+(setq mouse-yank-at-point t)
+
+;; Enable mouse in terminal Emacs
+(add-hook 'tty-setup-hook #'xterm-mouse-mode)
+
+;; Global highlight current line
 (global-hl-line-mode 1)
 
-;;; Code:
 
+;;; Fringes
+;; Reduce the clutter in the fringes; we'd like to reserve that space for more
+;; useful information, like git-gutter and flycheck.
+(setq indicate-buffer-boundaries nil
+      indicate-empty-lines nil)
+
+;; remove continuation arrow on right fringe
+(delq! 'continuation fringe-indicator-alist 'assq)
+
+
+;;; Windows
+;; The native border "consumes" a pixel of the fringe on righter-most splits,
+;; `window-divider' does not. Available since Emacs 25.1.
+(setq window-divider-default-places t
+      window-divider-default-bottom-width 1
+      window-divider-default-right-width 1)
+(add-hook 'prog-mode-hook #'window-divider-mode)
+
+;; always avoid GUI
+(setq use-dialog-box nil)
+;; Don't display floating tooltips; display their contents in the echo-area,
+;; because native tooltips are ugly.
+(when (bound-and-true-p tooltip-mode)
+  (tooltip-mode -1))
+;; ...especially on linux
+(when IS-LINUX
+  (setq x-gtk-use-system-tooltips nil))
+
+ ;; Favor vertical splits over horizontal ones. Screens are usually wide.
+(setq split-width-threshold 160
+      split-height-threshold nil)
+
+;;
+;;; Line numbers
+
+;; Explicitly define a width to reduce computation
+(setq-default display-line-numbers-width 3)
+
+;; Show absolute line numbers for narrowed regions makes it easier to tell the
+;; buffer is narrowed, and where you are, exactly.
+(setq-default display-line-numbers-widen t)
+
+;;
+;;; Unicode
+
+(defvar xing-unicode-font
+  (if IS-MAC
+      (font-spec :family "Apple Color Emoji")
+    (font-spec :family "Symbola"))
+  "Fallback font for unicode glyphs.")
+
+;;
+;;; Theme & font
+
+;; Underline looks a bit better when drawn lower
+(setq x-underline-at-descent-line t)
 (defun +modern-ui-emojify-h ()
   "Set Font for Emoji and symbol"
   (set-fontset-font
@@ -120,7 +197,9 @@
     (set-char-table-parent table char-width-table)       ;; make it inherit from the current char-width-table
     (set-char-table-range table page-break-lines-char 1) ;; let the width of page-break-lines-char be 1
     (setq char-width-table table)))
-;; Powerline
+
+;;
+;;; Powerline
 (use-package spaceline
   :ensure t
   :init

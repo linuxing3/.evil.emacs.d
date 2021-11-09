@@ -21,8 +21,6 @@
 
 (use-package evil-snipe
   :commands evil-snipe-local-mode evil-snipe-override-local-mode
-  :hook (doom-first-input . evil-snipe-override-mode)
-  :hook (doom-first-input . evil-snipe-mode)
   :init
   (setq evil-snipe-smart-case t
         evil-snipe-scope 'line

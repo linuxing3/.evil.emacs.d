@@ -38,7 +38,7 @@
    (setq tool-bar-mode nil)
    (setq menu-bar-mode nil)
    (setq global-display-line-numbers-mode t)
-   (setq scroll-bar-mode nil)
+   (scroll-bar-mode -1)
    (setq show-paren-mode t)))
 
 (defun +moder-ui-scrolling-h ()
