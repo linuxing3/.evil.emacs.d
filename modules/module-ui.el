@@ -172,9 +172,29 @@
 (use-package doom-themes
   :ensure t
   :config
-  (load-theme 'doom-dracula t))
+  ;; (load-theme 'doom-dracula t)
+  )
 
-(use-package spacemacs-theme)
+(use-package spacemacs-theme
+  :config
+  ;;(load-theme 'spacemacs-light)
+  )
+
+(use-package zerodark-theme
+  :config
+  (let ((class '((class color) (min-colors 89))))
+    (custom-theme-set-faces
+     'zerodark
+     `(selectrum-current-candidate
+       ((,class (:background "#48384c"
+                             :weight bold
+                             :foreground "#c678dd"))))
+     `(selectrum-prescient-primary-highlight
+       ((,class (:foreground "#da8548"))))
+     `(selectrum-prescient-secondary-highlight
+       ((,class (:foreground "#98be65"))))))
+  (enable-theme 'zerodark)
+  (zerodark-setup-modeline-format))
 
 ;; All The Icons
 (use-package all-the-icons :ensure t)

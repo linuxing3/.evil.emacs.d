@@ -86,7 +86,6 @@
  :states '(normal visual insert emacs)
  "C-o" #'open-with-external-app
  "C-s" #'save-buffer
- "C-w" #'kill-this-buffer
  "C-p" #'counsel-buffer-or-recentf
  "C-f" #'counsel-buffer-or-recentf
  "C-z" #'evil-undo
@@ -109,7 +108,7 @@
   "I" '(imenu-anywhare :which-key "imenu across buffers")
   "t"   '(load-theme :which-key "load theme")
   "s"   '(save-buffer :which-key "save buffer")
-  "q"  '(kill-emacs :which-key "kill emacs"))
+  "qq"  '(kill-emacs :which-key "kill emacs"))
 
 ;; 嵌套菜单宏:
 (defmacro +general-global-menu! (name infix-key &rest body)
@@ -136,7 +135,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "b" '(switch-to-buffer :which-key "切换缓冲区")
   "B" '(switch-to-buffer :which-key "切换缓冲区")
   "k" '(kill-this-buffer :which-key "杀死缓冲区")
-  "k" '(kill-current-buffer :which-key "杀死缓冲区")
+  "K" '(kill-current-buffer :which-key "杀死缓冲区")
   "s" '(save-buffer :which-key "保存缓冲区")
   "r"  '(rename-buffer :which-key "重命名缓冲")
   "M" '((lambda () (interactive) (switch-to-buffer "*Messages*"))

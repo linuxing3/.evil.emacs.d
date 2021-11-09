@@ -346,15 +346,37 @@ Built with %c.
 
   )
 
+
+(use-package emacsql-sqlite3)
 ;;
 ;;; `windows'下只能使用`v1'版本
 (use-package org-roam
-  :ensure t
-  :load-path "org-roam/org-roam-v1"
+  :ensure nil
+  :load-path "~/workspace/org-roam"
   :hook
   (after-init . org-roam-mode)
   :custom
   (org-roam-directory (dropbox-path "org/roam"))
+  :init
+  (setq org-roam-filename-noconfirm nil)
+  (setq org-roam-graphviz-executable "b:/app/graphviz/bin/dot.exe")
+  (setq org-roam-graph-viewer "C:/Program Files/Microsoft/Edge Beta/Application/msedge.exe")
+  (setq org-roam-templates
+        (list (list "default" (list :file #'org-roam--file-name-timestamp-title
+                                    :content "#+SETUPFILE:./hugo_setup.org
+#+HUGO_SECTION: zettels
+#+HUGO_SLUG: ${slug}
+#+TITLE: ${title}"))
+              (list "private" (list :file #'linuxing3/org-roam-title-private
+                                    :content "#+DATE: %U
+#+AUTHOR: %^{author: linuxing3}
+#+EXCERPT: %^{excerpt: emacs }
+#+TITLE: %^{title}"))))
+  ;; functions
+  (defun linuxing3/org-roam-title-private (title)
+    (let ((timestamp (format-time-string "%Y-%m-%d" (current-time)))
+          (slug (org-roam--title-to-slug title)))
+      (format "%s-%s" timestamp slug)))
   :bind (:map org-roam-mode-map
          (("C-c n l" . org-roam)
           ("C-c n f" . org-roam-find-file)

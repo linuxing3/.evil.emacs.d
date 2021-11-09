@@ -1,4 +1,4 @@
-* %^{Title}
-#+BEGIN_SRC %^{language}
-%i
-#+END_SRC
+** %^{Title}
+   #+BEGIN_SRC %^{language}
+   %i
+   #+END_SRC
