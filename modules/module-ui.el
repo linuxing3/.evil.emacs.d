@@ -1,4 +1,4 @@
- ;;;===========================================
+;;;===========================================
 ;;;					模块介绍
 ;;; 用户交互界面模块
 ;;;===========================================
@@ -78,8 +78,7 @@
   :config
   (load-theme 'doom-dracula t))
 
-(use-package spacemacs-theme
-  :ensure t)
+(use-package spacemacs-theme)
 
 ;; All The Icons
 (use-package all-the-icons :ensure t)

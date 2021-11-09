@@ -3,6 +3,7 @@
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; for Hugo
 
+(use-package simple-httpd)
 (use-package ox-hugo)
 
 (defvar blog-hugo-process "Hugo Server"
@@ -344,4 +345,5 @@ Built with %c.
 
   )
 
-(use-package simple-httpd)
+
+(provide 'org+fancy-app)

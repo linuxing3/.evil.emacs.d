@@ -33,6 +33,18 @@
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (defun +modern-babel-config-h()
   (interactive)
+  (setq org-src-preserve-indentation t  ; use native major-mode indentation
+        org-src-tab-acts-natively t     ; we do this ourselves
+        ;; You don't need my permission (just be careful, mkay?)
+        org-confirm-babel-evaluate nil
+        org-link-elisp-confirm-function nil
+        ;; Show src buffer in popup, and don't monopolize the frame
+        org-src-window-setup 'other-window
+        ;; Our :lang common-lisp module uses sly, so...
+        org-babel-lisp-eval-fn #'sly-eval)
+
+  ;; I prefer C-c C-c over C-c ' (more consistent)
+  (define-key org-src-mode-map (kbd "C-c C-c") #'org-edit-src-exit)
   (with-eval-after-load 'org
     (org-babel-do-load-languages
      (quote org-babel-load-languages)
@@ -47,7 +59,7 @@
 	         (org . t)
 	         (latex . t))))))
 
-(defun +org-init-appearance-h ()
+(defun +modern-appearance-config-h ()
   "Configures the UI for `org-mode'."
   (setq
    org-modules (quote (org-habit org-protocol org-man org-toc org-bookmark)))
@@ -103,32 +115,17 @@
         org-refile-use-outline-path 'file
         org-outline-path-complete-in-steps nil))
 
-(defun +org-init-babel-h ()
-  (setq org-src-preserve-indentation t  ; use native major-mode indentation
-        org-src-tab-acts-natively t     ; we do this ourselves
-        ;; You don't need my permission (just be careful, mkay?)
-        org-confirm-babel-evaluate nil
-        org-link-elisp-confirm-function nil
-        ;; Show src buffer in popup, and don't monopolize the frame
-        org-src-window-setup 'other-window
-        ;; Our :lang common-lisp module uses sly, so...
-        org-babel-lisp-eval-fn #'sly-eval)
-
-  ;; I prefer C-c C-c over C-c ' (more consistent)
-  (define-key org-src-mode-map (kbd "C-c C-c") #'org-edit-src-exit))
-
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; `启动配置'
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
-(add-hook 'org-load-hook #'+org-init-appearance-h)
-(add-hook 'org-load-hook #'+org-init-babel-h)
+(add-hook 'org-load-hook #'+modern-appearance-config-h)
 (add-hook 'org-load-hook #'+modern-org-config-h)
 (add-hook 'org-load-hook #'+modern-babel-config-h)
 
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; `加载现代美化配置'
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
-(load-file (private-module-path "org+fancy-function.el"))
-(load-file (private-module-path "org+fancy-app.el"))
+(require 'org+fancy-function)
+(require 'org+fancy-app)
 
 (provide 'module-org)

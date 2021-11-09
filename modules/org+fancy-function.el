@@ -544,3 +544,5 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
 					                          ("a." . "-")
 					                          ("b." . "-"))))
   )
+
+(provide 'org+fancy-function)

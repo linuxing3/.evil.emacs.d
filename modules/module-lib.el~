@@ -1,3 +1,9 @@
+;;; module-lib.el -*- lexical-binding: t; -*-
+
+
+(require 'cl-lib)
+(require 'subr-x)
+
 ;; ===============================================
 ;; Autoloads
 ;; ===============================================
@@ -34,13 +40,50 @@
        (cd ,orig-dir))))
 ;; (macroexpand '(with-dir "~/.emacs.d"))
 
+(defmacro pushnew! (place &rest values)
+  "Push VALUES sequentially into PLACE, if they aren't already present.
+This is a variadic `cl-pushnew'."
+  (let ((var (make-symbol "result")))
+    `(dolist (,var (list ,@values) (with-no-warnings ,place))
+       (cl-pushnew ,var ,place :test #'equal))))
+
+(defmacro prependq! (sym &rest lists)
+  "Prepend LISTS to SYM in place."
+  `(setq ,sym (append ,@lists ,sym)))
+
+(defmacro appendq! (sym &rest lists)
+  "Append LISTS to SYM in place."
+  `(setq ,sym (append ,sym ,@lists)))
+
+(defmacro delq! (elt list &optional fetcher)
+  "`delq' ELT from LIST in-place."
+
+;;;###autoload
+(defun dir! ()
+  "Returns the directory of the emacs lisp file this macro is called from."
+  (when-let (path (file!))
+    (directory-file-name (file-name-directory path))))
+
+;;;###autoload
+(defun file! ()
+  "Return the emacs lisp file this macro is called from."
+  (cond ((bound-and-true-p byte-compile-current-file))
+        (load-file-name)
+        ((stringp (car-safe current-load-list))
+         (car current-load-list))
+        (buffer-file-name)
+        ((error "Cannot get this file-path"))))
+
 ;;;###autoload
 ;; 递归遍历加载路径
-(defun add-subdirs-to-load-path(dir)
-  "Recursive add directories to `load-path`."
-  (let ((default-directory (file-name-as-directory dir)))
-    (add-to-list 'load-path dir)
-    (normal-top-level-add-subdirs-to-load-path)))
+(defmacro add-load-path! (&rest dirs)
+  "Add DIRS to `load-path', relative to the current file.
+The current file is the file from which `add-to-load-path!' is used."
+  `(let ((default-directory ,(dir!))
+         file-name-handler-alist)
+     (dolist (dir (list ,@dirs))
+       (cl-pushnew (expand-file-name dir) load-path))))
+
 
 ;;;###autoload
 (defun org-global-props (&optional property buffer)
@@ -208,4 +251,10 @@ Nil to use font supports ligatures."
        (setq home-directory "~/")
      (setq home-directory (expand-file-name (getenv "HOME"))))))
 
-(provide 'modules)
+(defun xing-initialize-core ()
+  "Load Doom's core files for an interactive session."
+  (require 'module-base)
+  (require 'module-ui)
+  (require 'module-keybindings))
+
+(provide 'module-lib)
