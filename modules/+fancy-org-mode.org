@@ -295,7 +295,7 @@ block)))
                  "Snippets"
                  entry
                  (file snippets-org-file)
-                 (file "~/EnvSetup/config/org/snippet.template")
+                 (file "~/.evil.emacs.d/assets/capture-template/snippet.template")
                  ;; "* %?\t%^g\n #+BEGIN_SRC %^{language}\n\n#+END_SRC"
                  :kill-buffer t))
   (setq billing-org-file (dropbox-path "org/billing.org"))
@@ -304,7 +304,7 @@ block)))
                  "Billing"
                  plain
                  (file+function billing-org-file find-month-tree)
-                 (file "~/EnvSetup/config/org/billing.template")
+                 (file "~/.evil.emacs.d/assets/capture-template/billing.template")
                  ;; " | %U | %^{类别} | %^{描述} | %^{金额} |"
                  :kill-buffer t))
 
@@ -314,7 +314,7 @@ block)))
                  "Contacts"
                  entry
                  (file contacts-org-file)
-                 (file "~/EnvSetup/config/org/contact.template")
+                 (file "~/.evil.emacs.d/assets/capture-template/contact.template")
                  ;; "* %^{姓名} %^{手机号}p %^{邮箱}p %^{住址}p %^{微信}p %^{微博}p %^{whatsapp}p\n\n  %?"
                  :empty-lines 1 :kill-buffer t))
 
@@ -373,14 +373,14 @@ block)))
                  "Son Daniel's Task"                               ; title
                  entry                                             ; type
                  (file+headline daniel-org-file "Task") ; target
-                 (file "~/EnvSetup/config/org/basic.template")))
+                 (file "~/.evil.emacs.d/assets/capture-template/basic.template")))
   (setq lulu-org-file (dropbox-path "org/lulu.agenda.org"))
   (add-to-list 'org-capture-templates
                '("tl"
                  "Wife Lulu's Task"
                  entry
                  (file+headline lulu-org-file "Task")
-                 (file "~/EnvSetup/config/org/basic.template")))
+                 (file "~/.evil.emacs.d/assets/capture-template/basic.template")))
   (setq my-org-file (dropbox-path "org/xingwenju.agenda.org"))
   (add-to-list 'org-capture-templates
                '("tr"
@@ -395,7 +395,7 @@ block)))
                  "My Work Projects"
                  entry
                  (file projects-org-file)
-                 (file "~/EnvSetup/config/org/project.template")
+                 (file "~/.evil.emacs.d/assets/capture-template/project.template")
                  :empty-line 1))
   (setq works-org-file (dropbox-path "org/works.agenda.org"))
   (add-to-list 'org-capture-templates
@@ -403,7 +403,7 @@ block)))
                  "My Work Task"
                  entry
                  (file+headline works-org-file "Work")
-                 (file "~/EnvSetup/config/org/basic.template")
+                 (file "~/.evil.emacs.d/assets/capture-template/basic.template")
                  :immediate-finish t))
 
   ;; Most often used"
@@ -413,7 +413,7 @@ block)))
                  "My Phone calls"
                  entry
                  (file+headline phone-org-file "Phone Calls")
-                 (file "~/EnvSetup/config/org/phone.template")
+                 (file "~/.evil.emacs.d/assets/capture-template/phone.template")
                  ;; "* %^{Habit cards|music|balls|games}\n  %?"
                  :immediate-finish t
                  :new-line 1))
@@ -424,7 +424,7 @@ block)))
                  "My Habit"
                  entry
                  (file habit-org-file)
-                 (file "~/EnvSetup/config/org/habit.template")
+                 (file "~/.evil.emacs.d/assets/capture-template/habit.template")
                  ;; "* %^{Habit cards|music|balls|games}\n  %?"
                  :immediate-finish t
                  :new-line 1))
@@ -435,7 +435,7 @@ block)))
                  "My Notes"
                  entry
                  (file notes-org-file)
-                 (file "~/EnvSetup/config/org/notes.template")
+                 (file "~/.evil.emacs.d/assets/capture-template/notes.template")
                  ;; "* %^{Loggings For...} %t %^g\n  %?"
                  :immediate-finish t
                  :new-line 1))
@@ -446,7 +446,7 @@ block)))
                  "My GTD Inbox"
                  entry
                  (file inbox-org-file)
-                 (file "~/EnvSetup/config/org/basic.template")
+                 (file "~/.evil.emacs.d/assets/capture-template/basic.template")
                  ;; "* [#%^{Priority}] %^{Title} %^g\n SCHEDULED:%U %?\n"
                  :immediate-finish t
                  :new-line 1)))

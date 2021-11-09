@@ -26,6 +26,7 @@
     :bind (("C-r" . swiper)
 	("C-c C-r" . ivy-resume)
 	("M-x" . counsel-M-x)
+	("C-x C-p" . counsel-rg)
 	("C-x C-f" . counsel-find-file))
     :config
     (progn
@@ -39,3 +40,5 @@
     :ensure t
     :config
     (progn (message "ivy-hydra is enabled!")))
+
+(use-package wgrep)
