@@ -2,6 +2,9 @@
 ;; 博客 blog
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; for Hugo
+
+(use-package ox-hugo)
+
 (defvar blog-hugo-process "Hugo Server"
   "Name of 'gridsome develop' process process")
 
@@ -200,7 +203,7 @@ Built with %c.
         '(
           ;; 将`emacs配置'发布到`OneDrive'
           ("emacs-config"
-           :base-directory "~/EnvSetup/config/evil-emacs/"
+           :base-directory "~/.evil.emacs.d/"
            :base-extension "el\\|org"
            :recursive t
            :publishing-directory "~/OneDrive/config/emacs/scratch/"

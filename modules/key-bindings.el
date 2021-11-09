@@ -15,14 +15,14 @@
   (which-key-mode))
 
 ;; `全局启动键'，绑定SPC
-(general-create-definer global-definer
+(general-create-definer global-space-definer
   :keymaps 'override
   :states  '(insert emacs normal hybrid motion visual operator)
   :prefix  "SPC"
   :non-normal-prefix "S-SPC")
 
 ;; `全局leader'键，使用SPC-m，获取特定major-mode的按键绑定
-(general-create-definer global-leader
+(general-create-definer global-space-m-leader
   :keymaps 'override
   :states '(emacs normal hybrid motion visual operator)
   :prefix "SPC m"
@@ -87,14 +87,14 @@
  "C-o" #'open-with-external-app
  "C-s" #'save-buffer
  "C-w" #'kill-this-buffer
- "C-d" #'kill-this-buffer
  "C-p" #'counsel-buffer-or-recentf
  "C-f" #'counsel-buffer-or-recentf
  "C-z" #'evil-undo
+ "C-S-z" #'evil-redo
  )
 
 ;; 以下快捷键需要先按SPC后出现
-(global-definer
+(global-space-definer
   "SPC" '(execute-extended-command :which-key "extended Command")
   "."   '(counsel-find-file :which-key "project find file")
   "/" '(swiper :which-key "swiper")
@@ -113,12 +113,12 @@
 
 ;; 嵌套菜单宏:
 (defmacro +general-global-menu! (name infix-key &rest body)
-  "Create a definer named +general-global-NAME wrapping global-definer.
+  "Create a definer named +general-global-NAME wrapping global-space-definer.
 Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY."
   (declare (indent 2))
   `(progn
      (general-create-definer ,(intern (concat "+general-global-" name))
-       :wrapping global-definer
+       :wrapping global-space-definer
        :prefix-map (quote ,(intern (concat "+general-global-" name "-map")))
        :infix ,infix-key
        :wk-full-keys nil
@@ -243,14 +243,18 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
 
 (+general-global-menu! "app" "a"
   "b" '(browse-url-of-file :which-key "Default Browser")
-  "n" '(neotree :which-key "Neotree Browser")
+  "n" '(toggle-neotree :which-key "Neotree Browser")
+  "hd" '(+modern-blog-hugo-deploy :which-key "Hugo deploy")
+  "hs" '(+modern-blog-hugo-start-server :which-key "Hugo serer")
+  "hk" '(+modern-blog-hugo-end-server :which-key "Hugo kill server")
+  "hx" '(org-hugo-export-to-md :which-key "Hugo export")
   )
 
 ;; Major-mode特定键
 (use-package elisp-mode
   :ensure nil
   :general
-  (global-leader
+  (global-space-m-leader
     ;;specify the major modes these should apply to:
     :major-modes
     '(emacs-lisp-mode lisp-interaction-mode t)
@@ -268,7 +272,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
 (use-package org-mode
   :ensure nil
   :general
-  (global-leader
+  (global-space-m-leader
     :major-modes '(org-mode t)
     :keymaps '(org-mode-map)
     "#" 'org-update-statistics-cookies

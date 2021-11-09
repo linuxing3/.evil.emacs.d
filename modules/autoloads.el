@@ -11,22 +11,22 @@
 
 ;;;###autoload
 (defun private-module-path (path)
-  "Prepend drive label to PATH."
+  "Prepare module path"
   (expand-file-name path linuxing3-private-modules))
 
 ;;;###autoload
 (defun dropbox-path (path)
-  "Prepend drive label to PATH."
-  (concat home-directory cloud-service-provider "/" path))
+  "Prepare cloud privider path"
+  (expand-file-name path (concat home-directory cloud-service-provider)))
 
 ;;;###autoload
 (defun workspace-path (path)
-  "Prepend drive label to PATH."
-  (concat home-directory "/workspace/" path))
+  "Prepare workspace path"
+  (expand-file-name path (concat home-directory linuxing3-private-workspace)))
 
 ;;;###autoload
 (defmacro with-dir (DIR &rest FORMS)
-  "Execute FORMS in DIR."
+  "Execute FORMS in specific DIR."
   (let ((orig-dir (gensym)))
     `(prog2
          (setq ,orig-dir default-directory)
@@ -62,8 +62,8 @@
   (if (null url-proxy-services)
       (progn
         (setq url-proxy-services
-              '(("http" . "127.0.0.1:8000")
-                ("https" . "127.0.0.1:8000")))
+              '(("http" . "127.0.0.1:8888")
+                ("https" . "127.0.0.1:8888")))
         (message "代理已开启."))
     (setq url-proxy-services nil)
     (message "代理已关闭.")))
@@ -158,6 +158,11 @@ in windows could be c:/Users/Administrator"
 
 (defcustom linuxing3-private-modules "~/.evil.emacs.d/modules"
   "Normally I use EnvSetup directory to hold all my private lisp files"
+  :group 'linuxing3
+  :type 'string)
+
+(defcustom linuxing3-private-workspace "workspace"
+  "Normally I use workspace directory to hold all my private working projects"
   :group 'linuxing3
   :type 'string)
 

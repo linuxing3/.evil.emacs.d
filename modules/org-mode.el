@@ -18,7 +18,7 @@
                             (sequence "[BUG](b)" "[新事件](i)" "[已知问题](k)" "[修改中](W)" "|" "[已修复](f)")))
 
   ;; 设定`hugo的目录'
-  (setq org-hugo-base-dir (workspace-path "workspace/awesome-hugo-blog"))
+  (setq org-hugo-base-dir (workspace-path "awesome-hugo-blog"))
 
   ;; 设定`agenda相关目录'
   (with-eval-after-load 'org

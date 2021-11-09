@@ -29,11 +29,14 @@
 
    ;; Show matching parens
    (setq show-paren-delay 0)
+
+   ;; dired copy to next window
    (setq dired-dwim-target t)
 
    ;; Make modern look
    (show-paren-mode  1)
    (setq tool-bar-mode nil)
+   (setq menu-bar-mode nil)
    (setq global-display-line-numbers-mode t)
    (setq scroll-bar-mode nil)
    (setq show-paren-mode t)))
