@@ -67,6 +67,7 @@
 (require 'module-snippets)
 (require 'module-format)
 (require 'module-coding)
+(require 'module-service)
 
 ;; ;; ---------------------------------------------------------
 ;; ;; App模块

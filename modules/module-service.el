@@ -33,3 +33,5 @@
     ))
 
 (my-prodigy-services)
+
+(provide 'module-service)
