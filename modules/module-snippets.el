@@ -55,10 +55,14 @@
 (use-package auto-yasnippet
   :ensure t
   :config
+  ;; (global-set-key (kbd "C-S-w") #'aya-create)
+  ;; (global-set-key (kbd "C-S-y") #'aya-expand)
   (setq aya-persist-snippets-dir +snippets-dir))
 
 (use-package doom-snippets
   :load-path "~/.evil.emacs.d/assets/doom-snippets"
-  :after yasnippet)
+  :after yasnippet
+  :config
+  (add-to-list 'yas-snippet-dirs 'doom-snippets-dir))
 
 (provide 'module-snippets)
