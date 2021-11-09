@@ -125,6 +125,7 @@
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (use-package elfeed-org
   :config
+  (elfeed-org)
   (setq rmh-elfeed-org-files (list
 			                  (concat org-directory "/elfeed1.org")
 			                  (concat org-directory "/elfeed2.org")))
@@ -345,5 +346,35 @@ Built with %c.
 
   )
 
+
+(use-package org-roam
+  :commands (org-roam-buffer-toggle-display
+             org-roam-find-file
+             org-roam-graph-show
+             org-roam-insert
+             org-roam-switch-to-buffer
+             org-roam-dailies-date
+             org-roam-dailies-today
+             org-roam-dailies-tomorrow
+             org-roam-dailies-yesterday)
+  :config
+  (setq org-roam-directory (dropbox-path "roam"))
+  (add-hook 'org-load-hook 'org-roam-mode)
+  (add-hook 'org-roam-backlinks-mode 'turn-on-visual-line-mode)
+  (setq org-roam-verbose nil
+        org-roam-completion-system 'ivy)
+  )
+
+;; (use-package org-roam-server
+;;   :config
+;;   (setq org-roam-server-host "127.0.0.1")
+;;   (setq org-roam-server-port 9090)
+;;   (org-roam-server-mode))
+
+;; (use-package org-roam-protocol
+;;   :after org-protocol)
+
+;; (use-package company-org-roam
+;;   :after org-roam)
 
 (provide 'org+fancy-app)

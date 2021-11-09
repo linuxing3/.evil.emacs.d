@@ -41,23 +41,6 @@
    (scroll-bar-mode -1)
    (setq show-paren-mode t)))
 
-(defun +moder-ui-scrolling-h ()
-  "Help scrolling faster"
-  (progn
-  (setq frame-title-format '("%b –Evil Emacs")
-        icon-title-format frame-title-format)
-  (setq frame-resize-pixelwise t)
-  (setq window-resize-pixelwise nil)
-  (blink-cursor-mode -1)
-  (setq hscroll-margin 2
-        hscroll-step 1
-        scroll-conservatively 101
-        scroll-margin 0
-        scroll-preserve-screen-position t
-        auto-window-vscroll nil
-        mouse-wheel-scroll-amount '(2 ((shift) . hscroll))
-        mouse-wheel-scroll-amount-horizontal 2)))
-
 
 ;; 更好的默认设置
 

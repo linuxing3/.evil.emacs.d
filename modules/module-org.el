@@ -1,6 +1,11 @@
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; `现代基本配置'
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+
+(use-package ob-go)
+(use-package ob-rust)
+(use-package ob-deno)
+
 (defun +modern-org-config-h()
   (interactive)
   ;; 设定`org的目录'
@@ -45,6 +50,7 @@
 
   ;; I prefer C-c C-c over C-c ' (more consistent)
   (define-key org-src-mode-map (kbd "C-c C-c") #'org-edit-src-exit)
+
   (with-eval-after-load 'org
     (org-babel-do-load-languages
      (quote org-babel-load-languages)
@@ -54,7 +60,16 @@
 	         (ditaa . t)
 	         (plantuml . t)
 	         (python . t)
-	         ;; (go . t)
+	         (sed . t)
+	         (awk . t)
+	         (ledger . t)
+             (C++ . t)
+             (cpp . t)
+             (C . t)
+             (shell . t)
+             (go . t)
+             (rust . t)
+             (deno . t)
 	         (gnuplot . t)
 	         (org . t)
 	         (latex . t))))))
