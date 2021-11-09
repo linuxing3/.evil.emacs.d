@@ -78,7 +78,8 @@
   :config
   (load-theme 'doom-dracula t))
 
-(use-package spacemacs-theme)
+(use-package spacemacs-theme
+  :ensure t)
 
 ;; All The Icons
 (use-package all-the-icons :ensure t)
@@ -137,4 +138,4 @@
 (+modern-ui-chinese-h)
 
 ;; 为上层提供 init-ui 模块
-(provide 'linuxing3-init-ui)
+(provide 'module-ui)

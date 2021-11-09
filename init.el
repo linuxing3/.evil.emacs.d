@@ -32,45 +32,50 @@
   (run-with-idle-timer 5 t #'garbage-collect) ;; 显示垃圾回收信息，这个可以作为调试用 ;;
   (setq garbage-collection-messages t))
 
-;; ---------------------------------------------------------
-;; 自动加载帮助器
-;; ---------------------------------------------------------
-(load-file (expand-file-name "~/.evil.emacs.d/modules/autoloads.el"))
 
-;; ---------------------------------------------------------
-;; 包管理器
-;; ---------------------------------------------------------
-(load-file (private-module-path "packages.el"))
+(add-to-list 'load-path (concat (file-name-directory load-file-name) "modules"))
 
-;; ---------------------------------------------------------
-;; 功能模块
-;; ---------------------------------------------------------
+;; ;; ---------------------------------------------------------
+;; ;; 自动加载帮助器
+;; ;; ---------------------------------------------------------
+;; (load-file (expand-file-name "~/.evil.emacs.d/modules/autoloads.el"))
+(require 'modules)
 
-(load-file (private-module-path "base.el"))
-(load-file (private-module-path "ivy.el"))
-(load-file (private-module-path "ui.el"))
-(load-file (private-module-path "evil-mode.el"))
+;; ;; ---------------------------------------------------------
+;; ;; 包管理器
+;; ;; ---------------------------------------------------------
+;; (load-file (private-module-path "packages.el"))
+(require 'module-packages)
 
-;; ---------------------------------------------------------
-;; Org功能模块
-;; ---------------------------------------------------------
+;; ;; ---------------------------------------------------------
+;; ;; 功能模块
+;; ;; ---------------------------------------------------------
 
-(load-file (private-module-path "org-mode.el"))
+(require 'module-base)
+(require 'module-ui)
+(require 'module-evil)
 
-;; ---------------------------------------------------------
-;; 编程模块
-;; ---------------------------------------------------------
-(load-file (private-module-path "project.el"))
-(load-file (private-module-path "completion.el"))
-(load-file (private-module-path "snippets.el"))
-(load-file (private-module-path "format.el"))
-(load-file (private-module-path "lang+plantuml.el"))
-(load-file (private-module-path "lang+markdown.el"))
-(load-file (private-module-path "coding-mode.el"))
+;; ;; ---------------------------------------------------------
+;; ;; Org功能模块
+;; ;; ---------------------------------------------------------
 
-(load-file (private-module-path "app+vagrant.el"))
-(load-file (private-module-path "app+translator.el"))
-;; ---------------------------------------------------------
-;; 快捷键绑定
-;; ---------------------------------------------------------
-(load-file (private-module-path "key-bindings.el"))
+(require 'module-org)
+
+;; ;; ---------------------------------------------------------
+;; ;; 编程模块
+;; ;; ---------------------------------------------------------
+(require 'module-project)
+(require 'module-completion)
+(require 'module-snippets)
+(require 'module-format)
+(require 'module-coding)
+
+;; ;; ---------------------------------------------------------
+;; ;; App模块
+;; ;; ---------------------------------------------------------
+(require 'module-app)
+;; ;; ---------------------------------------------------------
+;; ;; 快捷键绑定
+;; ;; ---------------------------------------------------------
+(require 'module-keybindings)
+;; (load-file (private-module-path "key-bindings.el"))

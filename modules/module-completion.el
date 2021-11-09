@@ -24,3 +24,5 @@
       (company-complete-common))))
 
 (use-package flycheck :ensure t)
+
+(provide 'module-completion)

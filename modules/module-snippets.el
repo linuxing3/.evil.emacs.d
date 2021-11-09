@@ -60,3 +60,5 @@
   :ensure t
   :config
   (setq aya-persist-snippets-dir +snippets-dir))
+
+(provide 'module-snippets)

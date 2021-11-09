@@ -128,5 +128,7 @@
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; `加载现代美化配置'
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
-(load-file (private-module-path "+fancy-org-mode.el"))
-(load-file (private-module-path "+fancy-org-app.el"))
+(load-file (private-module-path "org+fancy-function.el"))
+(load-file (private-module-path "org+fancy-app.el"))
+
+(provide 'module-org)

@@ -369,4 +369,4 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   (global-set-key (kbd "C-c F") 'counsel-org-file)
   )
 
-(provide 'linuxing3-key-bindings)
+(provide 'module-keybindings)
