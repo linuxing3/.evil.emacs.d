@@ -11,7 +11,7 @@
    '("~/OneDrive/org/habit.agenda.org" "c:/Users/wjb/OneDrive/org/xingwenju.agenda.org" "c:/Users/wjb/OneDrive/org/works.agenda.org" "c:/Users/wjb/OneDrive/org/projects.agenda.org" "c:/Users/wjb/OneDrive/org/lulu.agenda.org" "c:/Users/wjb/OneDrive/org/inbox.agenda.org" "c:/Users/wjb/OneDrive/org/daniel.agenda.org"))
  '(org-support-shift-select t)
  '(package-selected-packages
-   '(prodigy lsp-mode yasnippet lsp-treemacs lsp-ui lsp-ivy projectile hydra flycheck company avy which-key dap-mode))
+   '(org-roam lsp-mode yasnippet lsp-treemacs lsp-ui lsp-ivy projectile hydra flycheck company avy which-key dap-mode))
  '(safe-local-variable-values '((git-commit-major-mode . git-commit-elisp-text-mode)))
  '(scroll-bar-mode nil)
  '(show-paren-mode t)

@@ -346,24 +346,22 @@ Built with %c.
 
   )
 
-
-;; (use-package org-roam
-;;   :commands (org-roam-buffer-toggle-display
-;;              org-roam-find-file
-;;              org-roam-graph-show
-;;              org-roam-insert
-;;              org-roam-switch-to-buffer
-;;              org-roam-dailies-date
-;;              org-roam-dailies-today
-;;              org-roam-dailies-tomorrow
-;;              org-roam-dailies-yesterday)
-;;   :config
-;;   (setq org-roam-directory (dropbox-path "roam"))
-;;   (add-hook 'org-load-hook 'org-roam-mode)
-;;   (add-hook 'org-roam-backlinks-mode 'turn-on-visual-line-mode)
-;;   (setq org-roam-verbose nil
-;;         org-roam-completion-system 'ivy)
-;;   )
+;;
+;;; `windows'下只能使用`v1'版本
+(use-package org-roam
+  :ensure t
+  :load-path "org-roam/org-roam-v1"
+  :hook
+  (after-init . org-roam-mode)
+  :custom
+  (org-roam-directory (dropbox-path "org/roam"))
+  :bind (:map org-roam-mode-map
+         (("C-c n l" . org-roam)
+          ("C-c n f" . org-roam-find-file)
+          ("C-c n g" . org-roam-graph))
+         :map org-mode-map
+         (("C-c n i" . org-roam-insert))
+         (("C-c n I" . org-roam-insert-immediate))))
 
 ;; (use-package org-roam-server
 ;;   :config

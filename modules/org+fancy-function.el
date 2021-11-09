@@ -203,14 +203,14 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                '("ts"                                              ; hotkey
                  "👦 Son's Task"                               ; title
                  entry                                             ; type
-                 (file+headline daniel-org-file "Task") ; target
+                 (file+headline daniel-org-file "Tasks") ; target
                  (file "~/.evil.emacs.d/assets/capture-template/todo.template")))
   (setq lulu-org-file (dropbox-path "org/lulu.agenda.org"))
   (add-to-list 'org-capture-templates
                '("tl"
                  "👩 Wife Lulu's Task"
                  entry
-                 (file+headline lulu-org-file "Task")
+                 (file+headline lulu-org-file "Tasks")
                  (file "~/.evil.emacs.d/assets/capture-template/todo.template")))
   (setq my-org-file (dropbox-path "org/xingwenju.agenda.org"))
   (add-to-list 'org-capture-templates
@@ -220,12 +220,12 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  (file+headline my-org-file "Reading")
                  "** TODO %^{书名}\n%u\n%a\n"
                  :immediate-finish t))
-  (setq projects-org-file (dropbox-path "org/projects.agenda.org"))
+  (setq tmp-projects-org-file (dropbox-path "org/projects.agenda.org"))
   (add-to-list 'org-capture-templates
                '("tp"
                  "📓 My Work Projects"
                  entry
-                 (file projects-org-file)
+                 (file+headline works-org-file "Projects")
                  (file "~/.evil.emacs.d/assets/capture-template/project.template")
                  :empty-line 1))
   (setq works-org-file (dropbox-path "org/works.agenda.org"))
@@ -233,7 +233,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                '("tw"
                  "⏰ My Work Task"
                  entry
-                 (file+headline works-org-file "Work")
+                 (file+headline works-org-file "Tasks")
                  (file "~/.evil.emacs.d/assets/capture-template/basic.template")
                  :immediate-finish t))
 
