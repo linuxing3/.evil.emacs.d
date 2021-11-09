@@ -1,13 +1,11 @@
-.DS_Store
-*.local
+*.swp
+*.swo
+*.pyc
 
-# production
-.local
-.extension
-.cache
-local
-private
-elpa
-test
-auto-save-list
-eshell
+.venv
+./tags
+tags
+*.log
+./build/
+./release/
+./target/

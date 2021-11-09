@@ -236,7 +236,11 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
 
 (+general-global-menu! "code" "e"
   "b" '(eval-buffer :which-key "Eval buffer")
-  "s" '(eval-last-sexp :which-key "Eval last expression")
+  "e" '(eval-expression :which-key "Eval expression")
+  "l" '(eval-last-sexp :which-key "Eval last expression")
+  "s" '(+snippets/new :which-key "New Snippet")
+  "i" '(yas-insert-snippet :which-key "Insert Snippet")
+  "x" '(yas-expand-snippet :which-key "Expand Snippet")
   "p" '(pp-eval-last-sexp :which-key "PP Eval last expression")
   "r" '(eval-region :which-key "Eval region")
   "f" '(eval-defun :which-key "Eval funtion"))
@@ -248,6 +252,10 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "hs" '(+modern-blog-hugo-start-server :which-key "Hugo serer")
   "hk" '(+modern-blog-hugo-end-server :which-key "Hugo kill server")
   "hx" '(org-hugo-export-to-md :which-key "Hugo export")
+  "pb" '(prodigy-browse :which-key "Prodigy Browse")
+  "ps" '(prodigy-start :which-key "Prodigy start")
+  "pS" '(prodigy-stop :which-key "Prodigy stop")
+  "ys" '(youdao-dictionary-search-at-point :which-key "Seach youdao")
   )
 
 ;; Major-mode特定键

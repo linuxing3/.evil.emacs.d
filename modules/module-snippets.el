@@ -44,21 +44,21 @@
              yas-maybe-expand-abbrev-key-filter)
   :init
   :config
-  (setq yas-snippet-dirs '(
-			   yas-installed-snippets-dir
-			   "~/.emacs.d/snippets"
-			   ))
+  (setq yas-snippet-dirs '(yas-installed-snippets-dir))
   (add-to-list 'yas-snippet-dirs '+snippets-dir)
   (yas-global-mode 1)
   (yas-reload-all)
   (setq yas-prompt-functions '(yas-dropdown-prompt
-			       yas-maybe-ido-prompt
-			       yas-completing-prompt)))
-
+			                   yas-maybe-ido-prompt
+			                   yas-completing-prompt)))
 
 (use-package auto-yasnippet
   :ensure t
   :config
   (setq aya-persist-snippets-dir +snippets-dir))
+
+(use-package doom-snippets
+  :load-path "~/.evil.emacs.d/assets/doom-snippets"
+  :after yasnippet)
 
 (provide 'module-snippets)

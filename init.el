@@ -34,6 +34,7 @@
 
 
 (add-to-list 'load-path (concat (file-name-directory load-file-name) "modules"))
+(add-to-list 'load-path (concat (file-name-directory load-file-name) "assets/doom-snippets"))
 
 ;; ;; ---------------------------------------------------------
 ;; ;; 自动加载帮助器
