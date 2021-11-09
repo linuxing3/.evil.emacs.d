@@ -56,7 +56,7 @@
 (when IS-LINUX
   (setq x-gtk-use-system-tooltips nil))
 
- ;; Favor vertical splits over horizontal ones. Screens are usually wide.
+;; Favor vertical splits over horizontal ones. Screens are usually wide.
 (setq split-width-threshold 160
       split-height-threshold nil)
 
@@ -76,19 +76,19 @@
 (defun +modern-ui-scrolling-h ()
   "Help scrolling faster"
   (progn
-  (setq frame-title-format '("%b –Evil Emacs")
-        icon-title-format frame-title-format)
-  (setq frame-resize-pixelwise t)
-  (setq window-resize-pixelwise nil)
-  (blink-cursor-mode -1)
-  (setq hscroll-margin 2
-        hscroll-step 1
-        scroll-conservatively 101
-        scroll-margin 0
-        scroll-preserve-screen-position t
-        auto-window-vscroll nil
-        mouse-wheel-scroll-amount '(2 ((shift) . hscroll))
-        mouse-wheel-scroll-amount-horizontal 2)))
+    (setq frame-title-format '("%b –Evil Emacs")
+          icon-title-format frame-title-format)
+    (setq frame-resize-pixelwise t)
+    (setq window-resize-pixelwise nil)
+    (blink-cursor-mode -1)
+    (setq hscroll-margin 2
+          hscroll-step 1
+          scroll-conservatively 101
+          scroll-margin 0
+          scroll-preserve-screen-position t
+          auto-window-vscroll nil
+          mouse-wheel-scroll-amount '(2 ((shift) . hscroll))
+          mouse-wheel-scroll-amount-horizontal 2)))
 ;;
 ;;; Unicode
 
@@ -185,6 +185,14 @@
   (let ((class '((class color) (min-colors 89))))
     (custom-theme-set-faces
      'zerodark
+     `(org-document-title
+       ((,class (:foreground ,orange :height 1.3))))
+     `(outline-1
+       ((,class (:foreground ,peach :weight bold :height 1.2))))
+     `(outline-2
+       ((,class (:foreground ,purple :weight bold :height 1.1))))
+     `(outline-3
+       ((,class (:foreground ,blue :weight bold))))
      `(selectrum-current-candidate
        ((,class (:background "#48384c"
                              :weight bold

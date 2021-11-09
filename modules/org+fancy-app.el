@@ -357,33 +357,32 @@ Built with %c.
   (after-init . org-roam-mode)
   :custom
   (org-roam-directory (dropbox-path "org/roam"))
-  :init
+  :config
   (setq org-roam-filename-noconfirm nil)
   (setq org-roam-graphviz-executable "b:/app/graphviz/bin/dot.exe")
   (setq org-roam-graph-viewer "C:/Program Files/Microsoft/Edge Beta/Application/msedge.exe")
-  (setq org-roam-templates
-        (list (list "default" (list :file #'org-roam--file-name-timestamp-title
-                                    :content "#+SETUPFILE:./hugo_setup.org
-#+HUGO_SECTION: zettels
-#+HUGO_SLUG: ${slug}
-#+TITLE: ${title}"))
-              (list "private" (list :file #'linuxing3/org-roam-title-private
-                                    :content "#+DATE: %U
-#+AUTHOR: %^{author: linuxing3}
-#+EXCERPT: %^{excerpt: emacs }
-#+TITLE: %^{title}"))))
   ;; functions
   (defun linuxing3/org-roam-title-private (title)
     (let ((timestamp (format-time-string "%Y-%m-%d" (current-time)))
           (slug (org-roam--title-to-slug title)))
       (format "%s-%s" timestamp slug)))
+  ;; templates
+  (setq org-roam-dailies-capture-templates
+        '(("d" "default" entry #'org-roam-capture--get-point "* %?"
+           :file-name "daily/%<%Y-%m-%d>" :head "#+title:\n#+date: %<%Y-%m-%d>")
+          ("x" "private" entry #'org-roam-capture--get-point "* %?"
+           :file-name "daily/%<%Y-%m-%d>" :head "#+title:\n#+date: %<%Y-%m-%d>")))
+  (add-to-list 'org-roam-capture-templates
+               '(("x" "private" plain #'org-roam-capture--get-point "%?"
+                  :file-name "%<%Y%m%d%H%M%S>-${slug}"
+                  :head "#+title: ${title}\n#+date: %<%Y-%m-%d>")))
   :bind (:map org-roam-mode-map
-         (("C-c n l" . org-roam)
-          ("C-c n f" . org-roam-find-file)
-          ("C-c n g" . org-roam-graph))
-         :map org-mode-map
-         (("C-c n i" . org-roam-insert))
-         (("C-c n I" . org-roam-insert-immediate))))
+              (("C-c n l" . org-roam)
+               ("C-c n f" . org-roam-find-file)
+               ("C-c n g" . org-roam-graph))
+              :map org-mode-map
+              (("C-c n i" . org-roam-insert))
+              (("C-c n I" . org-roam-insert-immediate))))
 
 ;; (use-package org-roam-server
 ;;   :config

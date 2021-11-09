@@ -106,6 +106,24 @@
               (mapconcat (lambda (str) (concat "** " str))
                          fields
                          "\n\n"))))
+
+  ;; TODO:
+  ;; 配合emacs-client进行网页抓取
+  ;; 更新注册表
+  ;; ~/.evil.emacs.d/assets/scripts/org-protocol-emacs-client.reg
+  ;; 设置chrome书签, 使用 l 抓取器
+  ;; javascript:location.href='org-protocol://capture://l/'+ encodeURIComponent(location.href)+'/'+ encodeURIComponent(document.title)+'/'+encodeURIComponent(window.getSelection())
+  (defadvice org-capture
+      (after make-full-window-frame activate)
+    "Advise capture to be the only window when used as a popup"
+    (if (equal "emacs-capture" (frame-parameter nil 'name))
+        (delete-other-windows)))
+
+  (defadvice org-capture-finalize
+      (after delete-capture-frame activate)
+    "Advise capture-finalize to close the frame"
+    (if (equal "emacs-capture" (frame-parameter nil 'name))
+        (delete-frame)))
   ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
   ;; Capture template 以下是抓取模板
   ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
