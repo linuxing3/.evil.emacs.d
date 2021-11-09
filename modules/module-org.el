@@ -7,13 +7,8 @@
 (use-package ob-deno)
 
 (defun +modern-org-config-h()
-  (interactive)
   ;; 设定`org的目录'
-  (defvar org-directory-default nil
-    "whether use org directory in default location")
-  (if org-directory-default
-      (setq org-directory (expand-file-name "org" home-directory))
-    (setq org-directory (dropbox-path "org")))
+  (setq org-directory (dropbox-path "org"))
   ;; 设定`journal的目录'
   (defvar org-journal-base-dir nil
     "Netlify gridsome base directory")
@@ -26,18 +21,16 @@
   (setq org-hugo-base-dir (workspace-path "awesome-hugo-blog"))
 
   ;; 设定`agenda相关目录'
-  (with-eval-after-load 'org
-    (setq diary-file (dropbox-path "org/diary"))
-    (setq
-     org-agenda-diary-file (dropbox-path "org/diary")
-     org-agenda-files (directory-files org-directory t "\\.agenda\\.org$" t))
-    (setq org-archive-location (dropbox-path "org/archived/%s_archive::"))))
+  (setq diary-file (dropbox-path "org/diary"))
+  (setq
+   org-agenda-diary-file (dropbox-path "org/diary")
+   org-agenda-files (directory-files org-directory t "\\.agenda\\.org$" t))
+  (setq org-archive-location (dropbox-path "org/archived/%s_archive::")))
 
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; `现代Babel配置'
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (defun +modern-babel-config-h()
-  (interactive)
   (setq org-src-preserve-indentation t  ; use native major-mode indentation
         org-src-tab-acts-natively t     ; we do this ourselves
         ;; You don't need my permission (just be careful, mkay?)
@@ -52,27 +45,25 @@
   (define-key org-src-mode-map (kbd "C-c C-c") #'org-edit-src-exit)
 
   (with-eval-after-load 'org
-    (org-babel-do-load-languages
-     (quote org-babel-load-languages)
-     (quote ((emacs-lisp . t)
-	         (java . t)
-	         (dot . t)
-	         (ditaa . t)
-	         (plantuml . t)
-	         (python . t)
-	         (sed . t)
-	         (awk . t)
-	         (ledger . t)
-             (C++ . t)
-             (cpp . t)
-             (C . t)
-             (shell . t)
-             (go . t)
-             (rust . t)
-             (deno . t)
-	         (gnuplot . t)
-	         (org . t)
-	         (latex . t))))))
+  (org-babel-do-load-languages
+   (quote org-babel-load-languages)
+   (quote ((emacs-lisp . t)
+	       (java . t)
+	       (dot . t)
+	       (ditaa . t)
+	       (plantuml . t)
+	       (python . t)
+	       (sed . t)
+	       (awk . t)
+	       (ledger . t)
+           (C . t)
+           (shell . t)
+           (go . t)
+           (rust . t)
+           (deno . t)
+	       (gnuplot . t)
+	       (org . t)
+	       (latex . t))))))
 
 (defun +modern-appearance-config-h ()
   "Configures the UI for `org-mode'."
@@ -133,9 +124,12 @@
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; `启动配置'
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
-(add-hook 'org-load-hook #'+modern-appearance-config-h)
-(add-hook 'org-load-hook #'+modern-org-config-h)
-(add-hook 'org-load-hook #'+modern-babel-config-h)
+;; (add-hook 'org-load-hook #'+modern-appearance-config-h)
+;; (add-hook 'org-load-hook #'+modern-org-config-h)
+;; (add-hook 'org-load-hook #'+modern-babel-config-h)
+(+modern-org-config-h)
+(+modern-appearance-config-h)
+(+modern-babel-config-h)
 
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; `加载现代美化配置'

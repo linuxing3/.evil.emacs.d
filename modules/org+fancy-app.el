@@ -347,23 +347,23 @@ Built with %c.
   )
 
 
-(use-package org-roam
-  :commands (org-roam-buffer-toggle-display
-             org-roam-find-file
-             org-roam-graph-show
-             org-roam-insert
-             org-roam-switch-to-buffer
-             org-roam-dailies-date
-             org-roam-dailies-today
-             org-roam-dailies-tomorrow
-             org-roam-dailies-yesterday)
-  :config
-  (setq org-roam-directory (dropbox-path "roam"))
-  (add-hook 'org-load-hook 'org-roam-mode)
-  (add-hook 'org-roam-backlinks-mode 'turn-on-visual-line-mode)
-  (setq org-roam-verbose nil
-        org-roam-completion-system 'ivy)
-  )
+;; (use-package org-roam
+;;   :commands (org-roam-buffer-toggle-display
+;;              org-roam-find-file
+;;              org-roam-graph-show
+;;              org-roam-insert
+;;              org-roam-switch-to-buffer
+;;              org-roam-dailies-date
+;;              org-roam-dailies-today
+;;              org-roam-dailies-tomorrow
+;;              org-roam-dailies-yesterday)
+;;   :config
+;;   (setq org-roam-directory (dropbox-path "roam"))
+;;   (add-hook 'org-load-hook 'org-roam-mode)
+;;   (add-hook 'org-roam-backlinks-mode 'turn-on-visual-line-mode)
+;;   (setq org-roam-verbose nil
+;;         org-roam-completion-system 'ivy)
+;;   )
 
 ;; (use-package org-roam-server
 ;;   :config
