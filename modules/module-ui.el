@@ -177,8 +177,7 @@
 
 (use-package spacemacs-theme
   :config
-  ;;(load-theme 'spacemacs-light)
-  )
+  (load-theme 'spacemacs-dark))
 
 (use-package zerodark-theme
   :config

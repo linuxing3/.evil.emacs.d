@@ -359,8 +359,15 @@ Built with %c.
   (org-roam-directory (dropbox-path "org/roam"))
   :config
   (setq org-roam-filename-noconfirm nil)
-  (setq org-roam-graphviz-executable "b:/app/graphviz/bin/dot.exe")
-  (setq org-roam-graph-viewer "C:/Program Files/Microsoft/Edge Beta/Application/msedge.exe")
+
+  (if IS-WINDOWS
+      (progn
+        (setq org-roam-graphviz-executable "B:/app/graphviz/bin/dot.exe")
+        (setq org-roam-graph-viewer "C:/Program Files/Microsoft/Edge Beta/Application/msedge.exe")))
+  (if IS-LINUX
+      (progn
+        (setq org-roama-graphviz-executble "dot")
+        (setq org-roam-graph-viewer "chromium")))
   ;; functions
   (defun linuxing3/org-roam-title-private (title)
     (let ((timestamp (format-time-string "%Y-%m-%d" (current-time)))
@@ -372,10 +379,13 @@ Built with %c.
            :file-name "daily/%<%Y-%m-%d>" :head "#+title:\n#+date: %<%Y-%m-%d>")
           ("x" "private" entry #'org-roam-capture--get-point "* %?"
            :file-name "daily/%<%Y-%m-%d>" :head "#+title:\n#+date: %<%Y-%m-%d>")))
-  (add-to-list 'org-roam-capture-templates
-               '(("x" "private" plain #'org-roam-capture--get-point "%?"
-                  :file-name "%<%Y%m%d%H%M%S>-${slug}"
-                  :head "#+title: ${title}\n#+date: %<%Y-%m-%d>")))
+  (setq org-roam-capture-templates
+        '(("d" "default" plain (function org-roam--capture-get-point)
+           "%?"
+           :file-name "%(format-time-string \"%Y-%m-%d--%H-%M-%SZ--${slug}\" (current-time) t)"
+           :head "#+title: ${title}\n#+date: ${time}"
+           :unnarrowed t)
+          ))
   :bind (:map org-roam-mode-map
               (("C-c n l" . org-roam)
                ("C-c n f" . org-roam-find-file)

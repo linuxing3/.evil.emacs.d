@@ -43,7 +43,7 @@
  "<f10>"  #'org-agenda
  "<f11>"  #'make-frame
  "<f12>"  #'xref-find-definitions-other-window
- ;; Navigation
+;; Navigation
  "C-h"     #'evil-window-left
  "C-j"     #'evil-window-down
  "C-k"     #'evil-window-up
@@ -53,12 +53,14 @@
  "C-S-w"   #'ace-swap-window
  ;; Delete window
  "M-c"   #'evil-yank     ;; 粘贴
+ "M-v"   #'evil-paste-after ;; 粘贴
  "M-f"   #'swiper        ;; 查找
  "M-z"   #'fill-paragraph ;; 折行
  "M-s"   #'save-buffer   ;; 保存
  "M-r"   #'format-all-buffer
  "M-o"   #'ivy-occur-mode
  "C-S-p"   #'eshell
+ "C-S-s"   #'server-start
  ;; increase font size
  "M-="       #'text-scale-increase
  "M--"       #'text-scale-decrease
