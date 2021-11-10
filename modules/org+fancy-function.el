@@ -2,12 +2,13 @@
 ;; +fancy-org-model.el
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 
+(require 'org-protocol)
+
 (defun my-insert-chrome-current-tab-url()
   "Get the URL of the active tab of the first window only work in Mac"
   (interactive)
   (insert (my-retrieve-chrome-current-tab-url)))
 
-;;;###autoload
 (defun my-retrieve-chrome-current-tab-url()
   "Get the URL of the active tab of the first window"
   (interactive)
@@ -128,9 +129,9 @@
   ;; Capture template 以下是抓取模板
   ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
   (setq org-capture-templates nil)
-  (add-to-list 'org-capture-templates '("x" "Extra → → → → → → → → → → →  → → → → "))
 
   ;; `生活学习相关模板'
+  (add-to-list 'org-capture-templates '("x" "Extra"))
   (setq anki-org-file (dropbox-path "org/anki.org"))
   (add-to-list 'org-capture-templates
                `("xv"
@@ -216,65 +217,65 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
 
 %?")))
 
-  ;; Protocol Group
+  ;; `Protocol' 网页抓取
+  ;; 参考: https://www.zmonster.me/2018/02/28/org-mode-capture.html
+  ;; 当用 org-protocol 触发 org-capture 时，它会设置 org-store-link-plist , 属性有六个，分别如下:
+  ;; `type'	         链接的类型，如 http/https/ftp 等，是靠正则 (string-match "^\\([a-z]+\\):" url) 解析出来的
+  ;; `link'	         链接地址，在 org-protocol 里的 url 字段
+  ;; `description' 	 链接的标题，在 org-protocol 里的 title 字段
+  ;; `annotation'	 靠 link 和 description 完成的 org 格式的链接
+  ;; `initial'	     链接上选中的文本，在 org-protocol 里的 body 字段
+  ;; `query'	     org-protocol 上除掉开头和子协议部分的剩下部分
   (setq links-org-file (dropbox-path "org/links.org"))
+  (add-to-list 'org-capture-templates '("p" "Protocol"))
+  ;; 最简单的情况是用 org-capture 来做`网页书签管理'，记录下`网页的标题和链接'
   (add-to-list 'org-capture-templates
-               '("l"
-                 "❉ Temp Links from the interwebs"
+               '("pb"
+                 "❉ Bookmark interwebs"
                  entry
                  (file+headline links-org-file "Bookmarks")
-                 "* %t %:description\nlink: %l \n\n%i\n"
-                 :kill-buffer nil))
-
+                 ;; "* %^{Title}\n\n  Source: %u, %c\n\n  %i"
+                 ;; "* %t %:description\nlink: %l \n\n%i\n"
+                 "* %U - %:annotation"
+                 :immediate-finish t
+                 :kill-buffer t
+                 :empty-line 1))
+  ;; `选中网页上的内容'，通过 org-protocol 和 org-capture 快速记录到笔记中
   (add-to-list 'org-capture-templates
-               '("a"
+               '("pn"
                  "❉ Protocol Annotation"
+                 entry
+                 (file+headline links-org-file "Bookmarks")
+                 "* %U - %:annotation"
+                 :immediate-finish t
+                 :kill-buffer t))
+
+  ;; 一个网页上有多处内容都选中, `将同一个网页的内容都按顺序放置到同一个headline里面'
+  (add-to-list 'org-capture-templates
+               '("pa"
+                 "❉ Protocol initial"
                  plain
                  (file+function links-org-file org-capture-template-goto-link)
-                 " %^{Title}\n  %U - %?\n\n  %:initial"
+                 "  %U - %?\n\n  %:initial"
                  :empty-lines 1))
 
-  ;; `工作+个人+家人+行事历相关'
-  (add-to-list 'org-capture-templates '("t" "Tasks → → → → → → → → → → → → → → →"))
 
+  ;; `家人+行事历相关'
+  ;; (add-to-list 'org-capture-templates '("t" "Tasks → → → → → → → → → → → → → → →"))
   (setq daniel-org-file (dropbox-path "org/daniel.agenda.org"))
   (add-to-list 'org-capture-templates
-               '("ts"                                              ; hotkey
+               '("s"                                              ; hotkey
                  "👦 Son's Task"                               ; title
                  entry                                             ; type
                  (file+headline daniel-org-file "Tasks") ; target
                  (file "~/.evil.emacs.d/assets/capture-template/todo.template")))
   (setq lulu-org-file (dropbox-path "org/lulu.agenda.org"))
   (add-to-list 'org-capture-templates
-               '("tl"
+               '("l"
                  "👩 Wife Lulu's Task"
                  entry
                  (file+headline lulu-org-file "Tasks")
                  (file "~/.evil.emacs.d/assets/capture-template/todo.template")))
-  (setq my-org-file (dropbox-path "org/xingwenju.agenda.org"))
-  (add-to-list 'org-capture-templates
-               '("tr"
-                 "☠ My Book Reading Task"
-                 entry
-                 (file+headline my-org-file "Reading")
-                 "** TODO %^{书名}\n%u\n%a\n"
-                 :immediate-finish t))
-  (setq tmp-projects-org-file (dropbox-path "org/projects.agenda.org"))
-  (add-to-list 'org-capture-templates
-               '("tp"
-                 "📓 My Work Projects"
-                 entry
-                 (file+headline works-org-file "Projects")
-                 (file "~/.evil.emacs.d/assets/capture-template/project.template")
-                 :empty-line 1))
-  (setq works-org-file (dropbox-path "org/works.agenda.org"))
-  (add-to-list 'org-capture-templates
-               '("tw"
-                 "⏰ My Work Task"
-                 entry
-                 (file+headline works-org-file "Tasks")
-                 (file "~/.evil.emacs.d/assets/capture-template/basic.template")
-                 :immediate-finish t))
 
   ;; `常用快捷抓取模板'
   (setq phone-org-file (dropbox-path "org/phone.org"))
@@ -286,7 +287,6 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  (file "~/.evil.emacs.d/assets/capture-template/phone.template")
                  :immediate-finish t
                  :new-line 1))
-
   (setq habit-org-file (dropbox-path "org/habit.agenda.org"))
   (add-to-list 'org-capture-templates
                '("h"
@@ -297,7 +297,14 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  ;; "* %^{Habit cards|music|balls|games}\n  %?"
                  :immediate-finish t
                  :new-line 1))
-
+  (setq my-org-file (dropbox-path "org/xingwenju.agenda.org"))
+  (add-to-list 'org-capture-templates
+               '("r"
+                 "☠ My Book Reading Task"
+                 entry
+                 (file+headline my-org-file "Reading")
+                 "** TODO %^{书名}\n%u\n%a\n"
+                 :immediate-finish t))
   (setq notes-org-file (dropbox-path "org/notes.agenda.org"))
   (add-to-list 'org-capture-templates
                '("n"
@@ -308,7 +315,22 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  ;; "* %^{Loggings For...} %t %^g\n  %?"
                  :immediate-finish t
                  :new-line 1))
-
+  (setq tmp-projects-org-file (dropbox-path "org/projects.agenda.org"))
+  (add-to-list 'org-capture-templates
+               '("p"
+                 "📓 My Work Projects"
+                 entry
+                 (file+headline works-org-file "Projects")
+                 (file "~/.evil.emacs.d/assets/capture-template/project.template")
+                 :empty-line 1))
+  (setq works-org-file (dropbox-path "org/works.agenda.org"))
+  (add-to-list 'org-capture-templates
+               '("w"
+                 "⏰ My Work Task"
+                 entry
+                 (file+headline works-org-file "Tasks")
+                 (file "~/.evil.emacs.d/assets/capture-template/basic.template")
+                 :immediate-finish t))
   (setq inbox-org-file (dropbox-path "org/inbox.agenda.org"))
   (add-to-list 'org-capture-templates
                '("i"
