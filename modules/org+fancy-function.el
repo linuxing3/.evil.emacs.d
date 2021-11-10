@@ -236,19 +236,18 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  (file+headline links-org-file "Bookmarks")
                  ;; "* %^{Title}\n\n  Source: %u, %c\n\n  %i"
                  ;; "* %t %:description\nlink: %l \n\n%i\n"
-                 "* %U - %:annotation"
-                 :immediate-finish t
-                 :kill-buffer t
+                 "** %? [[%:link][%:description]] \nCaptured On: %U"
+                 ;; "* %U - %:annotation"
                  :empty-line 1))
+
   ;; `选中网页上的内容'，通过 org-protocol 和 org-capture 快速记录到笔记中
   (add-to-list 'org-capture-templates
                '("pn"
                  "❉ Protocol Annotation"
                  entry
                  (file+headline links-org-file "Bookmarks")
-                 "* %U - %:annotation"
-                 :immediate-finish t
-                 :kill-buffer t))
+                 "** %U - %:annotation"
+                 :empty-line 1))
 
   ;; 一个网页上有多处内容都选中, `将同一个网页的内容都按顺序放置到同一个headline里面'
   (add-to-list 'org-capture-templates
@@ -256,8 +255,8 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  "❉ Protocol initial"
                  plain
                  (file+function links-org-file org-capture-template-goto-link)
-                 "  %U - %?\n\n  %:initial"
-                 :empty-lines 1))
+                 "** %? - Captured On:%U\n\n  %:initial"
+                 :empty-line 1))
 
 
   ;; `家人+行事历相关'
