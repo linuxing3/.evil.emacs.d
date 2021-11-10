@@ -358,6 +358,8 @@ Built with %c.
   :custom
   (org-roam-directory (dropbox-path "org/roam"))
   :config
+  ;; 实现网页抓取的协议
+  (require 'org-roam-protocol)
   (setq org-roam-filename-noconfirm nil)
 
   (if IS-WINDOWS
@@ -368,24 +370,67 @@ Built with %c.
       (progn
         (setq org-roama-graphviz-executble "dot")
         (setq org-roam-graph-viewer "chromium")))
-  ;; functions
+  ;; 自定义私人笔记标题的处理方法
   (defun linuxing3/org-roam-title-private (title)
     (let ((timestamp (format-time-string "%Y-%m-%d" (current-time)))
           (slug (org-roam--title-to-slug title)))
       (format "%s-%s" timestamp slug)))
-  ;; templates
+  ;; `file' 日记模板 - diaries/20211110.org
   (setq org-roam-dailies-capture-templates
         '(("d" "default" entry #'org-roam-capture--get-point "* %?"
-           :file-name "daily/%<%Y-%m-%d>" :head "#+title:\n#+date: %<%Y-%m-%d>")
+           :file-name "daily/%<%Y-%m-%d>"
+           :head "#+title: ${title}\n#+date: ${time} \n#+roam_alias: \n#+roam_tags: \n"
+           :unnarrowed t)
           ("x" "private" entry #'org-roam-capture--get-point "* %?"
-           :file-name "daily/%<%Y-%m-%d>" :head "#+title:\n#+date: %<%Y-%m-%d>")))
+           :file-name "daily/%<%Y-%m-%d>"
+           :head "#+title: ${title}\n#+date: ${time} \n#+roam_alias: \n#+roam_tags: \n"
+           :unnarrowed t)))
+  ;; `file' 自定义笔记模板 - 2021-11-10-title.org
   (setq org-roam-capture-templates
         '(("d" "default" plain (function org-roam--capture-get-point)
            "%?"
            :file-name "%(format-time-string \"%Y-%m-%d--%H-%M-%SZ--${slug}\" (current-time) t)"
-           :head "#+title: ${title}\n#+date: ${time}"
+           :head "#+title: ${title}\n#+date: ${time} \n#+roam_alias: \n#+roam_tags: \n"
            :unnarrowed t)
           ))
+  ;; `file' 专业术语模板
+  (add-to-list 'org-roam-capture-templates
+               '("t" "Term" plain (function org-roam-capture--get-point)
+                 "- 领域: %^{术语所属领域}\n- 释义:"
+                 :file-name "%<%Y%m%d%H%M%S>-${slug}"
+                 :head "#+title: ${title}\n#+roam_alias:\n#+roam_tags: \n\n"
+                 :unnarrowed t
+                 ))
+  ;; `file' 工作试验模板
+  (add-to-list 'org-roam-capture-templates
+               '("p" "Paper Note" plain (function org-roam-capture--get-point)
+                 "* 相关工作\n\n%?\n* 观点\n\n* 模型和方法\n\n* 实验\n\n* 结论\n"
+                 :file-name "%<%Y%m%d%H%M%S>-${slug}"
+                 :head "#+title: ${title}\n#+roam_alias:\n#+roam_tags: \n\n"
+                 :unnarrowed t
+                 ))
+  ;; `immediate' 即可输入标题和日期，生成一个笔记
+  (setq org-roam-capture-immediate-template
+        '("d" "default" plain (function org-roam-capture--get-point)
+          "%?"
+          :file-name "%<%Y%m%d%H%M%S>-${slug}"
+          :head "#+title: ${title}\n#+date: ${date}"
+          :unnarrowed t))
+  ;; `ref' 抓取网页书签到一个用网页标题命名的文件中
+  (setq org-roam-capture-ref-templates
+        '(("r" "ref" plain (function org-roam-capture--get-point)
+           ""
+           :file-name "${slug}"
+           :head "\n#+title: ${title}\n#+roam_key: ${ref}\n"
+           :unnarrowed t)))
+  ;; `content' 抓取一个网页中的内容，多次分别插入到用网页标题命名的文件中
+  (add-to-list 'org-roam-capture-ref-templates
+               '("a" "Annotation" plain (function org-roam-capture--get-point)
+                 "** %U \n${body}\n"
+                 :file-name "${slug}"
+                 :head "\n#+title: ${title}\n#+roam_key: ${ref}\n#+roam_alias:\n"
+                 :immediate-finish t
+                 :unnarrowed t))
   :bind (:map org-roam-mode-map
               (("C-c n l" . org-roam)
                ("C-c n f" . org-roam-find-file)
@@ -400,8 +445,6 @@ Built with %c.
 ;;   (setq org-roam-server-port 9090)
 ;;   (org-roam-server-mode))
 
-;; (use-package org-roam-protocol
-;;   :after org-protocol)
 
 ;; (use-package company-org-roam
 ;;   :after org-roam)
