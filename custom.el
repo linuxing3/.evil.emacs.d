@@ -22,7 +22,7 @@
      ("TEMP" . "#b1951d")
      ("FIXME" . "#dc752f")
      ("XXX+" . "#dc752f")
-     ("\\?\\?\\?+" . "#dc752f")))
+     ("\\?\\?\\?+" . "#dc752f")) t)
  '(jdee-db-active-breakpoint-face-colors (cons "#191C25" "#81A1C1"))
  '(jdee-db-requested-breakpoint-face-colors (cons "#191C25" "#A3BE8C"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#191C25" "#434C5E"))
@@ -34,7 +34,7 @@
  '(org-fontify-todo-headline nil)
  '(org-support-shift-select t)
  '(package-selected-packages
-   '(org-roam-protocol lsp-mode yasnippet lsp-treemacs lsp-ui lsp-ivy projectile hydra flycheck company avy which-key dap-mode))
+   '(hl-todo lsp-mode yasnippet lsp-treemacs lsp-ui lsp-ivy projectile hydra flycheck company avy which-key dap-mode))
  '(pdf-view-midnight-colors (cons "#ECEFF4" "#2E3440"))
  '(rustic-ansi-faces
    ["#2E3440" "#BF616A" "#A3BE8C" "#EBCB8B" "#81A1C1" "#B48EAD" "#88C0D0" "#ECEFF4"])

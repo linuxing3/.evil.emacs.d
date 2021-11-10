@@ -41,7 +41,7 @@
     (delete-process it)))
 
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
-;; 日志 Journal
+;; NOTE: 日志 Journal  ---- 已迁移到hugo
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (defun +modern-org-journal-new-journal ()
   "Create the journal in a specific directory, then your can export ..."
@@ -91,7 +91,7 @@
                    (require 'org-journal nil t)))
           (org-journal-is-journal))))
 
-  (setq org-journal-dir (dropbox-path "org/journal/")
+  (setq org-journal-dir (workspace-path "awesome-hugo-blog/contents/journal/")
         org-journal-cache-file (dropbox-path "org/journal/"))
 
   :config
@@ -135,7 +135,7 @@
   )
 
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
-;; ✿ 演示文稿
+;; ✿ NOTE: 演示文稿
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (use-package ox-reveal
   :init
@@ -144,7 +144,7 @@
 
 
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
-;; ✿ Brain配置
+;; ✿ NOTE: Brain配置
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (use-package org-brain
   :ensure t
@@ -167,7 +167,7 @@
 (use-package org-download :ensure t)
 
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
-;; ✿ 发布网站
+;; ✿ NOTE: 发布网站
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 
 (use-package htmlize)
@@ -344,8 +344,10 @@ Built with %c.
           ("[Blog] Github Page Hugo" :components ("hugo-blog" "hugo-images" "hugo-assets"))
           ))
 
-  )
+  ) ;; org-public config ends here
 
+;;
+;;; NOTE: `构建自己的知识网络'
 
 (use-package emacsql-sqlite3)
 ;;
@@ -379,11 +381,11 @@ Built with %c.
   (setq org-roam-dailies-capture-templates
         '(("d" "default" entry #'org-roam-capture--get-point "* %?"
            :file-name "daily/%<%Y-%m-%d>"
-           :head "#+title: ${title}\n#+date: ${time} \n#+roam_alias: \n#+roam_tags: \n"
+           :head "#+title: \n#+date: %<%Y-%m-%d-%Z>\n"
            :unnarrowed t)
           ("x" "private" entry #'org-roam-capture--get-point "* %?"
            :file-name "daily/%<%Y-%m-%d>"
-           :head "#+title: ${title}\n#+date: ${time} \n#+roam_alias: \n#+roam_tags: \n"
+           :head "#+title: \n#+date: %<%Y-%m-%d-%Z>\n"
            :unnarrowed t)))
   ;; `file' 自定义笔记模板 - 2021-11-10-title.org
   (setq org-roam-capture-templates
@@ -423,7 +425,7 @@ Built with %c.
            :file-name "${slug}"
            :head "\n#+title: ${title}\n#+roam_key: ${ref}\n"
            :unnarrowed t)))
-  ;; `content' 抓取一个网页中的内容，多次分别插入到用网页标题命名的文件中
+  ;; `content'  抓取一个网页中的内容，多次分别插入到用网页标题命名的文件中
   (add-to-list 'org-roam-capture-ref-templates
                '("a" "Annotation" plain (function org-roam-capture--get-point)
                  "** %U \n${body}\n"
@@ -439,14 +441,21 @@ Built with %c.
               (("C-c n i" . org-roam-insert))
               (("C-c n I" . org-roam-insert-immediate))))
 
-;; (use-package org-roam-server
-;;   :config
-;;   (setq org-roam-server-host "127.0.0.1")
-;;   (setq org-roam-server-port 9090)
-;;   (org-roam-server-mode))
-
-
-;; (use-package company-org-roam
-;;   :after org-roam)
+;; TODO: 使用server进行roam网页互动
+(use-package org-roam-server
+  :load-path "~/workspace/org-roam-server"
+  :ensure nil
+  :config
+  (setq org-roam-server-host "127.0.0.1"
+        org-roam-server-port 10000
+        org-roam-server-authenticate nil
+        org-roam-server-export-inline-images t
+        org-roam-server-serve-files nil
+        org-roam-server-served-file-extensions '("pdf" "mp4" "ogv")
+        org-roam-server-network-poll t
+        org-roam-server-network-arrows nil
+        org-roam-server-network-label-truncate t
+        org-roam-server-network-label-truncate-length 60
+        org-roam-server-network-label-wrap-length 20)) ;; org roam config ends here
 
 (provide 'org+fancy-app)
