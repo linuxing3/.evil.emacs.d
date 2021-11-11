@@ -41,7 +41,7 @@
  '(org-support-shift-select t)
  '(package-selected-packages
    (quote
-    (emacsql-sqlite3 prodigy company-org-roam org-roam-protocol org-roam-server org-roam ob-deno ob-rust ob-go wgrep ox-hugo youdao-dictionary lsp-mode yasnippet lsp-treemacs lsp-ui lsp-ivy projectile hydra flycheck company avy which-key dap-mode)))
+    (exato evil-visualstar evil-textobj-anyblock evil-snipe evil-surround evil-escape evil-leader evil spaceline page-break-lines nyan-mode highlight-indent-guides info-colors all-the-icons-dired emacsql-sqlite3 prodigy company-org-roam org-roam-protocol org-roam-server org-roam ob-deno ob-rust ob-go wgrep ox-hugo youdao-dictionary lsp-mode yasnippet lsp-treemacs lsp-ui lsp-ivy projectile hydra flycheck company avy which-key dap-mode)))
  '(pdf-view-midnight-colors (cons "#ECEFF4" "#2E3440"))
  '(rustic-ansi-faces
    ["#2E3440" "#BF616A" "#A3BE8C" "#EBCB8B" "#81A1C1" "#B48EAD" "#88C0D0" "#ECEFF4"])
