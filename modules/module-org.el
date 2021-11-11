@@ -88,9 +88,10 @@
           ("[已修复]" . (:foreground "LimeGreen" :weight bold))
           ))
 
-  (setq-default org-display-custom-times t)
-  (setq org-time-stamp-custom-formats '("<%Y-%m-%d>" . "<%Y-%m-%d %H:%M>"))
-  (setq org-indirect-buffer-display 'current-window
+  ;; FIXME: 如果启用自定义时间格式，将无法在时间内部进行修改
+  ;; (setq-default org-display-custom-times t)
+  ;; (setq org-time-stamp-custom-formats '("<%Y-%m-%d>" . "<%Y-%m-%d %H:%M>"))
+   (setq org-indirect-buffer-display 'current-window
         org-eldoc-breadcrumb-separator " → "
         org-enforce-todo-dependencies t
         org-entities-user
