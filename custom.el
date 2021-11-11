@@ -28,8 +28,7 @@
  '(jdee-db-spec-breakpoint-face-colors (cons "#191C25" "#434C5E"))
  '(menu-bar-mode nil)
  '(objed-cursor-color "#BF616A")
- '(org-agenda-files
-   '("~/OneDrive/org/habit.agenda.org" "c:/Users/wjb/OneDrive/org/xingwenju.agenda.org" "c:/Users/wjb/OneDrive/org/works.agenda.org" "c:/Users/wjb/OneDrive/org/projects.agenda.org" "c:/Users/wjb/OneDrive/org/lulu.agenda.org" "c:/Users/wjb/OneDrive/org/inbox.agenda.org" "c:/Users/wjb/OneDrive/org/daniel.agenda.org"))
+ '(org-agenda-files nil)
  '(org-fontify-done-headline nil)
  '(org-fontify-todo-headline nil)
  '(org-support-shift-select t)

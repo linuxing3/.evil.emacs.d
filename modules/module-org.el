@@ -1,4 +1,4 @@
-;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+﻿;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; `现代基本配置'
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 
@@ -8,7 +8,7 @@
 
 (defun +modern-org-config-h()
   ;; 设定`org的目录'
-  (setq org-directory (dropbox-path "org"))
+  (setq org-directory "~/org")
   ;; 设定`journal的目录'
   (defvar org-journal-base-dir nil
     "Netlify gridsome base directory")
@@ -21,11 +21,13 @@
   (setq org-hugo-base-dir (workspace-path "awesome-hugo-blog"))
 
   ;; 设定`agenda相关目录'
-  (setq diary-file (dropbox-path "org/diary"))
-  (setq
-   org-agenda-diary-file (dropbox-path "org/diary")
-   org-agenda-files (directory-files org-directory t "\\.agenda\\.org$" t))
-  (setq org-archive-location (dropbox-path "org/archived/%s_archive::")))
+  (setq diary-file "~/org/diary")
+  (setq org-agenda-diary-file "~/org/diary")
+  
+  (setq org-agenda-files (directory-files org-directory t "\\.agenda\\.org$" t))
+  (add-to-list 'org-agenda-files (dropbox-path "works.agenda.org"))
+  
+  (setq org-archive-location "~/org/archived/%s_archive::"))
 
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; `现代Babel配置'

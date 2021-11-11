@@ -132,7 +132,7 @@
 
   ;; `生活学习相关模板'
   (add-to-list 'org-capture-templates '("x" "Extra"))
-  (setq anki-org-file (dropbox-path "org/anki.org"))
+  (setq anki-org-file "~/org/anki.org")
   (add-to-list 'org-capture-templates
                `("xv"
                  "🏁 Vocabulary"
@@ -140,7 +140,7 @@
                  (file+headline anki-org-file "Vocabulary")
                  ,(concat "* %^{heading} :note:\n"
                           "%(generate-anki-note-body)\n")))
-  (setq snippets-org-file (dropbox-path "org/snippets.org"))
+  (setq snippets-org-file "~/org/snippets.org")
   (add-to-list 'org-capture-templates
                '("xs"
                  "🐞 Snippets"
@@ -149,7 +149,7 @@
                  (file "~/.evil.emacs.d/assets/capture-template/snippet.template")
                  ;; "* %?\t%^g\n #+BEGIN_SRC %^{language}\n\n#+END_SRC"
                  :jump-to-captured t))
-  (setq billing-org-file (dropbox-path "org/billing.org"))
+  (setq billing-org-file "~/org/billing.org")
   (add-to-list 'org-capture-templates
                '("xb"
                  "💰 Billing"
@@ -159,7 +159,7 @@
                  ;; " | %U | %^{类别} | %^{描述} | %^{金额} |"
                  :jump-to-captured t))
 
-  (setq contacts-org-file (dropbox-path "org/contacts.org"))
+  (setq contacts-org-file "~/org/contacts.org")
   (add-to-list 'org-capture-templates
                '("xc"
                  "😂 Contacts"
@@ -181,12 +181,12 @@
                  :kill-buffer t))
 
   ;; `发布博客和日志相关'
-  (setq blog-org-dir (dropbox-path "org/journal/"))
+  (setq blog-org-dir  "~/org/roam/daily/")
   (add-to-list 'org-capture-templates
                `("xh"
                  "🏁 Hugo"
                  plain
-                 (file ,(concat blog-org-dir (format-time-string "%Y%m%d.md"))) ;; Markdown file
+                 (file ,(concat blog-org-dir (format-time-string "%Y-%m-%d.md"))) ;; Markdown file
                  ,(concat "---
 title: %^{Title}
 date: %U
@@ -200,7 +200,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                `("xx"
                  "🏁 Blog"
                  plain
-                 (file ,(concat blog-org-dir (format-time-string "%Y%m%d.org"))) ;; Org file
+                 (file ,(concat blog-org-dir (format-time-string "%Y-%m-%d.org"))) ;; Org file
                  ,(concat "#+DATE: %U
 #+TITLE: %^{Title}
 #+AUTHOR: linuxing3
@@ -228,7 +228,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
   ;; `annotation'	 靠 link 和 description 完成的 org 格式的链接
   ;; `initial'	     链接上选中的文本，在 org-protocol 里的 body 字段
   ;; `query'	     org-protocol 上除掉开头和子协议部分的剩下部分
-  (setq links-org-file (dropbox-path "org/links.org"))
+  (setq links-org-file "~/org/links.org")
   (add-to-list 'org-capture-templates '("p" "Protocol"))
   ;; 最简单的情况是用 org-capture 来做`网页书签管理'，记录下`网页的标题和链接'
   (add-to-list 'org-capture-templates
@@ -266,7 +266,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
 
   ;; `家人+行事历相关'
   ;; (add-to-list 'org-capture-templates '("t" "Tasks → → → → → → → → → → → → → → →"))
-  (setq daniel-org-file (dropbox-path "org/daniel.agenda.org"))
+  (setq daniel-org-file "~/org/daniel.agenda.org")
   (add-to-list 'org-capture-templates
                '("s"                                              ; hotkey
                  "👦 Son's Task"                               ; title
@@ -274,7 +274,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  (file+headline daniel-org-file "Tasks") ; target
                  (file "~/.evil.emacs.d/assets/capture-template/todo.template")
                  :jump-to-captured t))
-  (setq lulu-org-file (dropbox-path "org/lulu.agenda.org"))
+  (setq lulu-org-file "~/org/lulu.agenda.org")
   (add-to-list 'org-capture-templates
                '("l"
                  "👩 Wife Lulu's Task"
@@ -284,7 +284,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  :jump-to-captured t))
 
   ;; `常用快捷抓取模板'
-  (setq phone-org-file (dropbox-path "org/phone.org"))
+  (setq phone-org-file "~/org/phone.org")
   (add-to-list 'org-capture-templates
                '("P"
                  "📱 My Phone calls"
@@ -294,7 +294,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  :immediate-finish t
                  :jump-to-captured t
                  :new-line 1))
-  (setq habit-org-file (dropbox-path "org/habit.agenda.org"))
+  (setq habit-org-file "~/org/habit.agenda.org")
   (add-to-list 'org-capture-templates
                '("h"
                  "🎶 My Habit"
@@ -305,7 +305,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  :jump-to-captured t
                  :immediate-finish t
                  :new-line 1))
-  (setq my-org-file (dropbox-path "org/xingwenju.agenda.org"))
+  (setq my-org-file "~/org/xingwenju.agenda.org")
   (add-to-list 'org-capture-templates
                '("r"
                  "☠ My Book Reading Task"
@@ -315,7 +315,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  :jump-to-captured t
                  :immediate-finish t
                  :new-line t))
-  (setq notes-org-file (dropbox-path "org/notes.agenda.org"))
+  (setq notes-org-file "~/org/notes.agenda.org")
   (add-to-list 'org-capture-templates
                '("n"
                  "❉ My Notes"
@@ -326,7 +326,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  :jump-to-captured t
                  :immediate-finish t
                  :new-line 1))
-  (setq tmp-projects-org-file (dropbox-path "org/projects.agenda.org"))
+  (setq tmp-projects-org-file  "~/org/projects.agenda.org")
   (add-to-list 'org-capture-templates
                '("p"
                  "📓 My Work Projects"
@@ -335,7 +335,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  (file "~/.evil.emacs.d/assets/capture-template/project.template")
                  :jump-to-captured t
                  :empty-line 1))
-  (setq works-org-file (dropbox-path "org/works.agenda.org"))
+  (setq works-org-file (dropbox-path "works.agenda.org")) ;; NOTE: 工作内容不得公开
   (add-to-list 'org-capture-templates
                '("w"
                  "⏰ My Work Task"
@@ -344,7 +344,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  (file "~/.evil.emacs.d/assets/capture-template/basic.template")
                  :jump-to-captured t
                  :immediate-finish t))
-  (setq inbox-org-file (dropbox-path "org/inbox.agenda.org"))
+  (setq inbox-org-file  "~/org/inbox.agenda.org")
   (add-to-list 'org-capture-templates
                '("i"
                  "⏰ My GTD Inbox"
