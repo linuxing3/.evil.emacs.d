@@ -18,26 +18,22 @@
 
 ;;; Code:
 
-
-
-;; ;; ---------------------------------------------------------
-;; ;; 自动加载帮助器
-;; ;; ---------------------------------------------------------
-(require 'module-helper)
-(require 'module-lib)
+(when (version< emacs-version "26.1")
+  (progn
+	(add-to-list 'load-path (concat (file-name-directory load-file-name) "core"))
+	(add-to-list 'load-path (concat (file-name-directory load-file-name) "modules"))))
 
 ;; ;; ---------------------------------------------------------
-;; ;; 包管理器
+;; ;; 自动加载核心库
 ;; ;; ---------------------------------------------------------
-(require 'module-packages)
+(require 'core)
 
 ;; ;; ---------------------------------------------------------
 ;; ;; 功能模块
 ;; ;; ---------------------------------------------------------
 
-(require 'module-base)
 (require 'module-ui)
-(require 'module-evil)
+;; (require 'editor+dired)
 
 ;; ;; ---------------------------------------------------------
 ;; ;; Org功能模块
@@ -48,18 +44,18 @@
 ;; ;; ---------------------------------------------------------
 ;; ;; 编程模块
 ;; ;; ---------------------------------------------------------
-(require 'module-project)
-(require 'module-completion)
-(require 'module-snippets)
-(require 'module-format)
-(require 'module-coding)
-(require 'module-service)
+;; (require 'module-project)
+;; (require 'module-completion)
+;; (require 'module-snippets)
+;; (require 'module-format)
+;; (require 'module-coding)
+;; (require 'module-service)
 
 ;; ;; ---------------------------------------------------------
 ;; ;; App模块
 ;; ;; ---------------------------------------------------------
-(require 'module-app)
+;; (require 'module-app)
 ;; ;; ---------------------------------------------------------
 ;; ;; 快捷键绑定
 ;; ;; ---------------------------------------------------------
-(require 'module-keybinds)
+;; (require 'module-keybinds)
