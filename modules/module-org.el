@@ -89,7 +89,7 @@
           ))
 
   (setq-default org-display-custom-times t)
-  (setq org-time-stamp-custom-formats '("<%a %b %e %Y>" . "<%a %b %e %Y %H:%M>"))
+  (setq org-time-stamp-custom-formats '("<%Y-%m-%d>" . "<%Y-%m-%d %H:%M>"))
   (setq org-indirect-buffer-display 'current-window
         org-eldoc-breadcrumb-separator " → "
         org-enforce-todo-dependencies t
