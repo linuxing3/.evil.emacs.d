@@ -148,7 +148,7 @@
                  (file snippets-org-file)
                  (file "~/.evil.emacs.d/assets/capture-template/snippet.template")
                  ;; "* %?\t%^g\n #+BEGIN_SRC %^{language}\n\n#+END_SRC"
-                 :kill-buffer t))
+                 :jump-to-captured t))
   (setq billing-org-file (dropbox-path "org/billing.org"))
   (add-to-list 'org-capture-templates
                '("xb"
@@ -157,7 +157,7 @@
                  (file+function billing-org-file find-month-tree)
                  (file "~/.evil.emacs.d/assets/capture-template/billing.template")
                  ;; " | %U | %^{类别} | %^{描述} | %^{金额} |"
-                 :kill-buffer t))
+                 :jump-to-captured t))
 
   (setq contacts-org-file (dropbox-path "org/contacts.org"))
   (add-to-list 'org-capture-templates
@@ -167,7 +167,8 @@
                  (file contacts-org-file)
                  (file "~/.evil.emacs.d/assets/capture-template/contact.template")
                  ;; "* %^{姓名} %^{手机号}p %^{邮箱}p %^{住址}p %^{微信}p %^{微博}p %^{whatsapp}p\n\n  %?"
-                 :empty-lines 1 :kill-buffer t))
+                 :empty-lines 1
+                 :kill-buffer t))
 
   (setq password-org-file (dropbox-path "org/password.cpt.org"))
   (add-to-list 'org-capture-templates
@@ -176,7 +177,8 @@
                  entry
                  (file password-org-file)
                  "* %U - %^{title} %^G\n\n  - 用户名: %^{用户名}\n  - 密码: %(get-or-create-password)"
-                 :empty-lines 1 :kill-buffer t))
+                 :empty-lines 1
+                 :kill-buffer t))
 
   ;; `发布博客和日志相关'
   (setq blog-org-dir (dropbox-path "org/journal/"))
@@ -238,6 +240,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  ;; "* %t %:description\nlink: %l \n\n%i\n"
                  "** %? [[%:link][%:description]] \nCaptured On: %U"
                  ;; "* %U - %:annotation"
+                 :jump-to-captured t
                  :empty-line 1))
 
   ;; `选中网页上的内容'，通过 org-protocol 和 org-capture 快速记录到笔记中
@@ -247,6 +250,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  entry
                  (file+headline links-org-file "Bookmarks")
                  "** %U - %:annotation"
+                 :jump-to-captured t
                  :empty-line 1))
 
   ;; 一个网页上有多处内容都选中, `将同一个网页的内容都按顺序放置到同一个headline里面'
@@ -256,6 +260,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  plain
                  (file+function links-org-file org-capture-template-goto-link)
                  "** %? - Captured On:%U\n\n  %:initial"
+                 :jump-to-captured t
                  :empty-line 1))
 
 
@@ -267,14 +272,16 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  "👦 Son's Task"                               ; title
                  entry                                             ; type
                  (file+headline daniel-org-file "Tasks") ; target
-                 (file "~/.evil.emacs.d/assets/capture-template/todo.template")))
+                 (file "~/.evil.emacs.d/assets/capture-template/todo.template")
+                 :jump-to-captured t))
   (setq lulu-org-file (dropbox-path "org/lulu.agenda.org"))
   (add-to-list 'org-capture-templates
                '("l"
                  "👩 Wife Lulu's Task"
                  entry
                  (file+headline lulu-org-file "Tasks")
-                 (file "~/.evil.emacs.d/assets/capture-template/todo.template")))
+                 (file "~/.evil.emacs.d/assets/capture-template/todo.template")
+                 :jump-to-captured t))
 
   ;; `常用快捷抓取模板'
   (setq phone-org-file (dropbox-path "org/phone.org"))
@@ -285,6 +292,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  (file+headline phone-org-file "Phone Calls")
                  (file "~/.evil.emacs.d/assets/capture-template/phone.template")
                  :immediate-finish t
+                 :jump-to-captured t
                  :new-line 1))
   (setq habit-org-file (dropbox-path "org/habit.agenda.org"))
   (add-to-list 'org-capture-templates
@@ -294,6 +302,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  (file habit-org-file)
                  (file "~/.evil.emacs.d/assets/capture-template/habit.template")
                  ;; "* %^{Habit cards|music|balls|games}\n  %?"
+                 :jump-to-captured t
                  :immediate-finish t
                  :new-line 1))
   (setq my-org-file (dropbox-path "org/xingwenju.agenda.org"))
@@ -303,7 +312,9 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  entry
                  (file+headline my-org-file "Reading")
                  "** TODO %^{书名}\n%u\n%a\n"
-                 :immediate-finish t))
+                 :jump-to-captured t
+                 :immediate-finish t
+                 :new-line t))
   (setq notes-org-file (dropbox-path "org/notes.agenda.org"))
   (add-to-list 'org-capture-templates
                '("n"
@@ -312,6 +323,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  (file notes-org-file)
                  (file "~/.evil.emacs.d/assets/capture-template/notes.template")
                  ;; "* %^{Loggings For...} %t %^g\n  %?"
+                 :jump-to-captured t
                  :immediate-finish t
                  :new-line 1))
   (setq tmp-projects-org-file (dropbox-path "org/projects.agenda.org"))
@@ -321,6 +333,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  entry
                  (file+headline works-org-file "Projects")
                  (file "~/.evil.emacs.d/assets/capture-template/project.template")
+                 :jump-to-captured t
                  :empty-line 1))
   (setq works-org-file (dropbox-path "org/works.agenda.org"))
   (add-to-list 'org-capture-templates
@@ -329,6 +342,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  entry
                  (file+headline works-org-file "Tasks")
                  (file "~/.evil.emacs.d/assets/capture-template/basic.template")
+                 :jump-to-captured t
                  :immediate-finish t))
   (setq inbox-org-file (dropbox-path "org/inbox.agenda.org"))
   (add-to-list 'org-capture-templates
@@ -339,9 +353,10 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  (file "~/.evil.emacs.d/assets/capture-template/inbox.template")
                  ;; "* [#%^{Priority}] %^{Title} %^g\n SCHEDULED:%U %?\n"
                  :immediate-finish t
+                 :jump-to-captured t
                  :new-line 1))
   ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
-  )
+  ) ;; capture templates config ends here
 
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; 📅 Agenda 配置
@@ -474,7 +489,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                       (org-super-agenda-groups
                        `(
                          (:name "电脑相关" :tag ("COMPUTER" "@computer"))
-                         (:discard (:anything t)))))))))))
+                         (:discard (:anything t))))))))))) ;; Agenda config ends here
 
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; ☀ 美化配置
@@ -603,6 +618,6 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
 					                          ("B." . "-")
 					                          ("a." . "-")
 					                          ("b." . "-"))))
-  )
+  ) ;; tag config ends here
 
 (provide 'org+fancy-function)

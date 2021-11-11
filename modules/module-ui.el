@@ -258,6 +258,23 @@
   (spaceline-toggle-evil-state-on))
 
 
+(use-package hl-todo
+  :hook (prog-mode . hl-todo-mode)
+  :commands hl-todo-mode
+  :config
+  (setq hl-todo-highlight-punctuation ":"
+        hl-todo-keyword-faces
+        `(("TODO"  . ,(face-foreground 'warning))
+          ("FIXME" . ,(face-foreground 'error))
+          ("HACK"  . ,(face-foreground 'font-lock-constant-face))
+          ("REVIEW"  . ,(face-foreground 'font-lock-keyword-face))
+          ("NOTE"  . ,(face-foreground 'success))
+          ("DEPRECATED" . ,(face-foreground 'font-lock-doc-face))))
+  (when hl-todo-mode
+        (hl-todo-mode -1)
+        (hl-todo-mode +1)))
+
+
 ;; bootstrap
 (+modern-ui-emojify-h)
 (+modern-ui-chinese-h)
