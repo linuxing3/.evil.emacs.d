@@ -92,6 +92,7 @@
  "C-z" #'evil-undo
  "C-n" #'tab-bar-new-tab
  "C-w" #'tab-bar-close-tab
+ "C-m" #'tab-bar-close-tab
  "C-S-z" #'evil-redo
  )
 
