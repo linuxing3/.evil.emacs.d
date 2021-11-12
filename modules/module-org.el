@@ -6,6 +6,24 @@
 (use-package ob-rust)
 (use-package ob-deno)
 
+(defun +modern-org-gh-pull ()
+  "Pull org files from github."
+  (interactive)
+  (with-dir org-directory
+            (shell-command "cd " org-directory)
+            (shell-command "git add .")
+            (--> (current-time-string)
+                 (concat "git commit -m \"" it "\"")
+                 (shell-command it))
+            (shell-command "git push")))
+
+(defun +modern-org-gh-push ()
+  "Push org files to github"
+  (interactive)
+  (with-dir org-directory
+            (shell-command "cd " org-directory)
+            (shell-command "git pull")))
+
 (defun +modern-org-config-h()
   ;; 设定`org的目录'
   (setq org-directory "~/org")

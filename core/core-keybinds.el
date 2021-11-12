@@ -70,6 +70,7 @@
  "M-w"       #'delete-window ;; 删除窗口
  "M-2"       #'split-window-right ;; 垂直分割窗口
  "M-1"       #'delete-window ;; 删除窗口
+ "M-p"       #'ace-window ;; 删除窗口
  "M-W"   (if (daemonp) #'delete-frame #'evil-quit-all) ;; 删除帧
  )
 
