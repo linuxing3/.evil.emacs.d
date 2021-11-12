@@ -17,7 +17,7 @@
 (use-package which-key
   :ensure t
   :init
-  (setq which-key-separator " ")
+  (setq which-key-separator " |> ")
   (setq which-key-prefix-prefix "+")
   :config
   (which-key-mode))
@@ -28,15 +28,6 @@
   :states  '(emacs normal hybrid motion visual operator)
   :prefix  "SPC"
   :non-normal-prefix "S-SPC")
-
-;; `全局leader'键，使用SPC-m，获取特定major-mode的按键绑定
-(general-create-definer global-space-m-leader
-  :keymaps 'override
-  :states '(emacs normal hybrid motion visual operator)
-  :prefix "SPC m"
-  "" '(:ignore t :which-key (lambda (arg)
-                              `(,(cadr (split-string (car arg) " ")) .
-                                ,(replace-regexp-in-string "-mode$" "" (symbol-name major-mode))))))
 
 (general-define-key
  :states '(normal visual insert emacs)
@@ -56,9 +47,9 @@
  "C-j"     #'evil-window-down
  "C-k"     #'evil-window-up
  "C-l"     #'evil-window-right
- "C-w"     #'ace-window
- "C-q"     #'delete-window
- "C-S-w"   #'ace-swap-window
+ "C-w"     #'evil-window-next
+ "C-q"     #'evil-window-delete
+ "C-S-w"   #'evil-window-mru
  ;; Delete window
  "M-c"   #'evil-yank     ;; 粘贴
  "M-v"   #'evil-paste-after ;; 粘贴
@@ -141,6 +132,16 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
      (,(intern (concat "+general-global-" name))
       ,@body)))
 
+
+;; * Prefix Keybindings
+;; :prefix can be used to prevent redundant specification of prefix keys
+(general-define-key
+ :prefix "C-c"
+ ;; bind "C-c a" to 'org-agenda
+ "a" 'org-agenda
+ "b" 'counsel-bookmark
+ "c" 'org-capture)
+
 ;; 以下快捷键需要先按SPC-<KEY>后出现
 
 ;; Buffers
@@ -163,8 +164,25 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "TAB" '((lambda () (interactive) (switch-to-buffer nil))
           :which-key "其他缓冲区"))
 
+(+general-global-menu! "magit" "g"
+  "s" '(magit-status :which-key "Status"))
+
 (+general-global-menu! "file" "f"
-  "f" '(counsel-find-file :which-key "找到打开文件")
+  "f" '(:ignore t :which-key "找到打开文件")
+  "v" '((lambda () (interactive) (find-file "~/VirtualBox VMs/coder")) :which-key "Virtualbox dir")
+  "e" '((lambda () (interactive) (find-file "~/EnvSetup")) :which-key "EnvSetup dir")
+  "o" '((lambda () (interactive) (find-file "~/org")) :which-key "org dir")
+  "O" '((lambda () (interactive) (find-file "~/OneDrive")) :which-key "OneDrive dir")
+  "w" '((lambda () (interactive) (find-file "~/workspace")) :which-key "workspace dir")
+  "D" '((lambda () (interactive) (find-file "~/.doom.d")) :which-key "doom.d Dir")
+  "M" '((lambda () (interactive) (find-file "~/.doom.emacs.d")) :which-key "doom.emacs.d Dir")
+  "I" '((lambda () (interactive) (find-file "~/.emacs.d/init.el")) :which-key "emacs.d/init.el")
+  "i" '((lambda () (interactive) (find-file "~/.evil.emacs.d/init.el")) :which-key "evil.emacs.d/init.el")
+  "e" '((lambda () (interactive)
+	  (if IS-WINDOWS 
+	      (find-file "~/emacs-repos/emacs-from-scratch/Emacs.org")
+	    (find-file "~/.scratch.emacs.d/Emacs.org")))
+	:which-key "scratch.emacs.d/Emacs.org")
   "." '(counsel-find-file :which-key "找到打开文件")
   "/" '(projectile-find-file :which-key "找到项目文件")
   "?" '(counsel-file-jump :which-key "查找本地文件")
@@ -274,48 +292,57 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "b" '(browse-url-of-file :which-key "Default Browser")
   "n" '(toggle-neotree :which-key "Neotree Browser")
   ;; timer en place of pomodoro
+  "t" '(:ignore t :which-key "Timer")
   "tt" '(org-timer-set-timer :which-key "Set timer")
   "ts" '(org-timer-start :which-key "Start timer")
   "tS" '(org-timer-stop :which-key "Stop timer")
   "tp" '(org-timer-pause-or-continue :which-key "Pause or continue timer")
   ;; hugo blog
+  "h" '(:ignore t :which-key "Hugo blog")
   "hd" '(+modern-blog-hugo-deploy :which-key "Hugo deploy")
   "hs" '(+modern-blog-hugo-start-server :which-key "Hugo serer")
   "hk" '(+modern-blog-hugo-end-server :which-key "Hugo kill server")
   "hx" '(org-hugo-export-to-md :which-key "Hugo export")
+  "ho" '((lambda () (interactive)
+	   (progn ((org-hugo-export-to-md) (+modern-blog-hugo-deploy)))) :which-key "Hugo export")
   ;; Prodiy service
+  "p" '(:ignore t :which-key "Prodigy")
   "pb" '(prodigy :which-key "Prodigy Browse")
   "ps" '(prodigy-start :which-key "Prodigy start")
   "pS" '(prodigy-stop :which-key "Prodigy stop")
   ;; translate
-  "ys" '(youdao-dictionary-search-at-point :which-key "Seach youdao")
+  "y" '(youdao-dictionary-search-at-point :which-key "Seach youdao")
   )
 
+;; `全局leader'键，使用SPC-m，获取特定major-mode的按键绑定
+;; (general-create-definer global-space-m-leader
+;;   :keymaps 'override
+;;   :states '(emacs normal hybrid motion visual operator)
+;;   :prefix "SPC m"
+;;   "" '(:ignore t :which-key (lambda (arg)
+;;                               `(,(cadr (split-string (car arg) " ")) .
+;;                                 ,(replace-regexp-in-string "-mode$" "" (symbol-name major-mode))))))
+
+(defconst my-leader "SPC m")
+
+(general-create-definer space-m-leader-def
+  :keymaps 'override
+  :states '(normal)
+  :prefix "SPC m")
+
 ;; Major-mode特定键
-(use-package elisp-mode
-  :ensure nil
-  :general
-  (global-space-m-leader
-    ;;specify the major modes these should apply to:
-    :major-modes
-    '(emacs-lisp-mode lisp-interaction-mode t)
-    ;;and the keymaps:
-    :keymaps
-    '(emacs-lisp-mode-map lisp-interaction-mode-map)
+  (space-m-leader-def
+    :keymaps 'emacs-lisp-mode-map
     "e" '(:ignore t :which-key "eval")
     "eb" 'eval-buffer
     "ed" 'eval-defun
     "ee" 'eval-expression
     "ep" 'pp-eval-last-sexp
     "es" 'eval-last-sexp
-    "i" 'elisp-index-search))
+    "i" 'elisp-index-search)
 
-(use-package org-mode
-  :ensure nil
-  :general
-  (global-space-m-leader
-    :major-modes '(org-mode t)
-    :keymaps '(org-mode-map)
+  (space-m-leader-def
+    :keymaps 'org-mode-map
     "#" 'org-update-statistics-cookies
     "'" 'org-edit-special
     "*" 'org-ctrl-c-star
@@ -335,57 +362,58 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
     "t" 'org-todo
     "T" 'org-todo-list
     "x" 'org-toggle-checkbox
-    :prefix "c"
-    "c" 'org-clock-cancel
-    "d" 'org-clock-mark-default-task
-    "e" 'org-clock-modify-effort-estimate
-    "E" 'org-set-effort
-    "g" 'org-clock-goto
-    "i" 'org-clock-in
-    "I" 'org-clock-in-last
-    "o" 'org-clock-out
-    "r" 'org-resolve-clocks
-    "R" 'org-clock-report
-    "t" 'org-evaluate-time-range
-    "=" 'org-clock-timestamps-up
-    "-" 'org-clock-timestamps-down
-    ;; "l" '(:ignore t :which-key "link")
-    :prefix "l"
-    "c" 'org-cliplink
-    "i" 'org-id-store-link
-    "l" 'org-insert-link
-    "L" 'org-insert-all-links
-    "s" 'org-store-link
-    "S" 'org-insert-last-stored-link
-    "t" 'org-toggle-link-display
-    :prefix "d"
-    ;; "d" '(:ignore t :which-key "date")
-    "d" #'org-deadline
-    "s" #'org-schedule
-    "t" #'org-time-stamp
-    "T" #'org-time-stamp-inactive
-    :prefix "s"
-    ;; "t" '(:ignore t :which-key "tree/subtree")
-    "a" #'org-toggle-archive-tag
-    "b" #'org-tree-to-indirect-buffer
-    "c" #'org-clone-subtree-with-time-shift
-    "d" #'org-cut-subtree
-    "h" #'org-promote-subtree
-    "j" #'org-move-subtree-down
-    "k" #'org-move-subtree-up
-    "l" #'org-demote-subtree
-    "n" #'org-narrow-to-subtree
-    "r" #'org-refile
-    "s" #'org-sparse-tree
-    "A" #'org-archive-subtree
-    "N" #'widen
-    "S" #'org-sort
-    :prefix "p"
-    ;; "p" '(:ignore t :which-key "priority")
-    "d" #'org-priority-down
-    "p" #'org-priority
-    "u" #'org-priority-up
-    ))
+    ;;:prefix "c"
+    "c" '(:ignore t :which-key "clock")
+    "cc" 'org-clock-cancel
+    "cd" 'org-clock-mark-default-task
+    "ce" 'org-clock-modify-effort-estimate
+    "cE" 'org-set-effort
+    "cg" 'org-clock-goto
+    "ci" 'org-clock-in
+    "cI" 'org-clock-in-last
+    "co" 'org-clock-out
+    "cr" 'org-resolve-clocks
+    "cR" 'org-clock-report
+    "ct" 'org-evaluate-time-range
+    "c=" 'org-clock-timestamps-up
+    "c-" 'org-clock-timestamps-down
+    ;;:prefix "l"
+    "l" '(:ignore t :which-key "link")
+    "lc" 'org-cliplink
+    "li" 'org-id-store-link
+    "ll" 'org-insert-link
+    "lL" 'org-insert-all-links
+    "ls" 'org-store-link
+    "lS" 'org-insert-last-stored-link
+    "lt" 'org-toggle-link-display
+    ;;:prefix "d"
+    "d" '(:ignore t :which-key "date")
+    "dd" #'org-deadline
+    "ds" #'org-schedule
+    "dt" #'org-time-stamp
+    "dT" #'org-time-stamp-inactive
+    ;;:prefix "s"
+    "s" '(:ignore t :which-key "tree/subtree")
+    "sa" #'org-toggle-archive-tag
+    "sb" #'org-tree-to-indirect-buffer
+    "sc" #'org-clone-subtree-with-time-shift
+    "sd" #'org-cut-subtree
+    "sh" #'org-promote-subtree
+    "sj" #'org-move-subtree-down
+    "sk" #'org-move-subtree-up
+    "sl" #'org-demote-subtree
+    "sn" #'org-narrow-to-subtree
+    "sr" #'org-refile
+    "ss" #'org-sparse-tree
+    "sA" #'org-archive-subtree
+    "sN" #'widen
+    "sS" #'org-sort
+    ;;:prefix "p"
+    "p" '(:ignore t :which-key "priority")
+    "pd" #'org-priority-down
+    "pp" #'org-priority
+    "pu" #'org-priority-up
+    )
 
 (defun +ivy-bindings-h()
   ;; `Ivy-based' interface to shell and system tools
@@ -407,7 +435,6 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   (global-set-key (kbd "C-c g") 'counsel-git)
   (global-set-key (kbd "C-c o") 'counsel-outline)
   (global-set-key (kbd "C-c t") 'counsel-load-theme)
-  (global-set-key (kbd "C-c F") 'counsel-org-file)
-  )
+  (global-set-key (kbd "C-c F") 'counsel-org-file))
 
 (provide 'core-keybinds)
