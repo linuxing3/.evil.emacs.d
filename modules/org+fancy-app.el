@@ -91,7 +91,7 @@
                    (require 'org-journal nil t)))
           (org-journal-is-journal))))
 
-  (setq org-journal-dir (workspace-path "awesome-hugo-blog/contents/journal/")
+  (setq org-journal-dir (workspace-path "awesome-hugo-blog/content/journal/")
         org-journal-cache-file (dropbox-path "org/journal/"))
 
   :config
@@ -102,6 +102,8 @@
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; 番茄时钟
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+(setq org-clock-sound "~/.evil.emacs.d/assets/cound.wav")
+
 (use-package org-pomodoro
   :ensure t
   :config
@@ -214,7 +216,7 @@ Built with %c.
           ;; 关于`org-native-blog'的配置
           ;; 将`org'目录下org文件发布到网站根目录
           ("webroot"
-           :base-directory "~/EnvSetup/org/"
+           :base-directory "~/org/"
            :base-extension "org"
            :publishing-directory "~/workspace/github.io/"
            :publishing-function org-html-publish-to-html
@@ -243,7 +245,7 @@ Built with %c.
 
           ;; 将`org/journal'发布到网站的`blog'目录
           ("blog"
-           :base-directory "~/OneDrive/org/journal/"
+           :base-directory "~/org/journal/"
            :base-extension "org"
            :publishing-directory "~/workspace/github.io/blog/"
            :publishing-function org-html-publish-to-html
@@ -277,7 +279,7 @@ Built with %c.
 
           ;; 将`assets'发布到`网站根目录'
           ("images"
-           :base-directory "~/OneDrive/org/assets/images/"
+           :base-directory "~/OneDrive/shared/assets/images/"
            :base-extension "jpg\\|jpeg\\|gif\\|png"
            :recursive t
            :publishing-directory "~/workspace/github.io/assets/images/"
@@ -285,28 +287,28 @@ Built with %c.
 
 
           ("attach"
-           :base-directory "~/OneDrive/org/assets/attach/"
+           :base-directory "~/OneDrive/shared/assets/attach/"
            :base-extension "html\\|xml\\|css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|zip\\|gz\\|csv\\|m\\|R\\|el"
            :recursive t
            :publishing-directory "~/workspace/github.io/assets/attach/"
            :publishing-function org-publish-attachment)
 
           ("css"
-           :base-directory "~/OneDrive/org/assets/css/"
+           :base-directory "~/OneDrive/shared/assets/css/"
            :base-extension "css"
            :recursive t
            :publishing-directory "~/workspace/github.io/assets/css/"
            :publishing-function org-publish-attachment)
 
           ("js"
-           :base-directory "~/OneDrive/org/assets/js/"
+           :base-directory "~/OneDrive/shared/assets/js/"
            :base-extension "js"
            :recursive t
            :publishing-directory "~/workspace/github.io/assets/js/"
            :publishing-function org-publish-attachment)
 
           ("rss"
-           :base-directory "~/OneDrive/org/blog/"
+           :base-directory "~/org/roam/"
            :base-extension "org"
            :publishing-directory "~/workspace/github.io/blog"
            :recursive t
@@ -317,7 +319,7 @@ Built with %c.
           ;; 关于github网页的配置
           ;; 将`journal'发布到`awesome-hugo-blog'
           ("hugo-blog"
-           :base-directory "~/OneDrive/org/journal/"
+           :base-directory "~/org/roam/diary/"
            :base-extension "org\\|md\\|\\MD\\|markdown"
            :recursive t
            :publishing-directory "~/workspace/awesome-hugo-blog/content/journal/"
@@ -325,7 +327,7 @@ Built with %c.
 
           ;; 将`images'发布到`网站根目录'
           ("hugo-images"
-           :base-directory "~/OneDrive/org/assets/images/"
+           :base-directory "~/OneDrive/shared/assets/images/"
            :base-extension "jpg\\|jpeg\\|gif\\|png\\|mp4\\|mov\\|pdf\\|zip\\|gz\\|doc\\|docx\\|csv"
            :recursive t
            :publishing-directory "~/workspace/awesome-hugo-blog/static/images/"
@@ -333,7 +335,7 @@ Built with %c.
 
           ;; 将`assets'发布到`网站根目录'
           ("hugo-assets"
-           :base-directory "~/OneDrive/org/assets/css/"
+           :base-directory "~/OneDrive/shared/assets/css/"
            :base-extension "css\\|mp4\\|mov\\|pdf\\|zip\\|gz\\|doc\\|docx\\|csv"
            :recursive t
            :publishing-directory "~/workspace/awesome-hugo-blog/assets/css/"
@@ -358,7 +360,7 @@ Built with %c.
   :hook
   (after-init . org-roam-mode)
   :custom
-  (org-roam-directory (dropbox-path "org/roam"))
+  (org-roam-directory "~/org/roam")
   :config
   ;; 实现网页抓取的协议
   (require 'org-roam-protocol)
@@ -379,14 +381,39 @@ Built with %c.
       (format "%s-%s" timestamp slug)))
   ;; `file' 日记模板 - diaries/20211110.org
   (setq org-roam-dailies-capture-templates
-        '(("d" "default" entry #'org-roam-capture--get-point "* %?"
+        '(("d" "默认" entry #'org-roam-capture--get-point "* %?"
            :file-name "daily/%<%Y-%m-%d>"
            :head "#+title: \n#+date: %<%Y-%m-%d-%Z>\n"
            :unnarrowed t)
-          ("x" "private" entry #'org-roam-capture--get-point "* %?"
+          ("x" "个人" entry #'org-roam-capture--get-point "* %?"
            :file-name "daily/%<%Y-%m-%d>"
            :head "#+title: \n#+date: %<%Y-%m-%d-%Z>\n"
-           :unnarrowed t)))
+           :unnarrowed t)
+          ("t" "任务" entry
+           #'org-roam-capture--get-point
+           "* [待办] %?\n  %U\n  %a\n  %i"
+           :file-name "Journal/%<%Y-%m-%d>"
+           :olp ("Tasks")
+           :empty-lines 1
+           :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
+          ("j" "日记" entry
+           #'org-roam-capture--get-point
+           "* %<%I:%M %p> - Journal  :journal:\n\n%?\n\n"
+           :file-name "Journal/%<%Y-%m-%d>"
+           :olp ("Log")
+           :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
+          ("l" "日志" entry
+           #'org-roam-capture--get-point
+           "* %<%I:%M %p> - %?"
+           :file-name "Journal/%<%Y-%m-%d>"
+           :olp ("Log")
+           :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
+          ("m" "会议" entry
+           #'org-roam-capture--get-point
+           "* %<%I:%M %p> - %^{Meeting Title}  :meetings:\n\n%?\n\n"
+           :file-name "Journal/%<%Y-%m-%d>"
+           :olp ("Log")
+           :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")))
   ;; `file' 自定义笔记模板 - 2021-11-10-title.org
   (setq org-roam-capture-templates
         '(("d" "default" plain (function org-roam--capture-get-point)
@@ -436,6 +463,12 @@ Built with %c.
   :bind (:map org-roam-mode-map
               (("C-c n l" . org-roam)
                ("C-c n f" . org-roam-find-file)
+               ("C-c n d"   . org-roam-dailies-find-date)
+               ("C-c n c"   . org-roam-dailies-capture-today)
+               ("C-c n C r" . org-roam-dailies-capture-tomorrow)
+               ("C-c n t"   . org-roam-dailies-find-today)
+               ("C-c n y"   . org-roam-dailies-find-yesterday)
+               ("C-c n r"   . org-roam-dailies-find-tomorrow)
                ("C-c n g" . org-roam-graph))
               :map org-mode-map
               (("C-c n i" . org-roam-insert))

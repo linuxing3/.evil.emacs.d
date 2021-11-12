@@ -52,4 +52,4 @@
 (use-package exato
   :commands evil-outer-xml-attr evil-inner-xml-attr)
 
-(provide 'module-evil)
+(provide 'core-evil)

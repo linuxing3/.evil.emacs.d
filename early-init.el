@@ -1,6 +1,3 @@
-(when (version< emacs-version "25.1")
-  (error "This requires Emacs 25.1 and above!"))
-
 ;; Speed up startup
 (global-font-lock-mode t)
 (transient-mark-mode t)
@@ -9,12 +6,14 @@
 (when (eq system-type 'windows-nt)
   (setq gc-cons-threshold (* 512 1024 1024))
   (setq gc-cons-percentage 0.5)
-  (run-with-idle-timer 5 t #'garbage-collect) ;; ÏÔÊ¾À¬»ø»ØÊÕÐÅÏ¢£¬Õâ¸ö¿ÉÒÔ×÷Îªµ÷ÊÔÓÃ ;;
+  (run-with-idle-timer 5 t #'garbage-collect) ;; ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ;;
   (setq garbage-collection-messages t))
 
+(when (version< emacs-version "25.1")
+  (error "This requires Emacs 25.1 and above!"))
 
+(add-to-list 'load-path (concat (file-name-directory load-file-name) "core"))
 (add-to-list 'load-path (concat (file-name-directory load-file-name) "modules"))
-(add-to-list 'load-path (concat (file-name-directory load-file-name) "lib"))
 
 (setq custom-file "~/.evil.emacs.d/custom.el")
 (load-file custom-file)

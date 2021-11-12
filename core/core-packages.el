@@ -32,4 +32,4 @@
   :config (auto-compile-on-load-mode))
 
 
-(provide 'module-packages)
+(provide 'core-packages)

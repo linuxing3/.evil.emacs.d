@@ -911,4 +911,4 @@ With PREFIX, cd to project root."
       (if (string-match (car my-pair) buffer-file-name)
           (funcall (cdr my-pair)))))
 
-(provide 'module-helper)
+(provide 'core-helper)
