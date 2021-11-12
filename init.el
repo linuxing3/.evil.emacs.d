@@ -20,8 +20,8 @@
 
 (when (version< emacs-version "26.1")
   (progn
-	(add-to-list 'load-path (concat (file-name-directory load-file-name) "core"))
-	(add-to-list 'load-path (concat (file-name-directory load-file-name) "modules"))))
+    (add-to-list 'load-path (concat (file-name-directory load-file-name) "core"))
+    (add-to-list 'load-path (concat (file-name-directory load-file-name) "modules"))))
 
 ;; ;; ---------------------------------------------------------
 ;; ;; 自动加载核心库
@@ -44,17 +44,17 @@
 ;; ;; ---------------------------------------------------------
 ;; ;; 编程模块
 ;; ;; ---------------------------------------------------------
-;; (require 'module-project)
-;; (require 'module-completion)
-;; (require 'module-snippets)
-;; (require 'module-format)
-;; (require 'module-coding)
-;; (require 'module-service)
+(require 'module-project)
+(require 'module-completion)
+(require 'module-snippets)
+(require 'module-format)
+(require 'module-coding)
+(require 'module-service)
 
 ;; ;; ---------------------------------------------------------
 ;; ;; App模块
 ;; ;; ---------------------------------------------------------
-;; (require 'module-app)
+(require 'module-app)
 ;; ;; ---------------------------------------------------------
 ;; ;; 快捷键绑定
 ;; ;; ---------------------------------------------------------

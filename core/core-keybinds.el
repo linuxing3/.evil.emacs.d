@@ -304,7 +304,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "hk" '(+modern-blog-hugo-end-server :which-key "Hugo kill server")
   "hx" '(org-hugo-export-to-md :which-key "Hugo export")
   "ho" '((lambda () (interactive)
-	   (progn ((org-hugo-export-to-md) (+modern-blog-hugo-deploy)))) :which-key "Hugo export")
+	   (progn (org-hugo-export-to-md) (+modern-blog-hugo-deploy))) :which-key "Hugo export")
   ;; Prodiy service
   "p" '(:ignore t :which-key "Prodigy")
   "pb" '(prodigy :which-key "Prodigy Browse")

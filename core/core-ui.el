@@ -71,12 +71,12 @@
 (setq-default display-line-numbers-widen t)
 
 (setq display-time-world-list
-  '(("Etc/UTC" "UTC")
-    ("America/Los_Angeles" "Seattle")
-    ("America/New_York" "New York")
-    ("Europe/Athens" "Athens")
-    ("Pacific/Auckland" "Auckland")
-    ("Asia/Shanghai" "Shanghai")))
+      '(("Etc/UTC" "UTC")
+	("America/Los_Angeles" "Seattle")
+	("America/New_York" "New York")
+	("Europe/Athens" "Athens")
+	("Pacific/Auckland" "Auckland")
+	("Asia/Shanghai" "Shanghai")))
 (setq display-time-world-time-format "%a, %d %b %I:%M %p %Z")
 
 ;;
@@ -239,7 +239,7 @@
   :hook (after-init . nyan-mode)
   :config
   (setq nyan-wavy-trail t
-		nyan-animate-nyancat t))
+	nyan-animate-nyancat t))
 ;; 竖线
 (use-package page-break-lines
   :ensure t
@@ -279,8 +279,8 @@
           ("NOTE"  . ,(face-foreground 'success))
           ("DEPRECATED" . ,(face-foreground 'font-lock-doc-face))))
   (when hl-todo-mode
-        (hl-todo-mode -1)
-        (hl-todo-mode +1)))
+    (hl-todo-mode -1)
+    (hl-todo-mode +1)))
 
 
 ;; bootstrap

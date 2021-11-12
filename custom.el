@@ -37,7 +37,7 @@
  '(org-support-shift-select t)
  '(package-selected-packages
    (quote
-    (desktop-environment exwm lsp-mode yasnippet lsp-treemacs lsp-ui lsp-ivy projectile hydra flycheck company avy which-key dap-mode)))
+    (super-save perspective desktop-environment exwm lsp-mode yasnippet lsp-treemacs lsp-ui lsp-ivy projectile hydra flycheck company avy which-key dap-mode)))
  '(pdf-view-midnight-colors (cons "#ECEFF4" "#2E3440"))
  '(rustic-ansi-faces
    ["#2E3440" "#BF616A" "#A3BE8C" "#EBCB8B" "#81A1C1" "#B48EAD" "#88C0D0" "#ECEFF4"])
