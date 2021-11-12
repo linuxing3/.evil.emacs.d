@@ -179,7 +179,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "I" '((lambda () (interactive) (find-file "~/.emacs.d/init.el")) :which-key "emacs.d/init.el")
   "i" '((lambda () (interactive) (find-file "~/.evil.emacs.d/init.el")) :which-key "evil.emacs.d/init.el")
   "e" '((lambda () (interactive)
-	  (if IS-WINDOWS 
+	  (if IS-WINDOWS
 	      (find-file "~/emacs-repos/emacs-from-scratch/Emacs.org")
 	    (find-file "~/.scratch.emacs.d/Emacs.org")))
 	:which-key "scratch.emacs.d/Emacs.org")
@@ -302,9 +302,9 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "hd" '(+modern-blog-hugo-deploy :which-key "Hugo deploy")
   "hs" '(+modern-blog-hugo-start-server :which-key "Hugo serer")
   "hk" '(+modern-blog-hugo-end-server :which-key "Hugo kill server")
-  "hx" '(org-hugo-export-to-md :which-key "Hugo export")
+  "hx" '(org-hugo-export-to-md :which-key "Export markdown")
   "ho" '((lambda () (interactive)
-	   (progn (org-hugo-export-to-md) (+modern-blog-hugo-deploy))) :which-key "Hugo export")
+	   (progn (org-hugo-export-to-md) (+modern-blog-hugo-deploy))) :which-key "Export and deploy")
   ;; Prodiy service
   "p" '(:ignore t :which-key "Prodigy")
   "pb" '(prodigy :which-key "Prodigy Browse")
@@ -331,89 +331,89 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   :prefix "SPC m")
 
 ;; Major-mode特定键
-  (space-m-leader-def
-    :keymaps 'emacs-lisp-mode-map
-    "e" '(:ignore t :which-key "eval")
-    "eb" 'eval-buffer
-    "ed" 'eval-defun
-    "ee" 'eval-expression
-    "ep" 'pp-eval-last-sexp
-    "es" 'eval-last-sexp
-    "i" 'elisp-index-search)
+(space-m-leader-def
+  :keymaps 'emacs-lisp-mode-map
+  "e" '(:ignore t :which-key "eval")
+  "eb" 'eval-buffer
+  "ed" 'eval-defun
+  "ee" 'eval-expression
+  "ep" 'pp-eval-last-sexp
+  "es" 'eval-last-sexp
+  "i" 'elisp-index-search)
 
-  (space-m-leader-def
-    :keymaps 'org-mode-map
-    "#" 'org-update-statistics-cookies
-    "'" 'org-edit-special
-    "*" 'org-ctrl-c-star
-    "+" 'org-ctrl-c-minus
-    "," 'org-switchb
-    "." 'counsel-org-goto
-    "/" 'counsel-org-goto-all
-    "A" 'org-archive-subtree
-    "e" 'org-export-dispatch
-    "f" 'org-footnote-action
-    "h" 'org-toggle-heading
-    "i" 'org-toggle-item
-    "I" 'org-id-get-create
-    "n" 'org-store-link
-    "o" 'org-set-property
-    "q" 'org-set-tags-command
-    "t" 'org-todo
-    "T" 'org-todo-list
-    "x" 'org-toggle-checkbox
-    ;;:prefix "c"
-    "c" '(:ignore t :which-key "clock")
-    "cc" 'org-clock-cancel
-    "cd" 'org-clock-mark-default-task
-    "ce" 'org-clock-modify-effort-estimate
-    "cE" 'org-set-effort
-    "cg" 'org-clock-goto
-    "ci" 'org-clock-in
-    "cI" 'org-clock-in-last
-    "co" 'org-clock-out
-    "cr" 'org-resolve-clocks
-    "cR" 'org-clock-report
-    "ct" 'org-evaluate-time-range
-    "c=" 'org-clock-timestamps-up
-    "c-" 'org-clock-timestamps-down
-    ;;:prefix "l"
-    "l" '(:ignore t :which-key "link")
-    "lc" 'org-cliplink
-    "li" 'org-id-store-link
-    "ll" 'org-insert-link
-    "lL" 'org-insert-all-links
-    "ls" 'org-store-link
-    "lS" 'org-insert-last-stored-link
-    "lt" 'org-toggle-link-display
-    ;;:prefix "d"
-    "d" '(:ignore t :which-key "date")
-    "dd" #'org-deadline
-    "ds" #'org-schedule
-    "dt" #'org-time-stamp
-    "dT" #'org-time-stamp-inactive
-    ;;:prefix "s"
-    "s" '(:ignore t :which-key "tree/subtree")
-    "sa" #'org-toggle-archive-tag
-    "sb" #'org-tree-to-indirect-buffer
-    "sc" #'org-clone-subtree-with-time-shift
-    "sd" #'org-cut-subtree
-    "sh" #'org-promote-subtree
-    "sj" #'org-move-subtree-down
-    "sk" #'org-move-subtree-up
-    "sl" #'org-demote-subtree
-    "sn" #'org-narrow-to-subtree
-    "sr" #'org-refile
-    "ss" #'org-sparse-tree
-    "sA" #'org-archive-subtree
-    "sN" #'widen
-    "sS" #'org-sort
-    ;;:prefix "p"
-    "p" '(:ignore t :which-key "priority")
-    "pd" #'org-priority-down
-    "pp" #'org-priority
-    "pu" #'org-priority-up
-    )
+(space-m-leader-def
+  :keymaps 'org-mode-map
+  "#" 'org-update-statistics-cookies
+  "'" 'org-edit-special
+  "*" 'org-ctrl-c-star
+  "+" 'org-ctrl-c-minus
+  "," 'org-switchb
+  "." 'counsel-org-goto
+  "/" 'counsel-org-goto-all
+  "A" 'org-archive-subtree
+  "e" 'org-export-dispatch
+  "f" 'org-footnote-action
+  "h" 'org-toggle-heading
+  "i" 'org-toggle-item
+  "I" 'org-id-get-create
+  "n" 'org-store-link
+  "o" 'org-set-property
+  "q" 'org-set-tags-command
+  "t" 'org-todo
+  "T" 'org-todo-list
+  "x" 'org-toggle-checkbox
+  ;;:prefix "c"
+  "c" '(:ignore t :which-key "clock")
+  "cc" 'org-clock-cancel
+  "cd" 'org-clock-mark-default-task
+  "ce" 'org-clock-modify-effort-estimate
+  "cE" 'org-set-effort
+  "cg" 'org-clock-goto
+  "ci" 'org-clock-in
+  "cI" 'org-clock-in-last
+  "co" 'org-clock-out
+  "cr" 'org-resolve-clocks
+  "cR" 'org-clock-report
+  "ct" 'org-evaluate-time-range
+  "c=" 'org-clock-timestamps-up
+  "c-" 'org-clock-timestamps-down
+  ;;:prefix "l"
+  "l" '(:ignore t :which-key "link")
+  "lc" 'org-cliplink
+  "li" 'org-id-store-link
+  "ll" 'org-insert-link
+  "lL" 'org-insert-all-links
+  "ls" 'org-store-link
+  "lS" 'org-insert-last-stored-link
+  "lt" 'org-toggle-link-display
+  ;;:prefix "d"
+  "d" '(:ignore t :which-key "date")
+  "dd" #'org-deadline
+  "ds" #'org-schedule
+  "dt" #'org-time-stamp
+  "dT" #'org-time-stamp-inactive
+  ;;:prefix "s"
+  "s" '(:ignore t :which-key "tree/subtree")
+  "sa" #'org-toggle-archive-tag
+  "sb" #'org-tree-to-indirect-buffer
+  "sc" #'org-clone-subtree-with-time-shift
+  "sd" #'org-cut-subtree
+  "sh" #'org-promote-subtree
+  "sj" #'org-move-subtree-down
+  "sk" #'org-move-subtree-up
+  "sl" #'org-demote-subtree
+  "sn" #'org-narrow-to-subtree
+  "sr" #'org-refile
+  "ss" #'org-sparse-tree
+  "sA" #'org-archive-subtree
+  "sN" #'widen
+  "sS" #'org-sort
+  ;;:prefix "p"
+  "p" '(:ignore t :which-key "priority")
+  "pd" #'org-priority-down
+  "pp" #'org-priority
+  "pu" #'org-priority-up
+  )
 
 (defun +ivy-bindings-h()
   ;; `Ivy-based' interface to shell and system tools
