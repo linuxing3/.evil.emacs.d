@@ -85,11 +85,13 @@
  "M-z" #'fill-paragraph)
 
 (general-define-key
- :states '(normal visual insert emacs)
+ :states '(normal visual emacs)
  "C-o" #'open-with-external-app
  "C-p" #'counsel-buffer-or-recentf
  "C-f" #'counsel-buffer-or-recentf
  "C-z" #'evil-undo
+ "C-n" #'tab-bar-new-tab
+ "C-w" #'tab-bar-close-tab
  "C-S-z" #'evil-redo
  )
 
@@ -145,7 +147,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
 
 ;; 以下快捷键需要先按SPC-<KEY>后出现
 
-;; Buffers
+;; `buffers'
 (+general-global-menu! "buffer" "b"
   "]" '(next-buffer :which-key "下一缓冲区")
   "[" '(switch-to-prev-buffer :which-key "上一缓冲区")
@@ -165,9 +167,18 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "TAB" '((lambda () (interactive) (switch-to-buffer nil))
           :which-key "其他缓冲区"))
 
-(+general-global-menu! "magit" "g"
+;; `tabs'
+;; built-in keys:
+;; gn -> next tab
+;; gN -> pre tab
+;; C-` -> switch tab
+(+general-global-menu! "tab/magit" "g"
+  "n" '(tab-bar-new-tab :which-key "New tab")
+  "x" '(tab-bar-close-tab :which-key "Close tab")
+  "w" '(tab-bar-close-tab :which-key "Close tab")
   "s" '(magit-status :which-key "Status"))
 
+;; `files'
 (+general-global-menu! "file" "f"
   "f" '(:ignore t :which-key "找到打开文件")
   "v" '((lambda () (interactive) (find-file "~/VirtualBox VMs/coder")) :which-key "Virtualbox dir")
@@ -190,6 +201,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "d" '(dired :which-key "文件目录浏览")
   "r" '(counsel-buffer-or-recentf :which-key "最近使用文件"))
 
+;; `windows'
 (+general-global-menu! "window" "w"
   "l"  '(windmove-right :which-key "move right")
   "h"  '(windmove-left :which-key "move left")
@@ -205,7 +217,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "q"  '(delete-frame :which-key "delete frame"))
 
 
-;; NOTE: org功能模块
+;; NOTE: `org'功能模块
 (+general-global-menu! "org" "o"
   "b" '((lambda () (interactive) (org-publish-project "emacs-config"))
         :which-key "Publish emacs config")
@@ -243,7 +255,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
 ;; ∵ 快速快捷键
 (general-define-key
  :states '(normal visual)
- "gc" '(evilnc-comment-operator :which-key "切换注释")
+ "gc" '(comment-or-uncomment-region :which-key "切换注释")
  "g0" '(imenu :which-key "互动菜单")
  "gx" '(evil-exchange-point-and-mark :which-key "互换文字")
  "g="  #'evil-numbers/inc-at-pt
@@ -257,6 +269,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
  "g-"  #'evil-numbers/dec-at-pt-incremental
  )
 
+;; `search'
 (+general-global-menu! "search" "s"
   "b" '(counsel-bookmark :which-key "bookmark")
   "r" '(counsel-rg :which-key "ripgrep")
@@ -269,6 +282,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "f" '(counsel-describe-function :which-key "function")
   "t" '(counsel-load-theme :which-key "themes"))
 
+;; `project'
 (+general-global-menu! "project" "p"
   "/" '(projectile-find-file :which-key "打开项目文件")
   "." '(projectile-find-file :which-key "打开项目文件")
@@ -278,6 +292,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "D" '(projectile-dired-other-window :which-key "切换项目目录")
   "q" '(evil-save-and-quit :which-key "保存并退出"))
 
+;; `code'
 (+general-global-menu! "code" "e"
   "b" '(eval-buffer :which-key "Eval buffer")
   "e" '(eval-expression :which-key "Eval expression")
@@ -289,6 +304,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "r" '(eval-region :which-key "Eval region")
   "f" '(eval-defun :which-key "Eval funtion"))
 
+;; `app'
 (+general-global-menu! "app" "a"
   "b" '(browse-url-of-file :which-key "Default Browser")
   "n" '(toggle-neotree :which-key "Neotree Browser")
@@ -324,6 +340,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
 ;;                               `(,(cadr (split-string (car arg) " ")) .
 ;;                                 ,(replace-regexp-in-string "-mode$" "" (symbol-name major-mode))))))
 
+;; `模式状态键'
 (defconst my-leader "SPC m")
 
 (general-create-definer space-m-leader-def
@@ -416,7 +433,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "pu" #'org-priority-up
   )
 
-(defun +ivy-bindings-h()
+(defun +ivy-keybinds-h()
   ;; `Ivy-based' interface to shell and system tools
   (global-set-key (kbd "C-c c") 'counsel-compile)
   (global-set-key (kbd "C-c g") 'counsel-git)
@@ -437,5 +454,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   (global-set-key (kbd "C-c o") 'counsel-outline)
   (global-set-key (kbd "C-c t") 'counsel-load-theme)
   (global-set-key (kbd "C-c F") 'counsel-org-file))
+
+(+ivy-keybinds-h)
 
 (provide 'core-keybinds)
