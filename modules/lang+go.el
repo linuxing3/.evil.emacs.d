@@ -3,26 +3,12 @@
 ;; ---------------------------------------------------------
 
 (use-package go-mode
-  :ensure t)
-
-(use-package go-eldoc
   :ensure t
-  :config
-  (set-face-attribute 'eldoc-highlight-function-argument nil
-                      :underline t :foreground "green"
-                      :weight 'bold)
-  :hook
-  go-mode 'go-eldoc-setup)
-
-(use-package lsp-mode
-  :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-         (go-mode . lsp-deferred)
-         ;; if you want which-key integration
-         (lsp-mode . lsp-enable-which-key-integration))
-  :commands (lsp lsp-deferred)
+  :hook ((go-mode . lsp-deferred))
   :config
   (require 'dap-go)
-  (dap-register-debug-template
+  (dap-go-setup)
+  (if IS-WINDOWS (dap-register-debug-template
    "Launch Unoptimized Debug Package"
    (list :type "go"
 	 :request "launch"
@@ -32,5 +18,12 @@
 	 :buildFlags "-gcflags '-N -l'"
 	 :args nil
 	 :env nil
-	 :envFile nil))
-  (yas-global-mode))
+	 :envFile nil))))
+
+(use-package go-eldoc
+  :ensure t
+  :hook ((go-mode . go-eldoc-setup))
+  :config
+  (set-face-attribute 'eldoc-highlight-function-argument nil
+                      :underline t :foreground "green"
+                      :weight 'bold))

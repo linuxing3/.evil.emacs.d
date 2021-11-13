@@ -2,27 +2,18 @@
 ;; `现代基本配置'
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 
-;; (use-package ob-go)
-;; (use-package ob-rust)
-;; (use-package ob-deno)
+;; For capture from web browser
+(require 'org-protocol)
 
 (defun +modern-org-gh-pull ()
   "Pull org files from github."
   (interactive)
-  (with-dir org-directory
-            (shell-command "cd " org-directory)
-            (shell-command "git add .")
-            (--> (current-time-string)
-                 (concat "git commit -m \"" it "\"")
-                 (shell-command it))
-            (shell-command "git push")))
+  (+git-push org-directory))
 
 (defun +modern-org-gh-push ()
   "Push org files to github"
   (interactive)
-  (with-dir org-directory
-            (shell-command "cd " org-directory)
-            (shell-command "git pull")))
+  (+git-pull org-directory))
 
 (defun +modern-org-config-h()
   ;; 设定`org的目录'
@@ -41,10 +32,10 @@
   ;; 设定`agenda相关目录'
   (setq diary-file "~/org/diary")
   (setq org-agenda-diary-file "~/org/diary")
-  
+
   (setq org-agenda-files (directory-files org-directory t "\\.agenda\\.org$" t))
   (add-to-list 'org-agenda-files (dropbox-path "works.agenda.org"))
-  
+
   (setq org-archive-location "~/org/archived/%s_archive::"))
 
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
@@ -65,25 +56,25 @@
   ;; (define-key org-src-mode-map (kbd "C-c C-c") #'org-edit-src-exit)
 
   (with-eval-after-load 'org
-  (org-babel-do-load-languages
-   (quote org-babel-load-languages)
-   (quote ((emacs-lisp . t)
-	       (java . t)
-	       (dot . t)
-	       (ditaa . t)
-	       (plantuml . t)
-	       (python . t)
-	       (sed . t)
-	       (awk . t)
-	       (ledger . t)
-           (C . t)
-           (shell . t)
-           (go . t)
-           (rust . t)
-           (deno . t)
-	       (gnuplot . t)
-	       (org . t)
-	       (latex . t))))))
+    (org-babel-do-load-languages
+     (quote org-babel-load-languages)
+     (quote ((emacs-lisp . t)
+	     (java . t)
+	     (dot . t)
+	     (ditaa . t)
+	     (plantuml . t)
+	     (python . t)
+	     (sed . t)
+	     (awk . t)
+	     (ledger . t)
+             (C . t)
+             (shell . t)
+             (go . t)
+             (rust . t)
+             (deno . t)
+	     (gnuplot . t)
+	     (org . t)
+	     (latex . t))))))
 
 (defun +modern-appearance-config-h ()
   "Configures the UI for `org-mode'."
@@ -111,7 +102,7 @@
   ;; FIXME: 如果启用自定义时间格式，将无法在时间内部进行修改
   ;; (setq-default org-display-custom-times t)
   ;; (setq org-time-stamp-custom-formats '("<%Y-%m-%d>" . "<%Y-%m-%d %H:%M>"))
-   (setq org-indirect-buffer-display 'current-window
+  (setq org-indirect-buffer-display 'current-window
         org-eldoc-breadcrumb-separator " → "
         org-enforce-todo-dependencies t
         org-entities-user
@@ -145,9 +136,6 @@
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; `启动配置'
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
-;; (add-hook 'org-load-hook #'+modern-appearance-config-h)
-;; (add-hook 'org-load-hook #'+modern-org-config-h)
-;; (add-hook 'org-load-hook #'+modern-babel-config-h)
 (+modern-org-config-h)
 (+modern-appearance-config-h)
 (+modern-babel-config-h)
@@ -155,7 +143,31 @@
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; `加载其他功能'
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
-(require 'org+fancy-function)
-;; (require 'org+fancy-app)
+(setq package-selected-packages '(simple-httpd
+				  ox-hugo
+				  org-journal
+				  org-pomodoro
+				  elfeed-org
+				  ox-reveal
+				  org-brain
+				  org-download
+				  htmlize
+				  org
+				  emacsql-sqlite3))
+
+(when (cl-find-if-not #'package-installed-p package-selected-packages)
+  ;; (package-refresh-contents)
+  (mapc #'package-install package-selected-packages))
+
+(require 'org+hugo)
+(require 'org+journal)
+(require 'org+publish)
+(require 'org+brain)
+(require 'org+present)
+(require 'org+roam)
+(require 'org+elfeed)
+(require 'org+capture)
+(require 'org+agenda)
+(require 'org+pretty)
 
 (provide 'module-org)
