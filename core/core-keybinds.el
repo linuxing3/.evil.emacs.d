@@ -182,21 +182,21 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
 
 ;; `files'
 (+general-global-menu! "file" "f"
-  "f" '(:ignore t :which-key "找到打开文件")
+  "f" '(:ignore t :which-key "find file")
   "S" '((lambda () (interactive)
 	  (progn
 	    (+git-push "~/EnvSetup")
 	    (+git-push "~/.scratch.emacs.d")
 	    (+git-push "~/.evil.emacs.d")
 	    (+git-push "~/org")
-	    )) :which-key "Virtualbox dir")
+	    )) :which-key "push fundamental repos")
   "s" '((lambda () (interactive)
 	  (progn
 	    (+git-pull "~/EnvSetup")
 	    (+git-pull "~/.scratch.emacs.d")
 	    (+git-pull "~/.evil.emacs.d")
 	    (+git-pull "~/org")
-	    )) :which-key "Virtualbox dir")
+	    )) :which-key "pull fundamental repos")
   "v" '((lambda () (interactive) (find-file "~/VirtualBox VMs/coder")) :which-key "Virtualbox dir")
   "e" '((lambda () (interactive) (find-file "~/EnvSetup")) :which-key "EnvSetup dir")
   "o" '((lambda () (interactive) (find-file "~/org")) :which-key "org dir")

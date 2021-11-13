@@ -17,14 +17,7 @@
 (defun +modern-blog-hugo-deploy ()
   "Run gridsome cli and push changes upstream."
   (interactive)
-  (with-dir org-hugo-base-dir
-            ;; deploy to github for ci
-            (shell-command "cd " org-hugo-base-dir)
-            (shell-command "git add .")
-            (--> (current-time-string)
-                 (concat "git commit -m \"" it "\"")
-                 (shell-command it))
-            (shell-command "git push")))
+  (+git-push org-hugo-base-dir))
 
 (defun +modern-blog-hugo-start-server ()
   "Run gridsome server if not already running and open its webpage."
