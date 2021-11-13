@@ -55,12 +55,10 @@
         '(
           ;; My grouped tasks
           ("x"
-           "📅 My Super view"
+           " My Super view"
            (
-            (todo "" ((org-agenda-overriding-header "********** 📅 *********** 📅 ************** 📅 *********** 📅 **************")
-                      (org-super-agenda-groups '((:discard (:anything))))))
             (agenda "" (
-                        (org-agenda-overriding-header "📅 我的日程 ")
+                        (org-agenda-overriding-header " 我的日程 ")
                         (org-super-agenda-groups
                          '(
                            (:name none :time-grid t)
@@ -73,11 +71,11 @@
             (todo "" ((org-agenda-overriding-header "Tips: [t]状态 [,/+/-]优先级 [:]标签 [I/O]时钟 [e]耗时")
                       (org-super-agenda-groups '((:discard (:anything))))))
             (todo "" (
-                      (org-agenda-overriding-header "🐧 待办清单 ")
+                      (org-agenda-overriding-header " 待办清单 ")
                       (org-super-agenda-groups
                        '(
                          (:name "⚡ 重要任务 Important" :priority "A")
-                         (:name "🚀 其他任务 Others"
+                         (:name " 其他任务 Others"
                                 :priority<= "B"
                                 :scheduled today
                                 :order 1)
@@ -86,7 +84,7 @@
             ))
           ;; My GTD tasks
           ("u"
-           "📆 My GTD view"
+           " My GTD view"
            (
             (todo "" (
                       (org-agenda-overriding-header "❉ Get Things Done ❉")
@@ -112,20 +110,20 @@
                          (:discard (:anything t))))))))
           ;; Daniel's tasks
           ("d"
-           "👦 儿子的行事历"
+           " 儿子的行事历"
            (
             (todo "" (
-                      (org-agenda-overriding-header "👦 儿子的行事历")
+                      (org-agenda-overriding-header " 儿子的行事历")
                       (org-super-agenda-groups
                        '(
                          (:name "daniel" :tag ("@daniel" "@kid"))
                          (:discard (:anything t))))))))
           ;; End
           ("e"
-           "💻 电脑"
+           " 电脑"
            (
             (todo "" (
-                      (org-agenda-overriding-header "💻 电脑")
+                      (org-agenda-overriding-header " 电脑")
                       (org-super-agenda-groups
                        `(
                          (:name "电脑相关" :tag ("COMPUTER" "@computer"))

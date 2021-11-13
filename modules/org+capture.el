@@ -133,7 +133,7 @@
   (setq anki-org-file "~/org/anki.org")
   (add-to-list 'org-capture-templates
                `("xv"
-                 "🏁 Vocabulary"
+                 "Vocabulary"
                  entry
                  (file+headline anki-org-file "Vocabulary")
                  ,(concat "* %^{heading} :note:\n"
@@ -141,7 +141,7 @@
   (setq snippets-org-file "~/org/snippets.org")
   (add-to-list 'org-capture-templates
                '("xs"
-                 "🐞 Snippets"
+                 "Snippets"
                  entry
                  (file snippets-org-file)
                  (file "~/.evil.emacs.d/assets/capture-template/snippet.template")
@@ -150,7 +150,7 @@
   (setq billing-org-file "~/org/billing.org")
   (add-to-list 'org-capture-templates
                '("xb"
-                 "💰 Billing"
+                 "Billing"
                  plain
                  (file+function billing-org-file find-month-tree)
                  (file "~/.evil.emacs.d/assets/capture-template/billing.template")
@@ -160,7 +160,7 @@
   (setq contacts-org-file "~/org/contacts.org")
   (add-to-list 'org-capture-templates
                '("xc"
-                 "😂 Contacts"
+                 "Contacts"
                  entry
                  (file contacts-org-file)
                  (file "~/.evil.emacs.d/assets/capture-template/contact.template")
@@ -182,7 +182,7 @@
   (setq blog-org-dir  "~/org/roam/daily/")
   (add-to-list 'org-capture-templates
                `("xh"
-                 "🏁 Hugo"
+                 "Hugo"
                  plain
                  (file ,(concat blog-org-dir (format-time-string "%Y-%m-%d.md"))) ;; Markdown file
                  ,(concat "---
@@ -196,7 +196,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
 
   (add-to-list 'org-capture-templates
                `("xx"
-                 "🏁 Blog"
+                 "Blog"
                  plain
                  (file ,(concat blog-org-dir (format-time-string "%Y-%m-%d.org"))) ;; Org file
                  ,(concat "#+DATE: %U
@@ -231,7 +231,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
   ;; 最简单的情况是用 org-capture 来做`网页书签管理'，记录下`网页的标题和链接'
   (add-to-list 'org-capture-templates
                '("pb"
-                 "❉ Bookmark interwebs"
+                 "Bookmark interwebs"
                  entry
                  (file+headline links-org-file "Bookmarks")
                  ;; "* %^{Title}\n\n  Source: %u, %c\n\n  %i"
@@ -244,7 +244,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
   ;; `选中网页上的内容'，通过 org-protocol 和 org-capture 快速记录到笔记中
   (add-to-list 'org-capture-templates
                '("pn"
-                 "❉ Protocol Annotation"
+                 "Protocol Annotation"
                  entry
                  (file+headline links-org-file "Bookmarks")
                  "** %U - %:annotation"
@@ -254,7 +254,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
   ;; 一个网页上有多处内容都选中, `将同一个网页的内容都按顺序放置到同一个headline里面'
   (add-to-list 'org-capture-templates
                '("pa"
-                 "❉ Protocol initial"
+                 "Protocol initial"
                  plain
                  (file+function links-org-file org-capture-template-goto-link)
                  "** %? - Captured On:%U\n\n  %:initial"
@@ -267,7 +267,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
   (setq daniel-org-file "~/org/daniel.agenda.org")
   (add-to-list 'org-capture-templates
                '("s"                                              ; hotkey
-                 "👦 Son's Task"                               ; title
+                 "Son's Task"                               ; title
                  entry                                             ; type
                  (file+headline daniel-org-file "Tasks") ; target
                  (file "~/.evil.emacs.d/assets/capture-template/todo.template")
@@ -275,7 +275,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
   (setq lulu-org-file "~/org/lulu.agenda.org")
   (add-to-list 'org-capture-templates
                '("l"
-                 "👩 Wife Lulu's Task"
+                 "Wife Lulu's Task"
                  entry
                  (file+headline lulu-org-file "Tasks")
                  (file "~/.evil.emacs.d/assets/capture-template/todo.template")
@@ -285,7 +285,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
   (setq phone-org-file "~/org/phone.org")
   (add-to-list 'org-capture-templates
                '("P"
-                 "📱 My Phone calls"
+                 "My Phone calls"
                  entry
                  (file+headline phone-org-file "Phone Calls")
                  (file "~/.evil.emacs.d/assets/capture-template/phone.template")
@@ -295,7 +295,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
   (setq habit-org-file "~/org/habit.agenda.org")
   (add-to-list 'org-capture-templates
                '("h"
-                 "🎶 My Habit"
+                 "My Habit"
                  entry
                  (file habit-org-file)
                  (file "~/.evil.emacs.d/assets/capture-template/habit.template")
@@ -306,7 +306,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
   (setq my-org-file "~/org/xingwenju.agenda.org")
   (add-to-list 'org-capture-templates
                '("r"
-                 "☠ My Book Reading Task"
+                 "My Book Reading Task"
                  entry
                  (file+headline my-org-file "Reading")
                  "** TODO %^{书名}\n%u\n%a\n"
@@ -316,7 +316,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
   (setq notes-org-file "~/org/notes.agenda.org")
   (add-to-list 'org-capture-templates
                '("n"
-                 "❉ My Notes"
+                 "My Notes"
                  entry
                  (file notes-org-file)
                  (file "~/.evil.emacs.d/assets/capture-template/notes.template")
@@ -327,7 +327,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
   (setq tmp-projects-org-file  "~/org/projects.agenda.org")
   (add-to-list 'org-capture-templates
                '("p"
-                 "📓 My Work Projects"
+                 "My Work Projects"
                  entry
                  (file+headline works-org-file "Projects")
                  (file "~/.evil.emacs.d/assets/capture-template/project.template")
