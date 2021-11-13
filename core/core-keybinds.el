@@ -55,7 +55,7 @@
  "M-v"   #'evil-paste-after ;; 粘贴
  "M-f"   #'swiper        ;; 查找
  "M-z"   #'fill-paragraph ;; 折行
- "M-s"   #'save-buffer   ;; 保存
+ "M-s"   #'((lambda () (interactive) (evil-ex "wa")) :which-key "save all")
  "M-r"   #'format-all-buffer
  "M-u"   #'ivy-occur-mode
  "M-o"   #'ace-window
@@ -81,7 +81,6 @@
  "M-c" #'evil-yank
  "M-v" #'evil-paste-after
  "M-f" #'swiper
- "M-s" #'save-buffer
  "M-z" #'fill-paragraph)
 
 (general-define-key
@@ -113,6 +112,7 @@
   "3"   '((lambda () (interactive) (tab-bar-select-tab 3)) :which-key "tab 3")
   "i" '(imenu :which-key "imenu")
   "r" '(counsel-linux-app :which-key "counsel app")
+  "qs" '(evil-save-and-quit :which-key "save and exit emacs")
   "qq"  '(kill-emacs :which-key "kill emacs"))
 
 (global-space-definer
@@ -158,7 +158,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "B" '(switch-to-buffer :which-key "切换缓冲区")
   "k" '(kill-this-buffer :which-key "杀死缓冲区")
   "K" '(kill-current-buffer :which-key "杀死缓冲区")
-  "s" '(save-buffer :which-key "保存缓冲区")
+  "S" '(save-buffer :which-key "保存缓冲区")
   "r"  '(rename-buffer :which-key "重命名缓冲")
   "M" '((lambda () (interactive) (switch-to-buffer "*Messages*"))
         :which-key "消息缓冲区")
@@ -294,7 +294,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "F" '(counsel-describe-face :which-key "face")
   "p" '(counsel-package :which-key "package")
   "r" '(counsel-rg :which-key "ripgrep")
-  "s" '(save-buffer :which-key "save buffer")
+  "s" '(save-buffer :which-key "save all")
   "u" '(counsel-unicode-char :which-key "unicode")
   "v" '(counsel-describe-variable :which-key "variable")
   "t" '(counsel-load-theme :which-key "themes"))
@@ -306,8 +306,8 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "p" '(projectile-switch-project :which-key "切换项目文件")
   "r" '(projectile-recentf :which-key "切换项目文件")
   "d" '(projectile-dired :which-key "切换项目目录")
-  "D" '(projectile-dired-other-window :which-key "切换项目目录")
-  "q" '(evil-save-and-quit :which-key "保存并退出"))
+  "D" '(projectile-dired-other-window :which-key "切换项目目录"))
+;; "q" '(evil-save-and-quit :which-key "保存并退出"))
 
 ;; `code'
 (+general-global-menu! "code" "e"

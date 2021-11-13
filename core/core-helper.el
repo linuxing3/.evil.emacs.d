@@ -24,7 +24,7 @@
    ;; (setenv "DATA_DRIVE" "C:/Users/Administrator")
    (if (equal nil (getenv "DATA_DRIVE"))
        (if IS-WINDOWS (setq data-drive "C:/Users/Administrator")
-	     (setq data-drive "/"))
+	 (setq data-drive "/"))
      (setq data-drive (expand-file-name (getenv "DATA_DRIVE"))))
 
    ;; (setenv "HOME_DIRECTORY" "D:/home/vagrant")
@@ -913,6 +913,7 @@ With PREFIX, cd to project root."
 
 ;;
 ;;; git sync
+;;;###autoload
 (defun +git-push(dir)
   "Run git push in a specific directory"
   (interactive)
@@ -925,10 +926,26 @@ With PREFIX, cd to project root."
 
 ;;
 ;;; git sync
+;;;###autoload
 (defun +git-pull(dir)
   "Run git push in a specific directory"
   (interactive)
   (with-dir dir
             (shell-command "git pull")))
+
+;;
+;;; ensure package to be installed
+
+(defun +ensure-package (LIST)
+  "Ensure package is installed"
+  (when (cl-find-if-not #'package-installed-p LIST)
+    ;; (package-refresh-contents)
+    (mapc #'package-install LIST)))
+
+
+(defun +reload-emacs ()
+  "Ensure package is installed"
+  (interactive)
+  (load "~/.emacs.d/init.el"))
 
 (provide 'core-helper)

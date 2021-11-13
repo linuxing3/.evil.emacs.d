@@ -151,13 +151,13 @@
 				  ox-reveal
 				  org-brain
 				  org-download
-				  htmlize
-				  org
-				  emacsql-sqlite3))
+				  htmlize))
 
-(when (cl-find-if-not #'package-installed-p package-selected-packages)
-  ;; (package-refresh-contents)
-  (mapc #'package-install package-selected-packages))
+(+ensure-package package-selected-packages)
+
+(require 'org+capture)
+(require 'org+agenda)
+(require 'org+pretty)
 
 (require 'org+hugo)
 (require 'org+journal)
@@ -166,8 +166,5 @@
 (require 'org+present)
 (require 'org+roam)
 (require 'org+elfeed)
-(require 'org+capture)
-(require 'org+agenda)
-(require 'org+pretty)
 
 (provide 'module-org)
