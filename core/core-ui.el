@@ -72,11 +72,11 @@
 
 (setq display-time-world-list
       '(("Etc/UTC" "UTC")
-	("America/Los_Angeles" "Seattle")
-	("America/New_York" "New York")
-	("Europe/Athens" "Athens")
-	("Pacific/Auckland" "Auckland")
-	("Asia/Shanghai" "Shanghai")))
+	    ("America/Los_Angeles" "Seattle")
+	    ("America/New_York" "New York")
+	    ("Europe/Athens" "Athens")
+	    ("Pacific/Auckland" "Auckland")
+	    ("Asia/Shanghai" "Shanghai")))
 (setq display-time-world-time-format "%a, %d %b %I:%M %p %Z")
 
 ;;
@@ -98,6 +98,9 @@
           mouse-wheel-scroll-amount '(2 ((shift) . hscroll))
           mouse-wheel-scroll-amount-horizontal 2)))
 ;;
+;;; Theme & font
+
+;;
 ;;; Unicode
 
 (defvar xing-unicode-font
@@ -106,11 +109,21 @@
     (font-spec :family "Symbola"))
   "Fallback font for unicode glyphs.")
 
+;; You will most likely need to adjust this font size for your system!
+(defvar efs/default-font-size 140)
+(defvar efs/default-variable-font-size 140)
+;; Make frame transparency overridable
+(defvar efs/frame-transparency '(90 . 90))
+(set-face-attribute 'default nil :font "Fira Code" :height efs/default-font-size)
+;; Set the fixed pitch face
+(set-face-attribute 'fixed-pitch nil :font "Fira Code" :height efs/default-font-size)
+;; Set the variable pitch face
+(set-face-attribute 'variable-pitch nil :font "Cantarell" :height efs/default-variable-font-size :weight 'regular)
 ;;
-;;; Theme & font
-
 ;; Underline looks a bit better when drawn lower
 (setq x-underline-at-descent-line t)
+
+;; Emoji support
 (defun +modern-ui-emojify-h ()
   "Set Font for Emoji and symbol"
   (set-fontset-font
@@ -138,6 +151,7 @@
       ((member "Symbola" (font-family-list)) "Symbola")))))
   )
 
+;; Chinese support
 (defun +modern-ui-chinese-h ()
   "Set Font for chinese language"
   (set-fontset-font
@@ -239,7 +253,7 @@
   :hook (after-init . nyan-mode)
   :config
   (setq nyan-wavy-trail t
-	nyan-animate-nyancat t))
+	    nyan-animate-nyancat t))
 ;; 竖线
 (use-package page-break-lines
   :ensure t

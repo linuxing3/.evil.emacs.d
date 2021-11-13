@@ -2,9 +2,9 @@
 ;; `现代基本配置'
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 
-(use-package ob-go)
-(use-package ob-rust)
-(use-package ob-deno)
+;; (use-package ob-go)
+;; (use-package ob-rust)
+;; (use-package ob-deno)
 
 (defun +modern-org-gh-pull ()
   "Pull org files from github."
@@ -62,7 +62,7 @@
         org-babel-lisp-eval-fn #'sly-eval)
 
   ;; I prefer C-c C-c over C-c ' (more consistent)
-  (define-key org-src-mode-map (kbd "C-c C-c") #'org-edit-src-exit)
+  ;; (define-key org-src-mode-map (kbd "C-c C-c") #'org-edit-src-exit)
 
   (with-eval-after-load 'org
   (org-babel-do-load-languages
@@ -156,6 +156,6 @@
 ;; `加载其他功能'
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (require 'org+fancy-function)
-(require 'org+fancy-app)
+;; (require 'org+fancy-app)
 
 (provide 'module-org)

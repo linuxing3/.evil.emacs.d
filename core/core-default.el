@@ -183,6 +183,11 @@
 (use-package avy
   :commands (avy-goto-char avy-goto-word-0 avy-goto-line))
 
+(use-package ace-window
+  :config
+  (global-set-key (kbd "M-o") 'ace-window)
+  (setq aw-dispatch-always t))
+
 (use-package wgrep)
 
 (provide 'core-default)

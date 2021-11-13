@@ -911,4 +911,24 @@ With PREFIX, cd to project root."
       (if (string-match (car my-pair) buffer-file-name)
           (funcall (cdr my-pair)))))
 
+;;
+;;; git sync
+(defun +git-push(dir)
+  "Run git push in a specific directory"
+  (interactive)
+  (with-dir dir
+            (shell-command "git add .")
+            (--> (format-time-string "%Y-%m-%d %H:%M" (current-time))
+                 (concat "git commit -m \"" it "\"")
+                 (shell-command it))
+            (shell-command "git push")))
+
+;;
+;;; git sync
+(defun +git-pull(dir)
+  "Run git push in a specific directory"
+  (interactive)
+  (with-dir dir
+            (shell-command "git pull")))
+
 (provide 'core-helper)

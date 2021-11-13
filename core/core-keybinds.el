@@ -57,7 +57,8 @@
  "M-z"   #'fill-paragraph ;; 折行
  "M-s"   #'save-buffer   ;; 保存
  "M-r"   #'format-all-buffer
- "M-o"   #'ivy-occur-mode
+ "M-u"   #'ivy-occur-mode
+ "M-o"   #'ace-window
  "C-S-p"   #'eshell
  "C-S-s"   #'server-start
  ;; increase font size
@@ -70,7 +71,6 @@
  "M-w"       #'delete-window ;; 删除窗口
  "M-2"       #'split-window-right ;; 垂直分割窗口
  "M-1"       #'delete-window ;; 删除窗口
- "M-p"       #'ace-window ;; 删除窗口
  "M-W"   (if (daemonp) #'delete-frame #'evil-quit-all) ;; 删除帧
  )
 
@@ -108,10 +108,11 @@
   "!"    '(shell-command :which-key "shell command")
   "`"   '(eval-expression :which-key "eval expression")
   ":"   '(eval-expression :which-key "eval expression")
+  "1"   '((lambda () (interactive) (tab-bar-select-tab 1)) :which-key "tab 1")
+  "2"   '((lambda () (interactive) (tab-bar-select-tab 2)) :which-key "tab 2")
+  "3"   '((lambda () (interactive) (tab-bar-select-tab 3)) :which-key "tab 3")
   "i" '(imenu :which-key "imenu")
-  "I" '(imenu-anywhare :which-key "imenu across buffers")
-  "t"   '(load-theme :which-key "load theme")
-  "s"   '(save-buffer :which-key "save buffer")
+  "r" '(counsel-linux-app :which-key "counsel app")
   "qq"  '(kill-emacs :which-key "kill emacs"))
 
 (global-space-definer
@@ -182,6 +183,20 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
 ;; `files'
 (+general-global-menu! "file" "f"
   "f" '(:ignore t :which-key "找到打开文件")
+  "S" '((lambda () (interactive)
+	  (progn
+	    (+git-push "~/EnvSetup")
+	    (+git-push "~/.scratch.emacs.d")
+	    (+git-push "~/.evil.emacs.d")
+	    (+git-push "~/org")
+	    )) :which-key "Virtualbox dir")
+  "s" '((lambda () (interactive)
+	  (progn
+	    (+git-pull "~/EnvSetup")
+	    (+git-pull "~/.scratch.emacs.d")
+	    (+git-pull "~/.evil.emacs.d")
+	    (+git-pull "~/org")
+	    )) :which-key "Virtualbox dir")
   "v" '((lambda () (interactive) (find-file "~/VirtualBox VMs/coder")) :which-key "Virtualbox dir")
   "e" '((lambda () (interactive) (find-file "~/EnvSetup")) :which-key "EnvSetup dir")
   "o" '((lambda () (interactive) (find-file "~/org")) :which-key "org dir")
@@ -272,15 +287,16 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
 
 ;; `search'
 (+general-global-menu! "search" "s"
+  "a" '(counsel-fonts :which-key "fonts")
   "b" '(counsel-bookmark :which-key "bookmark")
-  "r" '(counsel-rg :which-key "ripgrep")
-  "s" '(counsel-fonts :which-key "fonts")
   "c" '(counsel-colors-emacs :which-key "colors")
-  "u" '(counsel-unicode-char :which-key "unicode")
-  "p" '(counsel-package :which-key "package")
-  "v" '(counsel-describe-variable :which-key "variable")
-  "F" '(counsel-describe-face :which-key "face")
   "f" '(counsel-describe-function :which-key "function")
+  "F" '(counsel-describe-face :which-key "face")
+  "p" '(counsel-package :which-key "package")
+  "r" '(counsel-rg :which-key "ripgrep")
+  "s" '(save-buffer :which-key "save buffer")
+  "u" '(counsel-unicode-char :which-key "unicode")
+  "v" '(counsel-describe-variable :which-key "variable")
   "t" '(counsel-load-theme :which-key "themes"))
 
 ;; `project'

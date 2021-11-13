@@ -28,8 +28,8 @@
 (setq use-package-always-ensure t)
 (setq use-package-verbose t)
 (require 'use-package)
-(use-package auto-compile
-  :config (auto-compile-on-load-mode))
+;;(use-package auto-compile
+;;  :config (auto-compile-on-load-mode))
 
 
 (provide 'core-packages)

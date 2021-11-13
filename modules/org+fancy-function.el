@@ -2,7 +2,7 @@
 ;; +fancy-org-model.el
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 
-(require 'org-protocol)
+;; (require 'org-protocol)
 
 (defun my-insert-chrome-current-tab-url()
   "Get the URL of the active tab of the first window only work in Mac"
