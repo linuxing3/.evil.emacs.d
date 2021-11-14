@@ -1,3 +1,5 @@
+;; This buffer is for text that is not saved, and for Lisp evaluation.
+;; To create a file, visit it with SPC . and enter text in its buffer.
 (use-package mu4e
   :defer 20 ; Wait until 20 seconds after startup
   :config
@@ -22,16 +24,16 @@
   ;; Set up contexts for email accounts
   (setq mu4e-contexts
         `(,(make-mu4e-context
-            :name "Fastmail"
+            :name "mfa"
             :match-func (lambda (msg) (when msg
-                                        (string-prefix-p "/Fastmail" (mu4e-message-field msg :maildir))))
+                                        (string-prefix-p "/mfa" (mu4e-message-field msg :maildir))))
             :vars '(
-                    (user-full-name . "David Wilson")
-                    (user-mail-address . "david@daviwil.com")
-                    (mu4e-sent-folder . "/Fastmail/Sent Items")
-                    (mu4e-trash-folder . "/Fastmail/Trash")
-                    (mu4e-drafts-folder . "/Fastmail/Drafts")
-                    (mu4e-refile-folder . "/Fastmail/Archive")
+                    (user-full-name . "xing wenju")
+                    (user-mail-address . "xing_wenju@mfa.gov.cn")
+                    (mu4e-sent-folder . "/mfa/Sent Items")
+                    (mu4e-trash-folder . "/mfa/Trash")
+                    (mu4e-drafts-folder . "/mfa/Drafts")
+                    (mu4e-refile-folder . "/mfa/Archive")
                     (mu4e-sent-messages-behavior . sent)
                     ))
           ,(make-mu4e-context
@@ -74,7 +76,7 @@
   ;; Use mu4e for sending e-mail
   (setq mail-user-agent 'mu4e-user-agent
         message-send-mail-function 'smtpmail-send-it
-        smtpmail-smtp-server "smtp.fastmail.com"
+        smtpmail-smtp-server "smtp.mfa.gov.cn"
         smtpmail-smtp-service 465
         smtpmail-stream-type  'ssl)
 
@@ -90,22 +92,22 @@
   ;; then, when you want archive some messages, move them to
   ;; the 'All Mail' folder by pressing ``ma''.
   (setq mu4e-maildir-shortcuts
-        '(("/Fastmail/INBOX"       . ?i)
-          ("/Fastmail/Lists/*"     . ?l)
-          ("/Fastmail/Sent Mail"   . ?s)
-          ("/Fastmail/Trash"       . ?t)))
+        '(("/mfa/INBOX"       . ?i)
+          ("/mfa/Lists/*"     . ?l)
+          ("/mfa/Sent Mail"   . ?s)
+          ("/mfa/Trash"       . ?t)))
 
   (add-to-list 'mu4e-bookmarks
                (make-mu4e-bookmark
                 :name "All Inboxes"
-                :query "maildir:/Fastmail/INBOX OR maildir:/Personal/Inbox"
+                :query "maildir:/mfa/INBOX OR maildir:/Personal/Inbox"
                 :key ?i))
 
   ;; don't keep message buffers around
   (setq message-kill-buffer-on-exit t)
 
   (setq dw/mu4e-inbox-query
-        "(maildir:/Personal/Inbox OR maildir:/Fastmail/INBOX) AND flag:unread")
+        "(maildir:/Personal/Inbox OR maildir:/mfa/INBOX) AND flag:unread")
 
   (defun dw/go-to-inbox ()
     (interactive)
@@ -120,6 +122,7 @@
 
   ;; Start mu4e in the background so that it syncs mail periodically
   (mu4e t))
+
 (use-package mu4e-alert
   :after mu4e
   :config
@@ -130,3 +133,5 @@
   (setq mu4e-alert-notify-repeated-mails nil)
 
   (mu4e-alert-enable-notifications))
+
+(provide 'app+mail)
