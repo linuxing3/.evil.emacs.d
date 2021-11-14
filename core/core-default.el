@@ -13,7 +13,7 @@
 
 ;; Splash Screen
 
-(defun +modern-ui-init-h ()
+(defun linuxing3/ui-init-h ()
   "Start modern ui for emacs"
   (progn
     (setq inhibit-startup-screen t)
@@ -102,7 +102,7 @@
 
 ;; 启动设置
 (+better-defaults-h)
-(+modern-ui-init-h)
+(linuxing3/ui-init-h)
 (+config-coding-system-h)
 
 (use-package counsel

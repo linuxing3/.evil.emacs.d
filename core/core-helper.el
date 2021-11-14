@@ -33,7 +33,7 @@
      (setq home-directory (expand-file-name (getenv "HOME"))))))
 ;; 切换代理
 ;;;###autoload
-(defun linuxing3-toggle-proxy ()
+(defun linuxing3/toggle-proxy ()
   (interactive)
   (if (null url-proxy-services)
       (progn

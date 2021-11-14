@@ -28,7 +28,7 @@
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (use-package org
   :config
-  (defun +modern-org-html-quote2 (block backend info)
+  (defun linuxing3/org-html-quote2 (block backend info)
     (when (org-export-derived-backend-p backend 'html)
       (when (string-match "\\`<div class=\"quote2\">" block)
         (setq block (replace-match "<blockquote>" t nil block))
@@ -36,7 +36,7 @@
         (setq block (replace-match "</blockquote>\n" t nil block))
         block)))
   (eval-after-load 'ox
-    '(add-to-list 'org-export-filter-special-block-functions '+modern-org-html-quote2))
+    '(add-to-list 'org-export-filter-special-block-functions 'linuxing3/org-html-quote2))
   (defun get-year-and-month ()
     (list (format-time-string "%Y") (format-time-string "%m")))
   (defun find-month-tree ()

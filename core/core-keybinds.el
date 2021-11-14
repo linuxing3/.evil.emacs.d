@@ -333,12 +333,12 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "tp" '(org-timer-pause-or-continue :which-key "Pause or continue timer")
   ;; hugo blog
   "h" '(:ignore t :which-key "Hugo blog")
-  "hd" '(+modern-blog-hugo-deploy :which-key "Hugo deploy")
-  "hs" '(+modern-blog-hugo-start-server :which-key "Hugo serer")
-  "hk" '(+modern-blog-hugo-end-server :which-key "Hugo kill server")
+  "hd" '(linuxing3/blog-hugo-deploy :which-key "Hugo deploy")
+  "hs" '(linuxing3/blog-hugo-start-server :which-key "Hugo serer")
+  "hk" '(linuxing3/blog-hugo-end-server :which-key "Hugo kill server")
   "hx" '(org-hugo-export-to-md :which-key "Export markdown")
   "ho" '((lambda () (interactive)
-	   (progn (org-hugo-export-to-md) (+modern-blog-hugo-deploy))) :which-key "Export and deploy")
+	   (progn (org-hugo-export-to-md) (linuxing3/blog-hugo-deploy))) :which-key "Export and deploy")
   ;; Prodiy service
   "p" '(:ignore t :which-key "Prodigy")
   "pb" '(prodigy :which-key "Prodigy Browse")

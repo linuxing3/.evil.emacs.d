@@ -1,7 +1,7 @@
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; NOTE: 日志 Journal  ---- 已迁移到hugo
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
-(defun +modern-org-journal-new-journal ()
+(defun linuxing3/org-journal-new-journal ()
   "Create the journal in a specific directory, then your can export ..."
   (interactive)
   (progn

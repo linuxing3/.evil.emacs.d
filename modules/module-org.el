@@ -5,17 +5,17 @@
 ;; For capture from web browser
 (require 'org-protocol)
 
-(defun +modern-org-gh-pull ()
+(defun linuxing3/org-gh-pull ()
   "Pull org files from github."
   (interactive)
   (+git-push org-directory))
 
-(defun +modern-org-gh-push ()
+(defun linuxing3/org-gh-push ()
   "Push org files to github"
   (interactive)
   (+git-pull org-directory))
 
-(defun +modern-org-config-h()
+(defun linuxing3/org-config-h()
   ;; 设定`org的目录'
   (setq org-directory "~/org")
   ;; 设定`journal的目录'
@@ -41,7 +41,7 @@
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; `现代Babel配置'
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
-(defun +modern-babel-config-h()
+(defun linuxing3/babel-config-h()
   (setq org-src-preserve-indentation t  ; use native major-mode indentation
         org-src-tab-acts-natively t     ; we do this ourselves
         ;; You don't need my permission (just be careful, mkay?)
@@ -76,7 +76,7 @@
 	     (org . t)
 	     (latex . t))))))
 
-(defun +modern-appearance-config-h ()
+(defun linuxing3/appearance-config-h ()
   "Configures the UI for `org-mode'."
   (setq
    org-modules (quote (org-habit org-protocol org-man org-toc org-bookmark)))
@@ -136,9 +136,9 @@
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; `启动配置'
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
-(+modern-org-config-h)
-(+modern-appearance-config-h)
-(+modern-babel-config-h)
+(linuxing3/org-config-h)
+(linuxing3/appearance-config-h)
+(linuxing3/babel-config-h)
 
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; `加载其他功能'

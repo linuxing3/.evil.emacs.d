@@ -81,7 +81,7 @@
 
 ;;
 ;;; Scrolling
-(defun +modern-ui-scrolling-h ()
+(defun linuxing3/ui-scrolling-h ()
   "Help scrolling faster"
   (progn
     (setq frame-title-format '("%b –Evil Emacs")
@@ -124,7 +124,7 @@
 (setq x-underline-at-descent-line t)
 
 ;; Emoji support
-(defun +modern-ui-emojify-h ()
+(defun linuxing3/ui-emojify-h ()
   "Set Font for Emoji and symbol"
   (set-fontset-font
    t
@@ -152,7 +152,7 @@
   )
 
 ;; Chinese support
-(defun +modern-ui-chinese-h ()
+(defun linuxing3/ui-chinese-h ()
   "Set Font for chinese language"
   (set-fontset-font
    t
@@ -298,8 +298,8 @@
 
 
 ;; bootstrap
-(+modern-ui-emojify-h)
-(+modern-ui-chinese-h)
+(linuxing3/ui-emojify-h)
+(linuxing3/ui-chinese-h)
 
 ;; 为上层提供 init-ui 模块
 (provide 'core-ui)
