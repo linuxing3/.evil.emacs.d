@@ -29,42 +29,42 @@
     (let ((timestamp (format-time-string "%Y-%m-%d" (current-time)))
           (slug (org-roam--title-to-slug title)))
       (format "%s-%s" timestamp slug)))
-  ;; `file' 日记模板 - diaries/20211110.org
+  ;; `file' 日记模板 - diaries/2021-11-10.org
   (setq org-roam-dailies-capture-templates
         '(("d" "默认" entry #'org-roam-capture--get-point "* %?"
-           :file-name "daily/%<%Y-%m-%d>"
+           :file-name "daily/%<%Y-%m-%d>" ;; `headline1'
            :head "#+title: \n#+date: %<%Y-%m-%d-%Z>\n"
            :unnarrowed t)
           ("x" "个人" entry #'org-roam-capture--get-point "* %?"
-           :file-name "daily/%<%Y-%m-%d>"
+           :file-name "daily/%<%Y-%m-%d>" ;; `headline1'
            :head "#+title: \n#+date: %<%Y-%m-%d-%Z>\n"
            :unnarrowed t)
           ("t" "任务" entry
            #'org-roam-capture--get-point
            "* [待办] %?\n  %U\n  %a\n  %i"
-           :file-name "Journal/%<%Y-%m-%d>"
-           :olp ("Tasks")
+           :file-name "daily/%<%Y-%m-%d>"
+           :olp ("Tasks") ;; under `Task' subtree
            :empty-lines 1
            :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
           ("j" "日记" entry
            #'org-roam-capture--get-point
            "* %<%I:%M %p> - Journal  :journal:\n\n%?\n\n"
-           :file-name "Journal/%<%Y-%m-%d>"
-           :olp ("Log")
-           :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
+           :file-name "daily/%<%Y-%m-%d>"
+           :olp ("Log") ;; under `Log' subtree
+           :head "#+title:  %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
           ("l" "日志" entry
            #'org-roam-capture--get-point
            "* %<%I:%M %p> - %?"
-           :file-name "Journal/%<%Y-%m-%d>"
-           :olp ("Log")
-           :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
+           :file-name "daily/%<%Y-%m-%d>"
+           :olp ("Log") ;; under `Log' subtree
+           :head "#+title:  %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")
           ("m" "会议" entry
            #'org-roam-capture--get-point
            "* %<%I:%M %p> - %^{Meeting Title}  :meetings:\n\n%?\n\n"
-           :file-name "Journal/%<%Y-%m-%d>"
-           :olp ("Log")
+           :file-name "daily/%<%Y-%m-%d>"
+           :olp ("Log") ;; under `Log' subtree
            :head "#+title: %<%Y-%m-%d %a>\n\n[[roam:%<%Y-%B>]]\n\n")))
-  ;; `file' 自定义笔记模板 - 2021-11-10-title.org
+  ;; `file' 自定义笔记模板 - 2021-11-10--file-title.org
   (setq org-roam-capture-templates
         '(("d" "default" plain (function org-roam--capture-get-point)
            "%?"
@@ -72,7 +72,7 @@
            :head "#+title: ${title}\n#+date: ${time} \n#+roam_alias: \n#+roam_tags: \n"
            :unnarrowed t)
           ))
-  ;; `file' 专业术语模板
+  ;; `file' 专业术语模板 - 202111101000000-title.org
   (add-to-list 'org-roam-capture-templates
                '("t" "Term" plain (function org-roam-capture--get-point)
                  "- 领域: %^{术语所属领域}\n- 释义:"
@@ -80,7 +80,7 @@
                  :head "#+title: ${title}\n#+roam_alias:\n#+roam_tags: \n\n"
                  :unnarrowed t
                  ))
-  ;; `file' 工作试验模板
+  ;; `file' 工作试验模板 - 202111101000000-title.org
   (add-to-list 'org-roam-capture-templates
                '("p" "Paper Note" plain (function org-roam-capture--get-point)
                  "* 相关工作\n\n%?\n* 观点\n\n* 模型和方法\n\n* 实验\n\n* 结论\n"
