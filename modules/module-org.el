@@ -39,7 +39,7 @@
   (setq org-archive-location "~/org/archived/%s_archive::"))
 
   (setq org-timer-default-timer 25)
-  (setq org-clock-sound "~/.evil.emacs.d/assets/music/timer-tick-sound.mp3")
+  (setq org-clock-sound "~/.evil.emacs.d/assets/music/music-box.wav")
 
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; `现代Babel配置'
