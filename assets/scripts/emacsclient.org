@@ -1,0 +1,28 @@
+* Emacsclient 
+
+** Generate a ecs file
+#+begin_src shell :tangle /usr/local/bin/ecs :mkdirp yes
+emacsclient -n -c -s /run/user/1000/emacs/server -a /usr/bin/emacs
+#+end_src
+
+#+begin_src shell :tangle ~/.dotfiles/tools/ecs :mkdirp yes
+emacsclient -n -c -s /run/user/1000/emacs/server -a /usr/bin/emacs
+#+end_src
+
+** Make executable
+
+#+begin_src shell :tangle no
+chmod +x ~/.dotfiles/tools/ecs
+#+end_src
+
+#+begin_src shell :tangle no
+chmod +x /usr/local/bin/ecs
+#+end_src
+
+#+RESULTS:
+
+** How to runemacs
+
+#+begin_src conf :tangle ~/.dotfiles/tools/tangle-ecs.cmd :mkdirp yes
+emacs -q --eval "(org-babel-tangle \"~/.evil.emacs.d/assets/scripts/emacsclient.org\")"
+#+end_src
