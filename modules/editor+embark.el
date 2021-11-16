@@ -115,6 +115,35 @@
 
 (use-package embark
   :config
+  ;; switch back and forth between the list of actions and the list of
+  ;; candidates (like in Helm) with `C-<tab>'. In the actions list you
+  ;; can either type the action (matched with completing-read), or
+  ;; call the action directly by prepending its keybinding with `@'.
+  (defun with-minibuffer-keymap (keymap)
+    (lambda (fn &rest args)
+      (minibuffer-with-setup-hook
+          (lambda ()
+            (use-local-map
+             (make-composed-keymap keymap (current-local-map))))
+	(apply fn args))))
+
+  (defvar embark-completing-read-prompter-map
+    (let ((map (make-sparse-keymap)))
+      (define-key map (kbd "<tab>") 'abort-recursive-edit)
+      map))
+
+  (advice-add 'embark-completing-read-prompter :around
+              (with-minibuffer-keymap embark-completing-read-prompter-map))
+  (define-key vertico-map (kbd "<tab>") 'embark-act-with-completing-read)
+
+  (defun embark-act-with-completing-read (&optional arg)
+    (interactive "P")
+    (let* ((embark-prompter 'embark-completing-read-prompter)
+           (act (propertize "Act" 'face 'highlight))
+           (embark-indicator (lambda (_keymap targets) nil)))
+      (embark-act arg)))
+
+  ;; `sudo' find file
   (defun sudo-find-file (file)
     "Open FILE as root."
     (interactive "FOpen file as root: ")
