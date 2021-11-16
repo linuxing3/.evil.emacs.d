@@ -14,7 +14,7 @@
 (defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
 (defconst IS-BSD     (or IS-MAC (eq system-type 'berkeley-unix)))
 
-(defun my-ensure-user-env ()
+(defun linuxing3/ensure-user-env ()
   "Check user env settings"
   (prog
    (if (equal nil (getenv "CLOUD_SERVICE_PROVIDER"))
@@ -46,7 +46,7 @@
 
 ;; 使用外部应用打开
 ;;;###autoload
-(defun open-with-external-app (&optional @fname)
+(defun linuxing3/open-with-external-app (&optional @fname)
   "Open the current file or dired marked files in external app.
 When called in Emacs Lisp, if @FNAME is given, open that."
   (interactive)
@@ -943,7 +943,7 @@ With PREFIX, cd to project root."
     (mapc #'package-install LIST)))
 
 
-(defun +reload-emacs ()
+(defun linuxing3/reload-emacs ()
   "Ensure package is installed"
   (interactive)
   (load "~/.emacs.d/init.el"))
