@@ -51,6 +51,7 @@
  "C-q"     #'evil-window-delete
  "C-S-w"   #'evil-window-mru
  ;; Delete window
+ "M-y"   #'my/consult-yank-or-yank-pop ;; 粘贴
  "M-c"   #'evil-yank     ;; 粘贴
  "M-v"   #'evil-paste-after ;; 粘贴
  "M-f"   #'swiper        ;; 查找

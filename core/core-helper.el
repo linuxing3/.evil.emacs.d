@@ -142,6 +142,12 @@ The current file is the file from which `add-to-load-path!' is used."
 ;;;; 编辑
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defun my/consult-yank-or-yank-pop (&optional arg)
+  "Call `consult-yank'. If called after a yank, call `yank-pop' instead."
+  (interactive "*p")
+  (if (eq last-command 'yank)
+      (yank-pop arg)
+    (consult-yank-pop)))
 
 ;;;###autoload
 (defun my-forward-kill-to-eol ()
