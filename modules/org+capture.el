@@ -349,7 +349,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  (file "~/.evil.emacs.d/assets/capture-template/project.template")
                  :jump-to-captured t
                  :empty-line 1))
-  (setq works-org-file (dropbox-path "works.agenda.org")) ;; NOTE: 工作内容不得公开
+  (setq works-org-file "~/org/works.agenda.org") ;; NOTE: 工作内容不得公开
   (add-to-list 'org-capture-templates
                '("w"
                  "⏰ My Work Task"
