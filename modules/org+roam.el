@@ -97,14 +97,14 @@
           :unnarrowed t))
   ;; `ref' 抓取网页书签到一个用网页标题命名的文件中
   (setq org-roam-capture-ref-templates
-        '(("r" "ref" plain (function org-roam-capture--get-point)
+        '(("pb" "ref" plain (function org-roam-capture--get-point)
            ""
            :file-name "${slug}"
            :head "\n#+title: ${title}\n#+roam_key: ${ref}\n"
            :unnarrowed t)))
   ;; `content'  抓取一个网页中的内容，多次分别插入到用网页标题命名的文件中
   (add-to-list 'org-roam-capture-ref-templates
-               '("a" "Annotation" plain (function org-roam-capture--get-point)
+               '("pa" "Annotation" plain (function org-roam-capture--get-point)
                  "** %U \n${body}\n"
                  :file-name "${slug}"
                  :head "\n#+title: ${title}\n#+roam_key: ${ref}\n#+roam_alias:\n"
