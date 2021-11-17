@@ -23,6 +23,22 @@
                   "return links as string\n"))))
     (format "%s" (s-chop-suffix "\"" (s-chop-prefix "\"" result)))))
 
+;; Kill the frame if one was created for the capture
+(defvar linuxing3/delete-frame-after-capture 0 "Whether to delete the last frame after the current capture")
+
+(defun linuxing3/delete-frame-if-neccessary (&rest r)
+  (cond
+   ((= linuxing3/delete-frame-after-capture 0) nil)
+   ((> linuxing3/delete-frame-after-capture 1)
+    (setq linuxing3/delete-frame-after-capture (- linuxing3/delete-frame-after-capture 1)))
+   (t
+    (setq linuxing3/delete-frame-after-capture 0)
+    (delete-frame))))
+
+(advice-add 'org-capture-finalize :after 'linuxing3/delete-frame-if-neccessary)
+(advice-add 'org-capture-kill :after 'linuxing3/delete-frame-if-neccessary)
+(advice-add 'org-capture-refile :after 'linuxing3/delete-frame-if-neccessary)
+
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; 📷 Capture配置
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
