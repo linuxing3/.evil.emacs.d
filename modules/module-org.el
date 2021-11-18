@@ -58,7 +58,6 @@
   (setq org-agenda-diary-file "~/org/diary")
 
   (setq org-agenda-files (directory-files org-directory t "\\.agenda\\.org$" t))
-  (add-to-list 'org-agenda-files (dropbox-path "works.agenda.org"))
 
   (setq org-archive-location "~/org/archived/%s_archive::")
 
