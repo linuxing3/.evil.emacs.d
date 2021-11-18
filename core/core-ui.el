@@ -9,6 +9,18 @@
 ;;
 ;;; General UX
 
+;; Make modern look
+(show-paren-mode  1)
+(tool-bar-mode -1)          ; Disable the toolbar
+(tooltip-mode -1)           ; Disable tooltips
+(menu-bar-mode -1)            ; Disable the menu bar
+
+(when (display-graphic-p)
+  (progn
+    (scroll-bar-mode -1)        ; Disable visible scrollbar
+    (set-fringe-mode 10)        ; Give some breathing room
+    ))
+
 ;; Don't prompt for confirmation when we create a new file or buffer (assume the
 ;; user knows what they're doing).
 (setq confirm-nonexistent-file-or-buffer nil)
@@ -72,11 +84,11 @@
 
 (setq display-time-world-list
       '(("Etc/UTC" "UTC")
-	    ("America/Los_Angeles" "Seattle")
-	    ("America/New_York" "New York")
-	    ("Europe/Athens" "Athens")
-	    ("Pacific/Auckland" "Auckland")
-	    ("Asia/Shanghai" "Shanghai")))
+	("America/Los_Angeles" "Seattle")
+	("America/New_York" "New York")
+	("Europe/Athens" "Athens")
+	("Pacific/Auckland" "Auckland")
+	("Asia/Shanghai" "Shanghai")))
 (setq display-time-world-time-format "%a, %d %b %I:%M %p %Z")
 
 ;;
@@ -253,7 +265,7 @@
   :hook (after-init . nyan-mode)
   :config
   (setq nyan-wavy-trail t
-	    nyan-animate-nyancat t))
+	nyan-animate-nyancat t))
 ;; 竖线
 (use-package page-break-lines
   :ensure t

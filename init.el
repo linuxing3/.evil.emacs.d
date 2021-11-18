@@ -18,10 +18,14 @@
 
 ;;; Code:
 
-(when (version< emacs-version "26.1")
-  (progn
-    (add-to-list 'load-path (concat (file-name-directory load-file-name) "core"))
-    (add-to-list 'load-path (concat (file-name-directory load-file-name) "modules"))))
+;; Speed up startup
+(setq gc-cons-threshold (* 50 1000 1000))
+
+(setq custom-file "~/.evil.emacs.d/custom.el")
+(load-file custom-file)
+
+(add-to-list 'load-path (concat (file-name-directory load-file-name) "core"))
+(add-to-list 'load-path (concat (file-name-directory load-file-name) "modules"))
 
 ;; ;; ---------------------------------------------------------
 ;; ;; 自动加载核心库
@@ -55,7 +59,11 @@
 ;; ;; App模块
 ;; ;; ---------------------------------------------------------
 (require 'module-app)
+(require 'module-remote)
 ;; ;; ---------------------------------------------------------
 ;; ;; 快捷键绑定
 ;; ;; ---------------------------------------------------------
 (require 'module-keybinds)
+
+;; Make gc pauses faster by decreasing the threshold.
+(setq gc-cons-threshold (* 2 1000 1000))
