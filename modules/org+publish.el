@@ -2,6 +2,8 @@
 ;; ✿ NOTE: 发布网站
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 
+(require 'org)
+;; (require 'ox-rss)
 (use-package htmlize)
 
 (defvar nico-website-html-head
@@ -17,9 +19,9 @@
 <ul>
 <li><a href='/'>Home</a></li>
 <li><a href='/blog/index.html'>Blog</a></li>
+<li><a href='/daily/index.html'>Daily</a></li>
 <li><a href='http://github.com/linuxing3'>GitHub</a></li>
 <li><a href='http://twitter.com/linuxing3'>Twitter</a></li>
-<li><a href='/contact.html'>Contact</a></li>
 </ul>
 </div>")
 
@@ -63,9 +65,9 @@ Built with %c.
 <div class='nav'><ul>
 <li><a href='/'>Home</a></li>
 <li><a href='/blog/index.html'>Blog</a></li>
+<li><a href='/daily/index.html'>Daily</a></li>
 <li><a href='http://github.com/linuxing3'>GitHub</a></li>
 <li><a href='http://twitter.com/linuxing3'>Twitter</a></li>
-<li><a href='/contact.html'>Contact</a></li>
 </ul>
 </div>"
            ;; :html-preamble ,nico-website-html-preamble
@@ -102,9 +104,9 @@ Built with %c.
 <div class='nav'><ul>
 <li><a href='/'>Home</a></li>
 <li><a href='/blog/index.html'>Blog</a></li>
+<li><a href='/daily/index.html'>Daily</a></li>
 <li><a href='https://github.com/linuxing3'>GitHub</a></li>
 <li><a href='https://twitter.com/linuxing3'>Twitter</a></li>
-<li><a href='/contact.html'>Contact</a></li>
 </ul>
 </div>"
            :html-postamble "
@@ -138,9 +140,9 @@ Built with %c.
 <div class='nav'><ul>
 <li><a href='/'>Home</a></li>
 <li><a href='/blog/index.html'>Blog</a></li>
+<li><a href='/daily/index.html'>Daily</a></li>
 <li><a href='https://github.com/linuxing3'>GitHub</a></li>
 <li><a href='https://twitter.com/linuxing3'>Twitter</a></li>
-<li><a href='/contact.html'>Contact</a></li>
 </ul>
 </div>"
            :html-postamble "

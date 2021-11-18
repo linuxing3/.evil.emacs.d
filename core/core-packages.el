@@ -8,14 +8,16 @@
 ;;                          ("melpa" . "https://melpa.org/packages/")))
 ;;
 ;; ------ Emacs China 源 ------
-;; (setq package-archives '(("gnu"   . "http://elpa.emacs-china.org/gnu/")
-;;                         ("org" . "https://orgmode.org/elpa/")
-;; 			 ("melpa" . "http://elpa.emacs-china.org/melpa/")))
+;; (setq package-archives '(("gnu"   . "https://elpa.emacs-china.org/gnu/")
+;;                         ("org" . "https://elpa.emacs-china.org/org/")
+;; 			("melpa" . "https://elpa.emacs-china.org/melpa/")
+;; 			("melpa-stable" . "https://elpa.emacs-china.org/stable-melpa/")))
 
 ;; ------ 腾讯源 ------
 (setq package-archives '(("gnu"   . "http://mirrors.cloud.tencent.com/elpa/gnu/")
 			 ("melpa" . "http://mirrors.cloud.tencent.com/elpa/melpa/")
 			 ("melpa-stable" . "http://mirrors.cloud.tencent.com/elpa/melpa-stable/")
+			 ("org-contrib" . "https://git.sr.ht/~bzg/org-contrib/")
 			 ("org" . "http://mirrors.cloud.tencent.com/elpa/org/")))
 ;; ------ 清华源 ------
 ;;(setq package-archives '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")

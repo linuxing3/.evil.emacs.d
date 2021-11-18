@@ -30,7 +30,7 @@
 ;; ;; ---------------------------------------------------------
 ;; ;; 自动加载核心库
 ;; ;; ---------------------------------------------------------
-(require 'core)
+(require 'core-straight)
 
 ;; ;; ---------------------------------------------------------
 ;; ;; 功能模块
@@ -43,23 +43,23 @@
 ;; ;; Org功能模块
 ;; ;; ---------------------------------------------------------
 
-(require 'module-org)
+;;(require 'module-org)
 
 ;; ;; ---------------------------------------------------------
 ;; ;; 编程模块
 ;; ;; ---------------------------------------------------------
-(require 'module-project)
-(require 'module-completion)
-(require 'module-snippets)
-(require 'module-format)
-(require 'module-coding)
-(require 'module-service)
+;; (require 'module-project)
+;; (require 'module-completion)
+;; (require 'module-snippets)
+;; (require 'module-format)
+;; (require 'module-coding)
+;; (require 'module-service)
 
 ;; ;; ---------------------------------------------------------
 ;; ;; App模块
 ;; ;; ---------------------------------------------------------
-(require 'module-app)
-(require 'module-remote)
+;; (require 'module-app)
+;; (require 'module-remote)
 ;; ;; ---------------------------------------------------------
 ;; ;; 快捷键绑定
 ;; ;; ---------------------------------------------------------
