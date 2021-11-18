@@ -75,56 +75,57 @@
           ("protocol" . (:foreground "LimeGreen" :weight bold))))
 
   (set-face-attribute 'org-link nil
-		              :weight 'normal
-		              :background nil)
+		      :weight 'normal
+		      :background nil)
   (set-face-attribute 'org-code nil
-		              :foreground "#a9a1e1"
-		              :background nil)
+		      :foreground "#a9a1e1"
+		      :background nil)
   (set-face-attribute 'org-date nil
-		              :foreground "#5B6268"
-		              :background nil)
+		      :foreground "#5B6268"
+		      :background nil)
   (set-face-attribute 'org-level-1 nil
-		              :foreground "steelblue2"
-		              :background nil
-		              :height 1.1
-		              :weight 'normal)
+		      :foreground "steelblue2"
+		      :background nil
+		      :height 1.1
+		      :weight 'normal)
   (set-face-attribute 'org-level-2 nil
-		              :foreground "slategray2"
-		              :background nil
-		              :height 1.0
-		              :weight 'normal)
+		      :foreground "slategray2"
+		      :background nil
+		      :height 1.0
+		      :weight 'normal)
   (set-face-attribute 'org-level-3 nil
-		              :foreground "SkyBlue2"
-		              :background nil
-		              :height 1.0
-		              :weight 'normal)
+		      :foreground "SkyBlue2"
+		      :background nil
+		      :height 1.0
+		      :weight 'normal)
   (set-face-attribute 'org-level-4 nil
-		              :foreground "DodgerBlue2"
-		              :background nil
-		              :height 1.0
-		              :weight 'normal)
+		      :foreground "DodgerBlue2"
+		      :background nil
+		      :height 1.0
+		      :weight 'normal)
   (set-face-attribute 'org-level-5 nil
-		              :weight 'normal)
+		      :weight 'normal)
   (set-face-attribute 'org-level-6 nil
-		              :weight 'normal)
+		      :weight 'normal)
   (set-face-attribute 'org-document-title nil
-		              :foreground "SlateGray1"
-		              :background nil
-		              :height 1.25
-		              :weight 'bold)
+		      :foreground "SlateGray1"
+		      :background nil
+		      :height 1.25
+		      :weight 'bold)
 
+  ;; Automatically change list bullets when change list levels.
   (setq org-list-demote-modify-bullet (quote (("+" . "-")
-					                          ("*" . "-")
-					                          ("1." . "-")
-					                          ("1)" . "-")
-					                          ("A)" . "-")
-					                          ("B)" . "-")
-					                          ("a)" . "-")
-					                          ("b)" . "-")
-					                          ("A." . "-")
-					                          ("B." . "-")
-					                          ("a." . "-")
-					                          ("b." . "-"))))
+					      ("*" . "-")
+					      ("1." . "-")
+					      ("1)" . "-")
+					      ("A)" . "-")
+					      ("B)" . "-")
+					      ("a)" . "-")
+					      ("b)" . "-")
+					      ("A." . "-")
+					      ("B." . "-")
+					      ("a." . "-")
+					      ("b." . "-"))))
   ) ;; tag config ends here
 
 (provide 'org+pretty)

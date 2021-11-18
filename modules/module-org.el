@@ -2,6 +2,17 @@
 ;; `现代基本配置'
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 
+(setq
+ org-modules (quote (org-habit
+		     org-protocol
+		     org-man
+                     org-bibtex
+                     org-crypt
+                     org-id
+                     org-info
+                     org-crypt
+		     org-toc
+		     org-bookmark)))
 ;; For capture from web browser
 (require 'org-protocol)
 
@@ -14,6 +25,19 @@
   "Push org files to github"
   (interactive)
   (+git-pull org-directory))
+
+(defun linuxing3/enable-ido-everywhere-h ()
+					; Use IDO for both buffer and file completion and ido-everywhere to t
+  (setq org-completion-use-ido t)
+  (setq ido-everywhere t)
+  (setq ido-max-directory-size 100000)
+  (ido-mode (quote both))
+					; Use the current window when visiting files and buffers with ido
+  (setq ido-default-file-method 'selected-window)
+  (setq ido-default-buffer-method 'selected-window)
+					; Use the current window for indirect buffer display
+  (setq org-indirect-buffer-display 'current-window)
+  )
 
 (defun linuxing3/org-config-h()
   ;; 设定`org的目录'
@@ -36,10 +60,14 @@
   (setq org-agenda-files (directory-files org-directory t "\\.agenda\\.org$" t))
   (add-to-list 'org-agenda-files (dropbox-path "works.agenda.org"))
 
-  (setq org-archive-location "~/org/archived/%s_archive::"))
+  (setq org-archive-location "~/org/archived/%s_archive::")
 
+  (global-auto-revert-mode t)
+  ;; onekey trigger state
+  (setq org-use-fast-todo-selection t)
+  (setq org-treat-S-cursor-todo-selection-as-state-change nil)
   (setq org-timer-default-timer 25)
-  (setq org-clock-sound "~/.evil.emacs.d/assets/music/music-box.wav")
+  (setq org-clock-sound "~/.evil.emacs.d/assets/music/music-box.wav"))
 
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; `现代Babel配置'
@@ -81,8 +109,6 @@
 
 (defun linuxing3/appearance-config-h ()
   "Configures the UI for `org-mode'."
-  (setq
-   org-modules (quote (org-habit org-protocol org-man org-toc org-bookmark)))
 
   (setq org-ellipsis " ▼ "
         org-bullets-bullet-list '(" ○ " " ◆ ")
@@ -125,8 +151,10 @@
         org-tags-column 0
         org-use-sub-superscripts '{}
         org-startup-folded nil)
+  (setq org-reverse-note-order t))
 
-  (setq org-reverse-note-order t)
+
+(defun linuxing3/refile-config-h ()
   (setq org-refile-allow-creating-parent-nodes 'confirm)
   (setq org-refile-use-cache nil)
   (setq org-blank-before-new-entry nil)
@@ -134,12 +162,21 @@
         '((nil :maxlevel . 3)
           (org-agenda-files :maxlevel . 3))
         org-refile-use-outline-path 'file
-        org-outline-path-complete-in-steps nil))
+        org-outline-path-complete-in-steps nil)
+  (linuxing3/enable-ido-everywhere-h)
+					; Allow refile to create parent tasks with confirmation
+  (defun linuxing3/verify-refile-target ()
+    "Exclude todo keywords with a done state from refile targets"
+    (not (member (nth 2 (org-heading-components)) org-done-keywords)))
+
+  (setq org-refile-target-verify-function 'linuxing3/verify-refile-target))
+
 
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; `启动配置'
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (linuxing3/org-config-h)
+(linuxing3/refile-config-h)
 (linuxing3/appearance-config-h)
 (linuxing3/babel-config-h)
 

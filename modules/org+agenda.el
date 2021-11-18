@@ -1,6 +1,12 @@
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; 📅 Agenda 配置
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+
+(load-file "org+project.el")
+
+;; Generate agenda faster
+(setq org-agenda-span 'day)
+
 (use-package org-super-agenda
   :commands (org-super-agenda-mode)
   :config)
@@ -55,7 +61,7 @@
         '(
           ;; My grouped tasks
           ("x"
-           " My Super view"
+           "My Super view"
            (
             (agenda "" (
                         (org-agenda-overriding-header " 我的日程 ")
@@ -84,7 +90,7 @@
             ))
           ;; My GTD tasks
           ("u"
-           " My GTD view"
+           "My GTD view"
            (
             (todo "" (
                       (org-agenda-overriding-header "❉ Get Things Done ❉")
@@ -110,7 +116,7 @@
                          (:discard (:anything t))))))))
           ;; Daniel's tasks
           ("d"
-           " 儿子的行事历"
+           "儿子的行事历"
            (
             (todo "" (
                       (org-agenda-overriding-header " 儿子的行事历")
@@ -118,15 +124,30 @@
                        '(
                          (:name "daniel" :tag ("@daniel" "@kid"))
                          (:discard (:anything t))))))))
-          ;; End
           ("e"
-           " 电脑"
+           "电脑"
            (
             (todo "" (
                       (org-agenda-overriding-header " 电脑")
                       (org-super-agenda-groups
                        `(
                          (:name "电脑相关" :tag ("COMPUTER" "@computer"))
-                         (:discard (:anything t))))))))))) ;; Agenda config ends here
+                         (:discard (:anything t))))))))
+          ;; End of super agenda groups
+	  ;; Above the common org agenda commands
+	  ("H" "Human Resources" tags "hr"
+           ((org-agenda-overriding-header "Human Resources Task")
+            (org-tags-match-list-sublevels t)))
+	  ("P" "Party Resources" tags "party"
+           ((org-agenda-overriding-header "Party Task")
+            (org-tags-match-list-sublevels t)))
+          ("h" "Habits" tags-todo "STYLE=\"habit\""
+           ((org-agenda-overriding-header "Habits")
+            (org-agenda-sorting-strategy
+             '(todo-state-down effort-up category-keep))))
+	  ))) ;; Agenda config ends here
+
+;; This turns the habit display on again at 6AM each morning.
+(run-at-time "06:00" 86400 '(lambda () (setq org-habit-show-habits t)))
 
 (provide 'org+agenda)
