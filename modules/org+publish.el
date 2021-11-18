@@ -48,10 +48,14 @@ Built with %c.
           ("webroot"
            :base-directory "~/org/"
            :base-extension "org"
-           :publishing-directory "~/workspace/github.io/"
+           :publishing-directory "/plinkx:vagrant:/var/www/html/"
            :publishing-function org-html-publish-to-html
            :section-numbers nil
            :with-toc nil
+	   :auto-sitemap t
+	   :sitemap-title "My GTD Workflow"
+	   :sitemap-filename "index.org"
+	   :sitemap-sort-files anti-chronologically
            :html-head "
 <link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic' rel='stylesheet' type='text/css'>
 <link rel='stylesheet' href='assets/css/site.css' type='text/css'/>"
@@ -73,18 +77,58 @@ Built with %c.
 </div>"
            )
 
-          ;; 将`org/journal'发布到网站的`blog'目录
+          ;; 将`awesome-hug-blog/content/journal'发布到网站的`blog'目录
           ("blog"
-           :base-directory "~/org/journal/"
+           :base-directory "~/workspace/awesome-hugo-blog/content/journal/"
            :base-extension "org"
-           :publishing-directory "~/workspace/github.io/blog/"
+           :publishing-directory "/plinkx:vagrant:/var/www/html/blog/"
            :publishing-function org-html-publish-to-html
            :exclude "PrivatePage.org" ;; regexp
            :headline-levels 3
            :section-numbers nil
            :with-toc nil
            :section-numbers nil
+	   :auto-sitemap t
+	   :sitemap-title "Blog Posts"
+	   :sitemap-filename "index.org"
+	   :sitemap-sort-files anti-chronologically
            :with-toc nil
+           :html-head "
+<link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic' rel='stylesheet' type='text/css'>
+<link rel='stylesheet' href='../assets/css/site.css' type='text/css'/>"
+           :html-head-extra "
+<link rel=\"alternate\" type=\"application/rss+xml\" href=\"http://linuxing3.github.io/blog.xml\" title=\"RSS feed\">"
+           :html-preamble "
+<div class='nav'><ul>
+<li><a href='/'>Home</a></li>
+<li><a href='/blog/index.html'>Blog</a></li>
+<li><a href='https://github.com/linuxing3'>GitHub</a></li>
+<li><a href='https://twitter.com/linuxing3'>Twitter</a></li>
+<li><a href='/contact.html'>Contact</a></li>
+</ul>
+</div>"
+           :html-postamble "
+<div class='footer'>
+Copyright 2013 %a (%v HTML).<br>
+Last updated %C. <br>
+Built with %c.
+</div>"
+           ) ;; end of blog configuration
+          ;; 将`org/roam/daily'发布到网站的`blog'目录
+          ("daily"
+           :base-directory "~/org/roam/daily/"
+           :base-extension "org"
+           :publishing-directory "/plinkx:vagrant:/var/www/html/daily/"
+           :publishing-function org-html-publish-to-html
+           :headline-levels 3
+	   :recursive t
+           :section-numbers nil
+           :with-toc nil
+           :section-numbers nil
+	   :auto-sitemap t
+	   :sitemap-title "Roam Daily"
+	   :sitemap-filename "index.org"
+	   :sitemap-sort-files anti-chronologically
            :html-head "
 <link href='http://fonts.googleapis.com/css?family=Libre+Baskerville:400,400italic' rel='stylesheet' type='text/css'>
 <link rel='stylesheet' href='../assets/css/site.css' type='text/css'/>"
@@ -112,7 +156,7 @@ Built with %c.
            :base-directory "~/OneDrive/shared/assets/images/"
            :base-extension "jpg\\|jpeg\\|gif\\|png"
            :recursive t
-           :publishing-directory "~/workspace/github.io/assets/images/"
+           :publishing-directory "/plinkx:vagrant:/var/www/html/assets/images/"
            :publishing-function org-publish-attachment)
 
 
@@ -120,31 +164,31 @@ Built with %c.
            :base-directory "~/OneDrive/shared/assets/attach/"
            :base-extension "html\\|xml\\|css\\|js\\|png\\|jpg\\|jpeg\\|gif\\|pdf\\|mp3\\|ogg\\|swf\\|zip\\|gz\\|csv\\|m\\|R\\|el"
            :recursive t
-           :publishing-directory "~/workspace/github.io/assets/attach/"
+           :publishing-directory "/plinkx:vagrant:/var/www/html/assets/attach/"
            :publishing-function org-publish-attachment)
 
           ("css"
            :base-directory "~/OneDrive/shared/assets/css/"
            :base-extension "css"
            :recursive t
-           :publishing-directory "~/workspace/github.io/assets/css/"
+           :publishing-directory "/plinkx:vagrant:/var/www/html/assets/css/"
            :publishing-function org-publish-attachment)
 
           ("js"
            :base-directory "~/OneDrive/shared/assets/js/"
            :base-extension "js"
            :recursive t
-           :publishing-directory "~/workspace/github.io/assets/js/"
+           :publishing-directory "/plinkx:vagrant:/var/www/html/assets/js/"
            :publishing-function org-publish-attachment)
 
-          ("rss"
-           :base-directory "~/org/roam/"
-           :base-extension "org"
-           :publishing-directory "~/workspace/github.io/blog"
-           :recursive t
-           :publishing-function (org-rss-publish-to-rss)
-           :html-link-home "http://github.io/linuxing3/"
-           :html-link-use-abs-url t)
+          ;; ("rss"
+          ;;  :base-directory "~/org/roam/"
+          ;;  :base-extension "org"
+          ;;  :publishing-directory "/plinkx:vagrant:/var/www/html/blog"
+          ;;  :recursive t
+          ;;  :publishing-function (org-rss-publish-to-rss)
+          ;;  :html-link-home "http://github.io/linuxing3/"
+          ;;  :html-link-use-abs-url t)
 
           ;; 关于github网页的配置
           ;; 将`journal'发布到`awesome-hugo-blog'
@@ -171,8 +215,9 @@ Built with %c.
            :publishing-directory "~/workspace/awesome-hugo-blog/assets/css/"
            :publishing-function org-publish-attachment)
 
-          ("[Blog] Org native" :components ("images" "css" "js" "css" "attach" "rss" "blog"))
+          ("[Blog] Org native" :components ("images" "css" "js" "attach" "blog"))
           ("[Emacs] Fast evil emacs config" :components ("emacs-config"))
+          ("[Roam] Daily" :components ("daily"))
           ("[Blog] Github Page Hugo" :components ("hugo-blog" "hugo-images" "hugo-assets"))
           ))
 

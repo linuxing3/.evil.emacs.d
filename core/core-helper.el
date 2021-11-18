@@ -917,6 +917,14 @@ With PREFIX, cd to project root."
       (if (string-match (car my-pair) buffer-file-name)
           (funcall (cdr my-pair)))))
 
+;;;###autoload
+(defun my-hugo-insert-org-format-title ()
+  "Insert's the org title in a hugo post."
+  (interactive)
+  ;;(let ((datim (format-time-string "%Y%m%d%H%M%S%N")))
+  (let ((datim (format-time-string "%FT%T%z")))
+    (goto-char (point-min))
+    ))
 ;;
 ;;; git sync
 ;;;###autoload
