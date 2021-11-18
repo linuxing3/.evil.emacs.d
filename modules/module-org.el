@@ -163,7 +163,6 @@
           (org-agenda-files :maxlevel . 3))
         org-refile-use-outline-path 'file
         org-outline-path-complete-in-steps nil)
-  (linuxing3/enable-ido-everywhere-h)
 					; Allow refile to create parent tasks with confirmation
   (defun linuxing3/verify-refile-target ()
     "Exclude todo keywords with a done state from refile targets"
@@ -195,10 +194,19 @@
 
 (+ensure-package package-selected-packages)
 
+;; essential
 (require 'org+capture)
 (require 'org+agenda)
 (require 'org+pretty)
 
+;; Enhance
+(require 'org+block)
+(require 'org+estimate)
+(require 'org+project)
+(require 'org+reminder)
+(require 'org+speedcommands)
+
+;; Application
 (require 'org+hugo)
 (require 'org+journal)
 (require 'org+publish)

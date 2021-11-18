@@ -15,3 +15,5 @@
 
 ; If we leave Emacs running overnight - reset the appointments one minute after midnight
 (run-at-time "24:01" nil 'linuxing3/org-agenda-to-appt)
+
+(provide 'org+reminder)

@@ -245,3 +245,5 @@ so change the default 'F' binding in the agenda to allow both"
          (pom
           (org-with-point-at pom
             (org-agenda-set-restriction-lock restriction-type))))))))
+
+(provide 'org+speedcommands)

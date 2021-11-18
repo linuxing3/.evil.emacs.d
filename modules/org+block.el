@@ -1,4 +1,3 @@
-
 ;; I use skeletons with abbrev-mode to quickly add preconfigured blocks to my Emacs edit buffers.
 ;; - generic blocks in org-mode
 ;; - plantuml blocks in org-mode
@@ -40,7 +39,7 @@
   "Insert a org plantuml block, querying for filename."
   "File (no extension): "
   "#+begin_src plantuml :file " str "-act.png :cache yes :tangle " str "-act.txt\n"
-  (bh/plantuml-reset-counters)
+  (linuxing3/plantuml-reset-counters)
   "@startuml\n"
   "skinparam activity {\n"
   "BackgroundColor<<New>> Cyan\n"
@@ -53,21 +52,21 @@
   "@enduml\n"
   "#+end_src\n")
 
-(defvar bh/plantuml-if-count 0)
+(defvar linuxing3/plantuml-if-count 0)
 
-(defun bh/plantuml-if ()
-  (incf bh/plantuml-if-count)
-  (number-to-string bh/plantuml-if-count))
+(defun linuxing3/plantuml-if ()
+  (incf linuxing3/plantuml-if-count)
+  (number-to-string linuxing3/plantuml-if-count))
 
-(defvar bh/plantuml-loop-count 0)
+(defvar linuxing3/plantuml-loop-count 0)
 
-(defun bh/plantuml-loop ()
-  (incf bh/plantuml-loop-count)
-  (number-to-string bh/plantuml-loop-count))
+(defun linuxing3/plantuml-loop ()
+  (incf linuxing3/plantuml-loop-count)
+  (number-to-string linuxing3/plantuml-loop-count))
 
-(defun bh/plantuml-reset-counters ()
-  (setq bh/plantuml-if-count 0
-        bh/plantuml-loop-count 0)
+(defun linuxing3/plantuml-reset-counters ()
+  (setq linuxing3/plantuml-if-count 0
+        linuxing3/plantuml-loop-count 0)
   "")
 
 (define-abbrev org-mode-abbrev-table "sact" "" 'skel-org-block-plantuml-activity)
@@ -76,7 +75,7 @@
   "Insert a org plantuml block activity if statement"
   ""
   "if \"\" then\n"
-  "  -> [condition] ==IF" (setq ifn (bh/plantuml-if)) "==\n"
+  "  -> [condition] ==IF" (setq ifn (linuxing3/plantuml-if)) "==\n"
   "  --> ==IF" ifn "M1==\n"
   "  -left-> ==IF" ifn "M2==\n"
   "else\n"
@@ -88,7 +87,7 @@
 (define-skeleton skel-org-block-plantuml-activity-for
   "Insert a org plantuml block activity for statement"
   "Loop for each: "
-  "--> ==LOOP" (setq loopn (bh/plantuml-loop)) "==\n"
+  "--> ==LOOP" (setq loopn (linuxing3/plantuml-loop)) "==\n"
   "note left: Loop" loopn ": For each " str "\n"
   "--> ==ENDLOOP" loopn "==\n"
   "note left: Loop" loopn ": End for each " str "\n" )
@@ -143,3 +142,5 @@
   "#+end_src\n")
 
 (define-abbrev org-mode-abbrev-table "selisp" "" 'skel-org-block-elisp)
+
+(provide 'org+block)

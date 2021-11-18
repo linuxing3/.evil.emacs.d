@@ -2,7 +2,6 @@
 ;; 📅 Agenda 配置
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 
-(load-file "org+project.el")
 
 ;; Generate agenda faster
 (setq org-agenda-span 'day)

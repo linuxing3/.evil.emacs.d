@@ -270,3 +270,5 @@ Skip project and sub-project tasks, habits, and loose non-project tasks."
           (replace-match (concat (make-string (length (match-string 1)) ?>) " " (match-string 2) ": ")))
         (goto-char (point-min))
         (kill-ring-save (point-min) (point-max))))))
+
+(provide 'org+project)
