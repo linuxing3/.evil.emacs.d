@@ -363,7 +363,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                '("i"
                  "⏰ My GTD Inbox"
                  entry
-                 (file inbox-org-file)
+                 (file+headline inbox-org-file "Tasks")
                  (file "~/.evil.emacs.d/assets/capture-template/inbox.template")
                  ;; "* [#%^{Priority}] %^{Title} %^g\n SCHEDULED:%U %?\n"
                  :immediate-finish t

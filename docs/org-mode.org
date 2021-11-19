@@ -1617,6 +1617,25 @@ Recent Tasks
 ...
 [Z] org             DONE Fix default section links        <-- 35 clock task entries ago
 #+end_example
+** Finding tasks to clock in
+:PROPERTIES:
+:CUSTOM_ID: FindTasksToClockIn
+:END:
+
+To find a task to work on I use one of the following options
+(generally listed most frequently used first)
+
+- Use the clock history C-u C-c C-x C-i
+  Go back to something I was clocking that is not finished
+- Pick something off today's block agenda
+  =SCHEDULED= or =DEADLINE= items that need to be done soon
+- Pick something off the =NEXT= tasks agenda view
+  Work on some unfinished task to move to completion
+- Pick something off the other task list 
+- Use an agenda view with filtering to pick something to work on
+
+Punching in on the task you select will restrict the agenda view to that project
+so you can focus on just that thing for some period of time.
 ** Clock Everything - Create New Tasks
 :PROPERTIES:
 :CUSTOM_ID: ClockEverythingWithNewTasks
@@ -1647,25 +1666,6 @@ a capture journal entry for it that goes to the diary.org date tree.
 If it's a task that actually needs to be tracked and marked done, and 
 applied to some project then I create a capture task instead which files it in 
 refile.org.
-** Finding tasks to clock in
-:PROPERTIES:
-:CUSTOM_ID: FindTasksToClockIn
-:END:
-
-To find a task to work on I use one of the following options
-(generally listed most frequently used first)
-
-- Use the clock history C-u C-c C-x C-i
-  Go back to something I was clocking that is not finished
-- Pick something off today's block agenda
-  =SCHEDULED= or =DEADLINE= items that need to be done soon
-- Pick something off the =NEXT= tasks agenda view
-  Work on some unfinished task to move to completion
-- Pick something off the other task list 
-- Use an agenda view with filtering to pick something to work on
-
-Punching in on the task you select will restrict the agenda view to that project
-so you can focus on just that thing for some period of time.
 ** Editing clock entries
 :PROPERTIES:
 :CUSTOM_ID: EditingClockEntries
