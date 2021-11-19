@@ -69,16 +69,16 @@
         lsp-ui-sideline-ignore-duplicate t
         lsp-ui-sideline-show-hover nil
         lsp-ui-sideline-actions-icon lsp-ui-sideline-actions-icon-default)
-  :ensure t
+  
   :commands lsp-ui-mode)
 
 ;; 搜索定义
 (use-package lsp-ivy
-  :ensure t
+  
   :commands lsp-ivy-workspace-symbol lsp-ivy-global-workspace-symbol)
 
 ;; 使用目录
-(use-package lsp-treemacs :ensure t :after lsp :commands lsp-treemacs-errors-list)
+(use-package lsp-treemacs  :after lsp :commands lsp-treemacs-errors-list)
 
 
 ;; ---------------------------------------------------------

@@ -1,7 +1,7 @@
 ;; Refer to:
 ;; https://emacs-lsp.github.io/lsp-mode/tutorials/reactjs-tutorial/#welcome-to-react
 
-(use-package json-mode :ensure t)
+(use-package json-mode )
 
 (use-package lsp-mode
   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)

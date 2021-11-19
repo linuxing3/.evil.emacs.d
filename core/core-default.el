@@ -106,7 +106,7 @@
 (+config-coding-system-h)
 
 (use-package counsel
-  :ensure t
+  
   :bind
   (("M-y" . counsel-yank-pop)
    :map ivy-minibuffer-map
@@ -114,7 +114,7 @@
 
 
 (use-package ivy
-  :ensure t
+  
   :diminish (ivy-mode)
   :bind (("C-s" . swiper)
          ("C-x b" . ivy-switch-buffer)
@@ -161,7 +161,7 @@
   (ivy-prescient-mode))
 
 (use-package swiper
-  :ensure t
+  
   :bind (("C-s" . swiper)
 	     ("C-c C-r" . ivy-resume)
 	     ("M-x" . counsel-M-x)
@@ -176,7 +176,7 @@
 
 
 (use-package ivy-hydra
-  :ensure t
+  
   :config
   (progn (message "ivy-hydra is enabled!")))
 

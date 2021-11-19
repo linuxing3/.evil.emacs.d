@@ -2,7 +2,7 @@
 ;; ☀ 美化配置
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (use-package org-superstar
-  :ensure t
+  
   :after org
   :hook (org-mode . org-superstar-mode)
   :config
@@ -12,20 +12,21 @@
   (setq org-ellipsis " ▼ "))
 
 (use-package org-bullets
-  :ensure t
+  
   :init (add-hook 'org-mode-hook 'org-bullets-mode)
   :custom
   (org-bullets-bullet-list '("☀" "☪"  "☯"  "✿" "→"))
   )
 
 (use-package org-fancy-priorities
-  :ensure t
+  
   :hook
   (org-mode . org-fancy-priorities-mode)
   :config
   (setq org-fancy-priorities-list '("⚡" "↑" "↓")))
 
 (use-package org
+  :straight nil
   :config
   ;; 标签组
   (setq org-tag-alist (quote ((:startgroup)

@@ -43,6 +43,7 @@
 ;; 📷 Capture配置
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (use-package org
+  :straight nil
   :config
   (defun linuxing3/org-html-quote2 (block backend info)
     (when (org-export-derived-backend-p backend 'html)

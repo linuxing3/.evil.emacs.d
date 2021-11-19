@@ -1,5 +1,5 @@
 (use-package markdown-mode
-  :ensure t
+  
   :init
   (setq markdown-enable-math t ; syntax highlighting for latex fragments
         markdown-enable-wiki-links t
@@ -36,7 +36,7 @@
   )
 
 (use-package markdown-toc
-  :ensure t)
+  )
 
 (defvar +markdown-compile-functions
   '(+markdown-compile-marked

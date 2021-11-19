@@ -189,22 +189,18 @@
 ;; 切换buffer焦点时高亮动画
 (use-package beacon
   :disabled
-  :ensure t
   :hook (after-init . beacon-mode))
 
 ;; 表情符号
 (use-package emojify
-  :ensure t
   :custom (emojify-emojis-dir (dropbox-path "config/emacs/emojis")))
 
 ;; 浮动窗口支持
 (use-package posframe
-  :ensure t
   :custom
   (posframe-mouse-banish nil))
 
 (use-package doom-themes
-  :ensure t
   :config
   ;; (load-theme 'doom-dracula t)
   )
@@ -239,21 +235,18 @@
   )
 
 ;; All The Icons
-(use-package all-the-icons :ensure t)
+(use-package all-the-icons)
 
 ;; dired模式图标支持
 (use-package all-the-icons-dired
-  :ensure t
   :hook ('dired-mode . 'all-the-icons-dired-mode))
 
 ;; 让info帮助信息中关键字有高亮
 (use-package info-colors
-  :ensure t
   :hook ('Info-selection-hook . 'info-colors-fontify-node))
 
 ;; 缩进线
 (use-package highlight-indent-guides
-  :ensure t
   :hook (prog-mode . highlight-indent-guides-mode)
   :config
   (setq highlight-indent-guides-method 'bitmap))
@@ -261,14 +254,12 @@
 ;; 彩虹猫进度条
 (use-package nyan-mode
   :if (not (boundp 'awesome-tray-mode))
-  :ensure t
   :hook (after-init . nyan-mode)
   :config
   (setq nyan-wavy-trail t
 	nyan-animate-nyancat t))
 ;; 竖线
 (use-package page-break-lines
-  :ensure t
   :hook (after-init . global-page-break-lines-mode)
   :config
   (set-fontset-font "fontset-default"
@@ -282,7 +273,6 @@
 ;;
 ;;; Powerline
 (use-package spaceline
-  :ensure t
   :init
   (setq powerline-default-separator 'slant)
   :config

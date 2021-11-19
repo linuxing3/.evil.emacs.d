@@ -1,10 +1,10 @@
 (use-package marginalia
-  :ensure t
+  
   :config
   (marginalia-mode))
 
 (use-package embark
-  :ensure t
+  
   :bind
   (("C-." . embark-act)         ;; pick some comfortable binding
    ("M-." . embark-dwim)        ;; good alternative: M-.
@@ -62,7 +62,7 @@
 (use-package orderless)
 (use-package 0x0)
 (use-package embark-consult
-  :ensure t
+  
   :after (embark consult)
   :demand t
   :hook

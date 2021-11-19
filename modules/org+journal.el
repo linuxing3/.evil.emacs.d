@@ -35,7 +35,7 @@
      "\n\n")))
 
 (use-package org-journal
-  :ensure t
+  
   :defer t
   :init
   (add-to-list 'magic-mode-alist '(+org-journal-p . org-journal-mode))

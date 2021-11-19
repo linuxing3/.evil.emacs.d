@@ -33,6 +33,7 @@ Built with %c.
 </div>")
 
 (use-package org
+  :straight nil
   :config
   (require 'ox-publish)
   (setq org-publish-project-alist
