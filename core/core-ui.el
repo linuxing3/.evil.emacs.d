@@ -126,11 +126,11 @@
 (defvar efs/default-variable-font-size 140)
 ;; Make frame transparency overridable
 (defvar efs/frame-transparency '(90 . 90))
-(set-face-attribute 'default nil :font "Fira Code" :height efs/default-font-size)
+(set-face-attribute 'default nil :font "Hack" :height efs/default-font-size)
 ;; Set the fixed pitch face
-(set-face-attribute 'fixed-pitch nil :font "Fira Code" :height efs/default-font-size)
+(set-face-attribute 'fixed-pitch nil :font "Hack" :height efs/default-font-size)
 ;; Set the variable pitch face
-(set-face-attribute 'variable-pitch nil :font "Cantarell" :height efs/default-variable-font-size :weight 'regular)
+(set-face-attribute 'variable-pitch nil :font "Hack" :height efs/default-variable-font-size :weight 'regular)
 ;;
 ;; Underline looks a bit better when drawn lower
 (setq x-underline-at-descent-line t)
