@@ -60,7 +60,7 @@
   (setq org-agenda-files (directory-files org-directory t "\\.agenda\\.org$" t))
 
   (setq org-archive-location "~/org/archived/%s_archive::")
-
+  (setq org-return-follows-link t)
   (global-auto-revert-mode t)
   ;; onekey trigger state
   (setq org-use-fast-todo-selection t)
