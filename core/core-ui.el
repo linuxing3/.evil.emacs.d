@@ -202,12 +202,12 @@
 
 (use-package doom-themes
   :config
-  ;; (load-theme 'doom-dracula t)
+  (load-theme 'doom-dracula t)
   )
 
-(use-package spacemacs-theme
-  :config
-  (load-theme 'spacemacs-dark))
+;; (use-package spacemacs-theme)
+  ;; :config
+  ;;(load-theme 'spacemacs-dark))
 
 (use-package zerodark-theme
   :config

@@ -26,7 +26,6 @@
   (setq org-fancy-priorities-list '("⚡" "↑" "↓")))
 
 (use-package org
-  :straight nil
   :config
   ;; 标签组
   (setq org-tag-alist (quote ((:startgroup)

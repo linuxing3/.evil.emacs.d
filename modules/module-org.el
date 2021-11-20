@@ -1,4 +1,4 @@
-﻿;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; `现代基本配置'
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 
@@ -181,17 +181,17 @@
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; `加载其他功能'
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
-;; (setq package-selected-packages '(simple-httpd
-;; 				  ox-hugo
-;; 				  org-journal
-;; 				  org-pomodoro
-;; 				  elfeed-org
-;; 				  ox-reveal
-;; 				  org-brain
-;; 				  org-download
-;; 				  htmlize))
+(setq package-selected-packages '(simple-httpd
+				  ox-hugo
+				  org-journal
+				  org-pomodoro
+				  elfeed-org
+				  ox-reveal
+				  org-brain
+				  org-download
+				  htmlize))
 
-;; (+ensure-package package-selected-packages)
+(+ensure-package package-selected-packages)
 
 ;; essential
 (require 'org+capture)

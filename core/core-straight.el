@@ -20,3 +20,5 @@
 (use-package straight
              :custom (straight-use-package-by-default t))
 
+(provide 'core-straight)
+
