@@ -56,9 +56,9 @@
  "M-c"   #'evil-yank     ;; 粘贴
  "M-v"   #'evil-paste-after ;; 粘贴
  "M-f"   #'consult-line-multi        ;; 查找
+ "M-u"   #'consult-multi-occur
  "M-z"   #'fill-paragraph ;; 折行
  "M-r"   #'format-all-buffer
- "M-u"   #'consult-multi-occur
  "M-o"   #'ace-window
  "C-S-p"   #'eshell
  "C-S-s"   #'server-start
@@ -99,7 +99,7 @@
 (global-space-definer
   "SPC" '(execute-extended-command :which-key "extended Command")
   "."   '(find-file :which-key "project find file")
-  "/" '(consult-line-multi :which-key "swiper")
+  "/" '(consult-line :which-key "consult line")
   "#"   '(bookmark-set :which-key "set bookmark") ;; 设置书签
   "RET" '(consult-bookmark :which-key "search bookmark") ;; 搜索书签
   "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
@@ -158,7 +158,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "B" '(switch-to-buffer :which-key "切换缓冲区")
   "k" '(kill-this-buffer :which-key "杀死缓冲区")
   "K" '(kill-current-buffer :which-key "杀死缓冲区")
-  "S" '(save-buffer :which-key "保存缓冲区")
+  "S" '(save-some-buffers :which-key "保存缓冲区")
   "r"  '(rename-buffer :which-key "重命名缓冲")
   "M" '((lambda () (interactive) (switch-to-buffer "*Messages*"))
         :which-key "消息缓冲区")

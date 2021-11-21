@@ -1,3 +1,4 @@
+(add-hook 'after-init-hook 'recentf-mode)
 
 (use-package 0x0)
 
