@@ -15,7 +15,7 @@
 
 ;; Which Key
 (use-package which-key
-  
+
   :init
   (setq which-key-separator " |> ")
   (setq which-key-prefix-prefix "+")
@@ -38,7 +38,7 @@
  "<f6>"  #'kill-buffer-and-window
  "<f7>"  #'split-window-right
  "<f8>"  #'format-all-buffer
- "<f9>"  #'counsel-org-capture
+ "<f9>"  #'org-capture
  "<f10>"  #'org-agenda
  "<f11>"  #'make-frame
  "<f12>"  #'xref-find-definitions-other-window
@@ -87,8 +87,8 @@
 (general-define-key
  :states '(normal visual emacs)
  "C-o" #'open-with-external-app
- "C-p" #'counsel-buffer-or-recentf
- "C-f" #'counsel-buffer-or-recentf
+ "C-p" #'consult-buffer
+ "C-f" #'consult-buffer-other-window
  "C-z" #'evil-undo
  "C-n" #'tab-bar-new-tab
  "C-w" #'tab-bar-close-tab
@@ -99,10 +99,10 @@
 ;; 以下快捷键需要先按SPC后出现
 (global-space-definer
   "SPC" '(execute-extended-command :which-key "extended Command")
-  "."   '(counsel-find-file :which-key "project find file")
+  "."   '(find-file :which-key "project find file")
   "/" '(swiper :which-key "swiper")
   "#"   '(bookmark-set :which-key "set bookmark") ;; 设置书签
-  "RET" '(counsel-bookmark :which-key "search bookmark") ;; 搜索书签
+  "RET" '(consult-bookmark :which-key "search bookmark") ;; 搜索书签
   "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
   "<" '(switch-to-buffer :which-key "switch buffer")
   "!"    '(shell-command :which-key "shell command")
@@ -112,7 +112,7 @@
   "2"   '((lambda () (interactive) (tab-bar-select-tab 2)) :which-key "tab 2")
   "3"   '((lambda () (interactive) (tab-bar-select-tab 3)) :which-key "tab 3")
   "i" '(imenu :which-key "imenu")
-  "r" '(counsel-linux-app :which-key "counsel app")
+  "r" '(consult-linux-app :which-key "consult app")
   "qs" '(evil-save-and-quit :which-key "save and exit emacs")
   "qq"  '(kill-emacs :which-key "kill emacs"))
 
@@ -145,7 +145,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
  :prefix "C-c"
  ;; bind "C-c a" to 'org-agenda
  "a" 'org-agenda
- "b" 'counsel-bookmark
+ "b" 'consult-bookmark
  "c" 'org-capture)
 
 ;; 以下快捷键需要先按SPC-<KEY>后出现
@@ -155,7 +155,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "]" '(next-buffer :which-key "下一缓冲区")
   "[" '(switch-to-prev-buffer :which-key "上一缓冲区")
   "n" '(evil-buffer-new :which-key "新建缓冲区")
-  "b" '(switch-to-buffer :which-key "切换缓冲区")
+  "b" '(consult-buffer :which-key "切换缓冲区")
   "B" '(switch-to-buffer :which-key "切换缓冲区")
   "k" '(kill-this-buffer :which-key "杀死缓冲区")
   "K" '(kill-current-buffer :which-key "杀死缓冲区")
@@ -214,11 +214,10 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
 	      (find-file "~/emacs-repos/emacs-from-scratch/Emacs.org")
 	    (find-file "~/.scratch.emacs.d/Emacs.org")))
 	:which-key "scratch.emacs.d/Emacs.org")
-  "." '(counsel-find-file :which-key "找到打开文件")
+  "." '(find-file :which-key "找到打开文件")
   "/" '(projectile-find-file :which-key "找到项目文件")
-  "?" '(counsel-file-jump :which-key "查找本地文件")
-  "d" '(dired :which-key "文件目录浏览")
-  "r" '(counsel-buffer-or-recentf :which-key "最近使用文件"))
+  "?" '(consult-file-jump :which-key "查找本地文件")
+  "d" '(dired :which-key "文件目录浏览"))
 
 ;; `windows'
 (+general-global-menu! "window" "w"
@@ -243,7 +242,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "ip"  '(:ignore t :which-key "insert")
   "il" '(org-insert-link :which-key "insert link")
   "n"  '(org-toggle-narrow-to-subtree :which-key "toggle narrow")
-  "s"  '(dw/counsel-rg-org-files :which-key "search notes")
+  "s"  '(dw/consult-rg-org-files :which-key "search notes")
   "a"  '(org-agenda :which-key "status")
   "t"  '(org-todo-list :which-key "todos")
   "c"  '(org-capture t :which-key "capture")
@@ -290,17 +289,17 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
 
 ;; `search'
 (+general-global-menu! "search" "s"
-  "a" '(counsel-fonts :which-key "fonts")
-  "b" '(counsel-bookmark :which-key "bookmark")
-  "c" '(counsel-colors-emacs :which-key "colors")
-  "f" '(counsel-describe-function :which-key "function")
-  "F" '(counsel-describe-face :which-key "face")
-  "p" '(counsel-package :which-key "package")
-  "r" '(counsel-rg :which-key "ripgrep")
+  "a" '(list-fontset :which-key "fonts")
+  "b" '(consult-bookmark :which-key "bookmark")
+  "c" '(list-colors-display :which-key "colors")
+  "f" '(describe-function :which-key "function")
+  "F" '(describe-face :which-key "face")
+  "p" '(describe-package :which-key "package")
+  "r" '(consult-ripgrep :which-key "ripgrep")
   "s" '(save-buffer :which-key "save all")
-  "u" '(counsel-unicode-char :which-key "unicode")
-  "v" '(counsel-describe-variable :which-key "variable")
-  "t" '(counsel-load-theme :which-key "themes"))
+  "u" '(consult-unicode-char :which-key "unicode")
+  "v" '(consult-describe-variable :which-key "variable")
+  "t" '(consult-theme :which-key "themes"))
 
 ;; `project'
 (+general-global-menu! "project" "p"
@@ -386,8 +385,8 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "*" 'org-ctrl-c-star
   "+" 'org-ctrl-c-minus
   "," 'org-switchb
-  "." 'counsel-org-goto
-  "/" 'counsel-org-goto-all
+  "." 'consult-org-goto
+  "/" 'consult-org-goto-all
   "A" 'org-archive-subtree
   "e" 'org-export-dispatch
   "f" 'org-footnote-action
@@ -475,6 +474,6 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   (global-set-key (kbd "C-c t") 'counsel-load-theme)
   (global-set-key (kbd "C-c F") 'counsel-org-file))
 
-(+ivy-keybinds-h)
+;; (+ivy-keybinds-h)
 
 (provide 'core-keybinds)
