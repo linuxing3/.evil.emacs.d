@@ -41,7 +41,7 @@
  "<f9>"  #'org-capture
  "<f10>"  #'org-agenda
  "<f11>"  #'make-frame
- "<f12>"  #'xref-find-definitions-other-window
+ "<f12>"  #'xref-find-definitions
  ;; Navigation
  "C-h"     #'evil-window-left
  "C-j"     #'evil-window-down
@@ -50,15 +50,15 @@
  "C-w"     #'evil-window-next
  "C-q"     #'evil-window-delete
  "C-S-w"   #'evil-window-mru
+ "C-s"   #'((lambda () (interactive) (evil-ex "wa")) :which-key "save all")
  ;; Delete window
  "M-y"   #'my/consult-yank-or-yank-pop ;; 粘贴
  "M-c"   #'evil-yank     ;; 粘贴
  "M-v"   #'evil-paste-after ;; 粘贴
- "M-f"   #'swiper        ;; 查找
+ "M-f"   #'consult-line-multi        ;; 查找
  "M-z"   #'fill-paragraph ;; 折行
- "M-s"   #'((lambda () (interactive) (evil-ex "wa")) :which-key "save all")
  "M-r"   #'format-all-buffer
- "M-u"   #'ivy-occur-mode
+ "M-u"   #'consult-multi-occur
  "M-o"   #'ace-window
  "C-S-p"   #'eshell
  "C-S-s"   #'server-start
@@ -81,7 +81,6 @@
  "M-a" #'mark-whole-buffer
  "M-c" #'evil-yank
  "M-v" #'evil-paste-after
- "M-f" #'swiper
  "M-z" #'fill-paragraph)
 
 (general-define-key
@@ -100,7 +99,7 @@
 (global-space-definer
   "SPC" '(execute-extended-command :which-key "extended Command")
   "."   '(find-file :which-key "project find file")
-  "/" '(swiper :which-key "swiper")
+  "/" '(consult-line-multi :which-key "swiper")
   "#"   '(bookmark-set :which-key "set bookmark") ;; 设置书签
   "RET" '(consult-bookmark :which-key "search bookmark") ;; 搜索书签
   "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
@@ -214,9 +213,10 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
 	      (find-file "~/emacs-repos/emacs-from-scratch/Emacs.org")
 	    (find-file "~/.scratch.emacs.d/Emacs.org")))
 	:which-key "scratch.emacs.d/Emacs.org")
+  "f" '(find-file :which-key "找到打开文件")
   "." '(find-file :which-key "找到打开文件")
   "/" '(projectile-find-file :which-key "找到项目文件")
-  "?" '(consult-file-jump :which-key "查找本地文件")
+  "r" '(consult-recent-file :which-key "找到打开文件")
   "d" '(dired :which-key "文件目录浏览"))
 
 ;; `windows'

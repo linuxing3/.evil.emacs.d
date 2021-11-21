@@ -19,7 +19,7 @@
     (setq inhibit-startup-screen t)
     (setq inhibit-default-init t)
     (setq inhibit-startup-echo-area-message user-login-name)
-    (setq initial-scratch-message ";; Happy Hacking with evil emacsk")
+    (setq initial-scratch-message ";; Happy Hacking with evil emacs")
 
     ;; Show matching parens
     (setq show-paren-delay 0)
@@ -268,6 +268,8 @@
   (setq aw-dispatch-always t))
 
 (use-package wgrep)
+
+(add-hook 'after-init-hook 'recentf-mode)
 
 ;; 启动设置
 (linuxing3/better-defaults-h)
