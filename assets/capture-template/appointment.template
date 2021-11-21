@@ -1,7 +1,10 @@
-** [#%^{Priority}] %^{Description} %^g
+** [#%^{Priority}] Meet %^{Guest} %^g
    SCHEDULED: %t
    :PROPERTIES:
-   PLACE:  %?
-   WITH:
+   PLACE: %^{place | HALL} 
+   WITH: %^{with| NOBODY}
    ADDED:  %U
+   TEMA: %^{tema}
    :END:
+
+   %?

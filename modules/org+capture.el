@@ -195,43 +195,22 @@
                  :kill-buffer t))
 
   ;; `发布博客和日志相关'
-  (setq blog-org-dir  "~/org/roam/daily/")
+  (setq blog-org-dir  "~/workspace/awesome-hugo-blog/content/blog")
   (add-to-list 'org-capture-templates
                `("xh"
-                 "Hugo"
+                 "Hugo Markdown Blog"
                  plain
                  (file ,(concat blog-org-dir (format-time-string "%Y-%m-%d.md"))) ;; Markdown file
-                 ,(concat "---
-title: %^{Title}
-date: %U
-author: %^{Author}
-tags: %^{Tags | emacs | code | vim | study | life | misc }
----
-
-** %?")))
+                 (file "~/.evil.emacs.d/assets/capture-template/blog.template")
+		 ))
 
   (add-to-list 'org-capture-templates
                `("xx"
-                 "Blog"
+                 "Roam Daily Notes"
                  plain
-                 (file ,(concat blog-org-dir (format-time-string "%Y-%m-%d.org"))) ;; Org file
-                 ,(concat "#+DATE: %U
-#+TITLE: %^{Title}
-#+AUTHOR: linuxing3
-#+EMAIL: linuxing3@qq.com
-#+DATE: %U
-#+OPTIONS: ':t *:t -:t ::t <:t H:3 \\n:nil ^:t arch:headline author:t c:nil
-#+OPTIONS: creator:comment d:(not LOGBOOK) date:t e:t email:nil f:t inline:t
-#+OPTIONS: num:t p:nil pri:nil stat:t tags:t tasks:t tex:t timestamp:t toc:t
-#+OPTIONS: todo:t |:t
-#+CREATOR: Emacs 26.3.50.3 (Org mode 8.0.3)
-#+DESCRIPTION:
-#+EXCLUDE_TAGS: noexport
-#+KEYWORDS:
-#+LANGUAGE: en
-#+SELECT_TAGS: export
-
-%?")))
+                 (file ,(concat "~/org/roam/daily/" (format-time-string "%Y-%m-%d.org"))) ;; Org file
+                 (file "~/.evil.emacs.d/assets/capture-template/roamdaily.template")
+		 ))
 
   ;; `Protocol' 网页抓取
   ;; 参考: https://www.zmonster.me/2018/02/28/org-mode-capture.html
@@ -242,6 +221,9 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
   ;; `annotation'	 靠 link 和 description 完成的 org 格式的链接
   ;; `initial'	     链接上选中的文本，在 org-protocol 里的 body 字段
   ;; `query'	     org-protocol 上除掉开头和子协议部分的剩下部分
+  ;; "* %^{Title}\n\n  Source: %u, %c\n\n  %i"
+  ;; "* %t %:description\nlink: %l \n\n%i\n"
+  ;; "* %U - %:annotation"
   (setq links-org-file "~/org/links.org")
   (add-to-list 'org-capture-templates '("p" "Protocol"))
   ;; 最简单的情况是用 org-capture 来做`网页书签管理'，记录下`网页的标题和链接'
@@ -250,10 +232,8 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  "Bookmark interwebs"
                  entry
                  (file+headline links-org-file "Bookmarks")
-                 ;; "* %^{Title}\n\n  Source: %u, %c\n\n  %i"
-                 ;; "* %t %:description\nlink: %l \n\n%i\n"
                  "** %? [[%:link][%:description]] \nCaptured On: %U"
-                 ;; "* %U - %:annotation"
+                 :immediate-finish t
                  :jump-to-captured t
                  :empty-line 1))
 
@@ -264,6 +244,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  entry
                  (file+headline links-org-file "Bookmarks")
                  "** %U - %:annotation"
+                 :immediate-finish t
                  :jump-to-captured t
                  :empty-line 1))
 
@@ -274,6 +255,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  plain
                  (file+function links-org-file org-capture-template-goto-link)
                  "** %? - Captured On:%U\n\n  %:initial"
+                 :immediate-finish t
                  :jump-to-captured t
                  :empty-line 1))
 
@@ -295,6 +277,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  entry
                  (file+headline lulu-org-file "Tasks")
                  (file "~/.evil.emacs.d/assets/capture-template/todo.template")
+                 :immediate-finish t
                  :jump-to-captured t))
 
   ;; `常用快捷抓取模板'
@@ -315,7 +298,6 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  entry
                  (file habit-org-file)
                  (file "~/.evil.emacs.d/assets/capture-template/habit.template")
-                 ;; "* %^{Habit cards|music|balls|games}\n  %?"
                  :jump-to-captured t
                  :immediate-finish t
                  :new-line 1))
@@ -342,26 +324,27 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
   ;; `GTD' templates
   (setq works-org-file "~/org/works.agenda.org") ;; NOTE: 工作内容不得公开
   (add-to-list 'org-capture-templates
-               '("w"
-                 "⏰ My Work Task"
-                 entry
-                 (file+headline works-org-file "Tasks")
-                 (file "~/.evil.emacs.d/assets/capture-template/basic.template")
-                 :jump-to-captured t
-                 :immediate-finish t))
-  (add-to-list 'org-capture-templates
 	       '("t"
 		 "⏰ My Daily Task"
 		 entry
 		 (file+datetree "~/org/dailytasks.agenda.org")
                  (file "~/.evil.emacs.d/assets/capture-template/todo.template")
+                 :immediate-finish t
 		 ))
+  (add-to-list 'org-capture-templates
+               '("w"
+                 "⏰ My Work Task"
+                 entry
+                 (file+headline works-org-file "Tasks")
+                 (file "~/.evil.emacs.d/assets/capture-template/basic.template")
+                 :immediate-finish t))
   (add-to-list 'org-capture-templates
 	       '("a"
 		 "⏰ My Appointment"
 		 entry
 		 (file+headline works-org-file "Appointment")
 		 (file "~/.evil.emacs.d/assets/capture-template/appointment.template")
+                 :immediate-finish t
 		 ))
   (setq inbox-org-file  "~/org/inbox.agenda.org")
   (add-to-list 'org-capture-templates
@@ -370,9 +353,7 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  entry
                  (file+headline inbox-org-file "Tasks")
                  (file "~/.evil.emacs.d/assets/capture-template/inbox.template")
-                 ;; "* [#%^{Priority}] %^{Title} %^g\n SCHEDULED:%U %?\n"
                  :immediate-finish t
-                 :jump-to-captured t
                  :new-line 1))
   )
 
