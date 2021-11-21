@@ -1,0 +1,7 @@
+** [#%^{Priority}] %^{Description} %^g
+   SCHEDULED: %t
+   :PROPERTIES:
+   PLACE:  %?
+   WITH:
+   ADDED:  %U
+   :END:

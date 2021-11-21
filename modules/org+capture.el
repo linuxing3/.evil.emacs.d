@@ -322,10 +322,10 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
   (setq my-org-file "~/org/xingwenju.agenda.org")
   (add-to-list 'org-capture-templates
                '("r"
-                 "My Book Reading Task"
+                 "My Reading"
                  entry
                  (file+headline my-org-file "Reading")
-                 "** TODO %^{书名}\n%u\n%a\n"
+                 "** %^{书名}\n%u\n%a\n"
                  :jump-to-captured t
                  :immediate-finish t
                  :new-line t))
@@ -334,21 +334,12 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                '("n"
                  "My Notes"
                  entry
-                 (file notes-org-file)
-                 (file "~/.evil.emacs.d/assets/capture-template/notes.template")
-                 ;; "* %^{Loggings For...} %t %^g\n  %?"
+                 (file+datetree notes-org-file)
+		 "* %^{Description} %^g %?\n Added: %U"
                  :jump-to-captured t
                  :immediate-finish t
                  :new-line 1))
-  (setq tmp-projects-org-file  "~/org/projects.agenda.org")
-  (add-to-list 'org-capture-templates
-               '("p"
-                 "My Work Projects"
-                 entry
-                 (file+headline works-org-file "Projects")
-                 (file "~/.evil.emacs.d/assets/capture-template/project.template")
-                 :jump-to-captured t
-                 :empty-line 1))
+  ;; `GTD' templates
   (setq works-org-file "~/org/works.agenda.org") ;; NOTE: 工作内容不得公开
   (add-to-list 'org-capture-templates
                '("w"
@@ -358,10 +349,24 @@ tags: %^{Tags | emacs | code | vim | study | life | misc }
                  (file "~/.evil.emacs.d/assets/capture-template/basic.template")
                  :jump-to-captured t
                  :immediate-finish t))
+  (add-to-list 'org-capture-templates
+	       '("t"
+		 "⏰ My Daily Task"
+		 entry
+		 (file+datetree "~/org/dailytasks.agenda.org")
+                 (file "~/.evil.emacs.d/assets/capture-template/todo.template")
+		 ))
+  (add-to-list 'org-capture-templates
+	       '("a"
+		 "⏰ My Appointment"
+		 entry
+		 (file+headline works-org-file "Appointment")
+		 (file "~/.evil.emacs.d/assets/capture-template/appointment.template")
+		 ))
   (setq inbox-org-file  "~/org/inbox.agenda.org")
   (add-to-list 'org-capture-templates
                '("i"
-                 "⏰ My GTD Inbox"
+                 "⏰ My Inbox"
                  entry
                  (file+headline inbox-org-file "Tasks")
                  (file "~/.evil.emacs.d/assets/capture-template/inbox.template")

@@ -1,3 +1,9 @@
 ** [#%^{Priority}] %^{Title} %^g
-   SCHEDULED: %T
-   %?
+   :PROPERTIES:
+   ADDED:  %U
+   :END:
+   Outcome Goal:  %?
+   Main Steps:
+    - [ ]
+    - [ ]
+    - [ ]

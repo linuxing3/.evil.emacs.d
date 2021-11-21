@@ -7,8 +7,11 @@
   :init
   (vertico-mode)
   (setq vertico-scroll-margin 0)
-  (setq vertico-count 20)
+  (setq vertico-count 10)
   (setq vertico-resize t)
+  (define-key vertico-map "?" #'minibuffer-completion-help)
+  (define-key vertico-map (kbd "M-RET") #'minibuffer-force-complete-and-exit)
+  (define-key vertico-map (kbd "M-TAB") #'minibuffer-complete)
   (setq vertico-cycle t))
 
 (use-package marginalia
@@ -280,12 +283,9 @@
   ;; Both < and C-+ work reasonably well.
   (setq consult-narrow-key "<") ;; (kbd "C-+")
 
-  ;; Optionally make narrowing help available in the minibuffer.
-  ;; You may want to use `embark-prefix-help-command' or which-key instead.
-  ;; (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
+  (define-key consult-narrow-map (vconcat consult-narrow-key "?") #'consult-narrow-help)
 
   ;; Optionally configure a function which returns the project root directory.
-  ;; There are multiple reasonable alternatives to chose from.
   ;;;; 1. project.el (project-roots)
   (setq consult-project-root-function
         (lambda ()
@@ -298,7 +298,20 @@
   ;; (setq consult-project-root-function #'vc-root-dir)
   ;;;; 4. locate-dominating-file
   ;; (setq consult-project-root-function (lambda () (locate-dominating-file "." ".git")))
+
+  ;; The completion-at-point command is usually bound to M-TAB or
+  ;; TAB. In case you want to use Vertico for
+  ;; completion-at-point/completion-in-region, you can use the
+  ;; function consult-completion-in-region provided by the Consult
+  ;; package.
+  (setq completion-in-region-function
+	(lambda (&rest args)
+          (apply (if vertico-mode
+                     #'consult-completion-in-region
+                   #'completion--in-region)
+		 args)))
   )
+
 (use-package consult-dir)
 
 (use-package savehist
