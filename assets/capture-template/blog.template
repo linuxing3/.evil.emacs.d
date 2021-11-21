@@ -1,6 +1,6 @@
 ---
 title: %^{Title}
-date: %U
+date: %t
 author: %^{Author}
 tags: %^{Tags | emacs | code | vim | study | life | misc }
 ---
