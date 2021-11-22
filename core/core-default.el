@@ -13,7 +13,7 @@
 
 ;; Splash Screen
 
-(defun linuxing3/ui-init-h ()
+(defun linuxing3/better-ui-init-h ()
   "Start modern ui for emacs"
   (progn
     (setq inhibit-startup-screen t)
@@ -82,7 +82,7 @@
           sentence-end-double-space nil)))
 
 ;; Helpers
-(defun linuxing3/config-coding-system-h()
+(defun linuxing3/better-coding-system-h()
   "configure utf-8 as default coding system"
   (progn
     ;; FIXME: windows下会导致文件保存乱码
@@ -101,88 +101,22 @@
     ;;(modify-coding-system-alist 'process "*" 'utf-8)
     ))
 
-(defun linuxing3/core-default-vertico-h ()
+(defun linuxing3/better-vertico-h ()
   (progn
-    ;; Enable vertico
+    ;; `completion'
     (use-package vertico
       :init
-      (vertico-mode)
-
-      ;; Different scroll margin
+      ;; (vertico-mode)
       (setq vertico-scroll-margin 0)
-
-      ;; Show more candidates
-      (setq vertico-count 20)
-
-      ;; Grow and shrink the Vertico minibuffer
+      (setq vertico-count 10)
       (setq vertico-resize t)
-
-      ;; Optionally enable cycling for `vertico-next' and `vertico-previous'.
-      (setq vertico-cycle t)
-      )
-
-    ;; Optionally use the `orderless' completion style. See
-    ;; `+orderless-dispatch' in the Consult wiki for an advanced Orderless style
-    ;; dispatcher. Additionally enable `partial-completion' for file path
-    ;; expansion. `partial-completion' is important for wildcard support.
-    ;; Multiple files can be opened at once with `find-file' if you enter a
-    ;; wildcard. You may also give the `initials' completion style a try.
-    (use-package orderless
-      :init
-      ;; Configure a custom style dispatcher (see the Consult wiki)
-      ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
-      ;;       orderless-component-separator #'orderless-escapable-split-on-space)
-      (setq completion-styles '(orderless)
-            completion-category-defaults nil
-            completion-category-overrides '((file (styles partial-completion)))))
-
-    ;; Persist history over Emacs restarts. Vertico sorts by history position.
-    (use-package savehist
-      :init
-      (savehist-mode))
-
-    ;; A few more useful configurations...
-    (use-package emacs
-      :init
-      ;; Add prompt indicator to `completing-read-multiple'.
-      ;; Alternatively try `consult-completing-read-multiple'.
-      (defun crm-indicator (args)
-	    (cons (concat "[CRM] " (car args)) (cdr args)))
-      (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
-
-      ;; Do not allow the cursor in the minibuffer prompt
-      (setq minibuffer-prompt-properties
-            '(read-only t cursor-intangible t face minibuffer-prompt))
-      (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
-
-      ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
-      ;; Vertico commands are hidden in normal buffers.
-      ;; (setq read-extended-command-predicate
-      ;;       #'command-completion-default-include-p)
-
-      ;; Enable recursive minibuffers
-      (setq enable-recursive-minibuffers t))
-
-    ;; Enable richer annotations using the Marginalia package
-    (use-package marginalia
-      ;; Either bind `marginalia-cycle` globally or only in the minibuffer
-      :bind (("M-A" . marginalia-cycle)
-             :map minibuffer-local-map
-             ("M-A" . marginalia-cycle))
-      ;; The :init configuration is always executed (Not lazy!)
-      :init
-
-      ;; Must be in the :init section of use-package such that the mode gets
-      ;; enabled right away. Note that this forces loading the package.
-      (marginalia-mode))
-
-    ;; (use-package orderless)
-
-    (use-package consult)
-    (use-package consult-dir)))
+      (define-key vertico-map "?" #'minibuffer-completion-help)
+      (define-key vertico-map (kbd "M-RET") #'minibuffer-force-complete-and-exit)
+      (define-key vertico-map (kbd "M-TAB") #'minibuffer-complete)
+      (setq vertico-cycle t))))
 
 
-(defun linuxing3/core-default-ivy-h ()
+(defun linuxing3/better-ivy-h ()
   (progn
     (use-package counsel
 
@@ -260,25 +194,48 @@
       (progn (message "ivy-hydra is enabled!")))
     ))
 
-(use-package avy
-  :commands (avy-goto-char avy-goto-word-0 avy-goto-line))
+(defun linuxing3/better-find-h ()
+  (progn
+    (use-package avy
+      :commands (avy-goto-char avy-goto-word-0 avy-goto-line))
 
-(use-package ace-window
-  :config
-  (global-set-key (kbd "M-o") 'ace-window)
-  (setq aw-dispatch-always t))
+    (use-package ace-window
+      :config
+      (global-set-key (kbd "M-o") 'ace-window)
+      (setq aw-dispatch-always t))
 
-(use-package wgrep)
+    (use-package wgrep)
+
+    (use-package marginalia
+      :bind (("M-A" . marginalia-cycle)
+             :map minibuffer-local-map
+             ("M-A" . marginalia-cycle))
+      :init
+      (marginalia-mode))
+
+
+    (use-package orderless
+      :init
+      ;; Configure a custom style `dispatcher' (see the Consult wiki)
+      ;; (setq orderless-style-dispatchers '(+orderless-dispatch)
+      ;;       orderless-component-separator #'orderless-escapable-split-on-space)
+      (setq completion-styles '(orderless)
+            completion-category-defaults nil
+            completion-category-overrides '((file (styles partial-completion)))))
+    )
+  )
+
 
 (add-hook 'after-init-hook 'recentf-mode)
 
 ;; 启动设置
 (linuxing3/better-defaults-h)
-(linuxing3/ui-init-h)
-(linuxing3/config-coding-system-h)
+(linuxing3/better-ui-init-h)
+(linuxing3/better-coding-system-h)
+(linuxing3/better-find-h)
 
-(if USE-VERTICO
-    (linuxing3/core-default-vertico-h)
-  (linuxing3/core-default-ivy-h))
+;; choose completion mode
+;; (linuxing3/better-defaults-ivy-h)
+;; (linuxing3/better-defaults-vertico-h)
 
 (provide 'core-default)
