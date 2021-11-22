@@ -478,6 +478,11 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   (global-set-key (kbd "C-c t") 'counsel-load-theme)
   (global-set-key (kbd "C-c F") 'counsel-org-file))
 
-;; (+ivy-keybinds-h)
+(defun +vertico-keybinds-h ()
+  "Only when vertico is enabled")
+
+(if USE-VERTICO
+    (+vertico-keybinds-h)
+  (+ivy-keybinds-h))
 
 (provide 'core-keybinds)

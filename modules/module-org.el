@@ -61,7 +61,6 @@
 
   (setq org-archive-location "~/org/archived/%s_archive::")
   (setq org-return-follows-link t)
-  (global-auto-revert-mode t)
   ;; onekey trigger state
   (setq org-use-fast-todo-selection t)
   (setq org-treat-S-cursor-todo-selection-as-state-change nil)
@@ -216,11 +215,11 @@
 (require 'org+elfeed)
 
 ;; keybinds 
-(require 'evil-org)
-(add-hook 'org-mode-hook 'evil-org-mode)
-(evil-org-set-key-theme '(navigation insert textobjects additional calendar))
-(require 'evil-org-agenda)
-(evil-org-agenda-set-keys)
+;; (require 'evil-org)
+;; (add-hook 'org-mode-hook 'evil-org-mode)
+;; (evil-org-set-key-theme '(navigation insert textobjects additional calendar))
+;; (require 'evil-org-agenda)
+;; (evil-org-agenda-set-keys)
 
 ;; Setup saves all org buffers at 1 minute before the hour using
 ;; the following code in my =.emacs=

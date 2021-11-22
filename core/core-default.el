@@ -57,6 +57,7 @@
     (setq frame-inhibit-implied-resize t)
     (setq inhibit-compacting-font-caches t)
 
+    (global-auto-revert-mode t)
 
     (setq gcmh-idle-delay 'auto  ; default is 15s
           gcmh-auto-idle-delay-factor 10
@@ -275,6 +276,9 @@
 (linuxing3/better-defaults-h)
 (linuxing3/ui-init-h)
 (linuxing3/config-coding-system-h)
-(linuxing3/core-default-vertico-h)
+
+(if USE-VERTICO
+    (linuxing3/core-default-vertico-h)
+  (linuxing3/core-default-ivy-h))
 
 (provide 'core-default)

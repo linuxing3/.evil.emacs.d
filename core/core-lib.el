@@ -91,6 +91,11 @@ in windows could be c:/Users/Administrator"
   :group 'linuxing3
   :type 'string)
 
+(defcustom linuxing3-completion-mode "vertico"
+  "Can be vertico o ivy for completion"
+  :group 'linuxing3
+  :type 'string)
+
 (defcustom linuxing3-prettify-symbols-alist
   '(("lambda" . ?λ)
     ("<-" . ?←)
