@@ -19,3 +19,4 @@
 (use-package el-patch
   :straight t)
 
+(provide 'core-straight)
