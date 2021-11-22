@@ -47,6 +47,13 @@ Built with %c.
 
           ;; 关于`org-native-blog'的配置
           ;; 将`org'目录下org文件发布到网站根目录
+          ("links"
+           :base-directory "~/org/"
+           :base-extension "org"
+           :publishing-directory "/var/www/html/"
+           :publishing-function org-html-publish-to-html)
+          ;; 关于`org-native-blog'的配置
+          ;; 将`org'目录下org文件发布到网站根目录
           ("webroot"
            :base-directory "~/org/"
            :base-extension "org"

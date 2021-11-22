@@ -126,11 +126,11 @@
 (defvar efs/default-variable-font-size 140)
 ;; Make frame transparency overridable
 (defvar efs/frame-transparency '(90 . 90))
-(set-face-attribute 'default nil :font "Fira Code" :height efs/default-font-size)
+(set-face-attribute 'default nil :font "Hack" :height efs/default-font-size)
 ;; Set the fixed pitch face
-(set-face-attribute 'fixed-pitch nil :font "Fira Code" :height efs/default-font-size)
+(set-face-attribute 'fixed-pitch nil :font "Hack" :height efs/default-font-size)
 ;; Set the variable pitch face
-(set-face-attribute 'variable-pitch nil :font "Cantarell" :height efs/default-variable-font-size :weight 'regular)
+(set-face-attribute 'variable-pitch nil :font "Hack" :height efs/default-variable-font-size :weight 'regular)
 ;;
 ;; Underline looks a bit better when drawn lower
 (setq x-underline-at-descent-line t)
@@ -189,29 +189,25 @@
 ;; 切换buffer焦点时高亮动画
 (use-package beacon
   :disabled
-  :ensure t
   :hook (after-init . beacon-mode))
 
 ;; 表情符号
 (use-package emojify
-  :ensure t
   :custom (emojify-emojis-dir (dropbox-path "config/emacs/emojis")))
 
 ;; 浮动窗口支持
 (use-package posframe
-  :ensure t
   :custom
   (posframe-mouse-banish nil))
 
 (use-package doom-themes
-  :ensure t
   :config
-  ;; (load-theme 'doom-dracula t)
+  (load-theme 'doom-dracula t)
   )
 
-(use-package spacemacs-theme
-  :config
-  (load-theme 'spacemacs-dark))
+;; (use-package spacemacs-theme)
+  ;; :config
+  ;;(load-theme 'spacemacs-dark))
 
 (use-package zerodark-theme
   :config
@@ -239,21 +235,18 @@
   )
 
 ;; All The Icons
-(use-package all-the-icons :ensure t)
+(use-package all-the-icons)
 
 ;; dired模式图标支持
 (use-package all-the-icons-dired
-  :ensure t
   :hook ('dired-mode . 'all-the-icons-dired-mode))
 
 ;; 让info帮助信息中关键字有高亮
 (use-package info-colors
-  :ensure t
   :hook ('Info-selection-hook . 'info-colors-fontify-node))
 
 ;; 缩进线
 (use-package highlight-indent-guides
-  :ensure t
   :hook (prog-mode . highlight-indent-guides-mode)
   :config
   (setq highlight-indent-guides-method 'bitmap))
@@ -261,14 +254,12 @@
 ;; 彩虹猫进度条
 (use-package nyan-mode
   :if (not (boundp 'awesome-tray-mode))
-  :ensure t
   :hook (after-init . nyan-mode)
   :config
   (setq nyan-wavy-trail t
 	nyan-animate-nyancat t))
 ;; 竖线
 (use-package page-break-lines
-  :ensure t
   :hook (after-init . global-page-break-lines-mode)
   :config
   (set-fontset-font "fontset-default"
@@ -282,7 +273,6 @@
 ;;
 ;;; Powerline
 (use-package spaceline
-  :ensure t
   :init
   (setq powerline-default-separator 'slant)
   :config

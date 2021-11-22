@@ -1,3 +1,6 @@
+
+(setq gc-cons-threshold (* 50 1000 1000))
+
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -16,7 +19,7 @@
 ;; Configure use-package to use straight.el by default
 (use-package straight
              :custom (straight-use-package-by-default t))
-(use-package el-patch
-  :straight t)
+
+(provide 'core-straight)
 
 (provide 'core-straight)

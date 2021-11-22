@@ -1,7 +1,7 @@
 
-(use-package 'clojure-mode :ensure t)
+(use-package 'clojure-mode )
 
-(use-package 'cider :ensure t)
+(use-package 'cider )
 
 (use-package 'lsp
   :commands (lsp lsp-deferred) 

@@ -1,7 +1,7 @@
-** TODO [#B] %^{Issue}                                                :PHONE:
-:SCHEDULED: %U
-%^{Number}p
-%^{From}p
-%^{To}p
+**  TODO [#B] %^{Issue}                                                :PHONE:
+    :SCHEDULED: %U
+    %^{Number}p
+    %^{From}p
+    %^{To}p
 
-%?
+    %?

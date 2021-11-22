@@ -1,4 +1,4 @@
-﻿;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
+;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; `现代基本配置'
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 
@@ -61,7 +61,6 @@
 
   (setq org-archive-location "~/org/archived/%s_archive::")
   (setq org-return-follows-link t)
-  (global-auto-revert-mode t)
   ;; onekey trigger state
   (setq org-use-fast-todo-selection t)
   (setq org-treat-S-cursor-todo-selection-as-state-change nil)
@@ -182,6 +181,7 @@
 ;; `加载其他功能'
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (setq package-selected-packages '(simple-httpd
+				  evil-org
 				  ox-hugo
 				  org-journal
 				  org-pomodoro
@@ -213,5 +213,16 @@
 (require 'org+present)
 (require 'org+roam)
 (require 'org+elfeed)
+
+;; keybinds 
+;; (require 'evil-org)
+;; (add-hook 'org-mode-hook 'evil-org-mode)
+;; (evil-org-set-key-theme '(navigation insert textobjects additional calendar))
+;; (require 'evil-org-agenda)
+;; (evil-org-agenda-set-keys)
+
+;; Setup saves all org buffers at 1 minute before the hour using
+;; the following code in my =.emacs=
+(run-at-time "00:59" 3600 'org-save-all-org-buffers)
 
 (provide 'module-org)

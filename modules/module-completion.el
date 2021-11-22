@@ -3,7 +3,7 @@
 ;; Company mode
 ;; ---------------------------------------------------------
 (use-package company
-  :ensure t
+  
   :init
   (setq company-minimum-prefix-length 3)
   (setq tab-always-indent 'complete)
@@ -23,7 +23,7 @@
     (let ((completion-at-point-functions completion-at-point-functions-saved))
       (company-complete-common))))
 
-(use-package flycheck :ensure t)
+(use-package flycheck )
 
 (use-package smartparens
   ;; Auto-close delimiters and blocks as you type. It's more powerful than that,

@@ -29,7 +29,7 @@
         (evil-insert-state)))))
 
 (use-package yasnippet
-  :ensure t
+  
   :commands (yas-minor-mode-on
              yas-expand
              yas-expand-snippet
@@ -51,7 +51,7 @@
 			                   yas-completing-prompt)))
 
 (use-package auto-yasnippet
-  :ensure t
+  
   :config
   ;; (global-set-key (kbd "C-S-w") #'aya-create)
   ;; (global-set-key (kbd "C-S-y") #'aya-expand)

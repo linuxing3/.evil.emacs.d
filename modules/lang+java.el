@@ -1,5 +1,5 @@
 (use-package dap-mode
-  :ensure t
+  
   :config
     (require 'dap-java)
     (dap-register-debug-template "My Java Runner"

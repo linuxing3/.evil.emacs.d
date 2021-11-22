@@ -15,7 +15,7 @@
 
 ;; Which Key
 (use-package which-key
-  :ensure t
+
   :init
   (setq which-key-separator " |> ")
   (setq which-key-prefix-prefix "+")
@@ -38,10 +38,10 @@
  "<f6>"  #'kill-buffer-and-window
  "<f7>"  #'split-window-right
  "<f8>"  #'format-all-buffer
- "<f9>"  #'counsel-org-capture
+ "<f9>"  #'org-capture
  "<f10>"  #'org-agenda
  "<f11>"  #'make-frame
- "<f12>"  #'xref-find-definitions-other-window
+ "<f12>"  #'xref-find-definitions
  ;; Navigation
  "C-h"     #'evil-window-left
  "C-j"     #'evil-window-down
@@ -50,15 +50,15 @@
  "C-w"     #'evil-window-next
  "C-q"     #'evil-window-delete
  "C-S-w"   #'evil-window-mru
+ "C-s"   #'((lambda () (interactive) (evil-ex "wa")) :which-key "save all")
  ;; Delete window
  "M-y"   #'my/consult-yank-or-yank-pop ;; 粘贴
  "M-c"   #'evil-yank     ;; 粘贴
  "M-v"   #'evil-paste-after ;; 粘贴
- "M-f"   #'swiper        ;; 查找
+ "M-f"   #'consult-line-multi        ;; 查找
+ "M-u"   #'consult-multi-occur
  "M-z"   #'fill-paragraph ;; 折行
- "M-s"   #'((lambda () (interactive) (evil-ex "wa")) :which-key "save all")
  "M-r"   #'format-all-buffer
- "M-u"   #'ivy-occur-mode
  "M-o"   #'ace-window
  "C-S-p"   #'eshell
  "C-S-s"   #'server-start
@@ -81,14 +81,13 @@
  "M-a" #'mark-whole-buffer
  "M-c" #'evil-yank
  "M-v" #'evil-paste-after
- "M-f" #'swiper
  "M-z" #'fill-paragraph)
 
 (general-define-key
  :states '(normal visual emacs)
  "C-o" #'open-with-external-app
- "C-p" #'counsel-buffer-or-recentf
- "C-f" #'counsel-buffer-or-recentf
+ "C-p" #'consult-buffer
+ "C-f" #'consult-buffer-other-window
  "C-z" #'evil-undo
  "C-n" #'tab-bar-new-tab
  "C-w" #'tab-bar-close-tab
@@ -99,10 +98,10 @@
 ;; 以下快捷键需要先按SPC后出现
 (global-space-definer
   "SPC" '(execute-extended-command :which-key "extended Command")
-  "."   '(counsel-find-file :which-key "project find file")
-  "/" '(swiper :which-key "swiper")
+  "."   '(find-file :which-key "project find file")
+  "/" '(consult-line :which-key "consult line")
   "#"   '(bookmark-set :which-key "set bookmark") ;; 设置书签
-  "RET" '(counsel-bookmark :which-key "search bookmark") ;; 搜索书签
+  "RET" '(consult-bookmark :which-key "search bookmark") ;; 搜索书签
   "TAB" '(switch-to-prev-buffer :which-key "previous buffer")
   "<" '(switch-to-buffer :which-key "switch buffer")
   "!"    '(shell-command :which-key "shell command")
@@ -112,7 +111,7 @@
   "2"   '((lambda () (interactive) (tab-bar-select-tab 2)) :which-key "tab 2")
   "3"   '((lambda () (interactive) (tab-bar-select-tab 3)) :which-key "tab 3")
   "i" '(imenu :which-key "imenu")
-  "r" '(counsel-linux-app :which-key "counsel app")
+  "r" '(consult-linux-app :which-key "consult app")
   "qs" '(evil-save-and-quit :which-key "save and exit emacs")
   "qq"  '(kill-emacs :which-key "kill emacs"))
 
@@ -145,7 +144,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
  :prefix "C-c"
  ;; bind "C-c a" to 'org-agenda
  "a" 'org-agenda
- "b" 'counsel-bookmark
+ "b" 'consult-bookmark
  "c" 'org-capture)
 
 ;; 以下快捷键需要先按SPC-<KEY>后出现
@@ -155,11 +154,11 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "]" '(next-buffer :which-key "下一缓冲区")
   "[" '(switch-to-prev-buffer :which-key "上一缓冲区")
   "n" '(evil-buffer-new :which-key "新建缓冲区")
-  "b" '(switch-to-buffer :which-key "切换缓冲区")
+  "b" '(consult-buffer :which-key "切换缓冲区")
   "B" '(switch-to-buffer :which-key "切换缓冲区")
   "k" '(kill-this-buffer :which-key "杀死缓冲区")
   "K" '(kill-current-buffer :which-key "杀死缓冲区")
-  "S" '(save-buffer :which-key "保存缓冲区")
+  "S" '(save-some-buffers :which-key "保存缓冲区")
   "r"  '(rename-buffer :which-key "重命名缓冲")
   "M" '((lambda () (interactive) (switch-to-buffer "*Messages*"))
         :which-key "消息缓冲区")
@@ -200,25 +199,29 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
 	    (+git-pull "~/org")
 	    (+git-push "~/workspace/awesome-hugo-blog")
 	    )) :which-key "pull fundamental repos")
-  "v" '((lambda () (interactive) (find-file "~/VirtualBox VMs/coder")) :which-key "Virtualbox dir")
-  "e" '((lambda () (interactive) (find-file "~/EnvSetup")) :which-key "EnvSetup dir")
-  "o" '((lambda () (interactive) (find-file "~/org")) :which-key "org dir")
-  "O" '((lambda () (interactive) (find-file "~/OneDrive")) :which-key "OneDrive dir")
+  "1" '((lambda () (interactive) (find-file "/mnt/superboot")) :which-key "superboot")
+  "2" '((lambda () (interactive) (find-file "/mnt/win10")) :which-key "windows")
+  "3" '((lambda () (interactive) (find-file "/gnu/home")) :which-key "gnu home")
+  "4" '((lambda () (interactive) (find-file "/mnt/sdb8/home/vagrant")) :which-key "debian old")
+  "5" '((lambda () (interactive) (find-file "~/.dotfiles/.config")) :which-key "Dotfiles config")
+  "6" '((lambda () (interactive) (find-file "~/.dotfiles")) :which-key "Dotfiles dir")
+  "7" '((lambda () (interactive)
+	  (if IS-WINDOWS
+	      (find-file "~/emacs-repos/emacs-from-scratch/Emacs.org")
+	    (find-file "~/.scratch.emacs.d/Emacs.org")))
+	:which-key "Scratch Emacs.org")
+  "8" '((lambda () (interactive) (find-file "~/VirtualBox VMs/coder")) :which-key "Virtualbox dir")
+  "9" '((lambda () (interactive) (find-file "~/org")) :which-key "org dir")
+  "o" '((lambda () (interactive) (find-file "~/OneDrive")) :which-key "OneDrive dir")
   "w" '((lambda () (interactive) (find-file "~/workspace")) :which-key "workspace dir")
   "D" '((lambda () (interactive) (find-file "~/.doom.d")) :which-key "doom.d Dir")
   "M" '((lambda () (interactive) (find-file "~/.doom.emacs.d")) :which-key "doom.emacs.d Dir")
   "I" '((lambda () (interactive) (find-file "~/.emacs.d/init.el")) :which-key "emacs.d/init.el")
   "i" '((lambda () (interactive) (find-file "~/.evil.emacs.d/init.el")) :which-key "evil.emacs.d/init.el")
-  "e" '((lambda () (interactive)
-	  (if IS-WINDOWS
-	      (find-file "~/emacs-repos/emacs-from-scratch/Emacs.org")
-	    (find-file "~/.scratch.emacs.d/Emacs.org")))
-	:which-key "scratch.emacs.d/Emacs.org")
-  "." '(counsel-find-file :which-key "找到打开文件")
-  "/" '(projectile-find-file :which-key "找到项目文件")
-  "?" '(counsel-file-jump :which-key "查找本地文件")
-  "d" '(dired :which-key "文件目录浏览")
-  "r" '(counsel-buffer-or-recentf :which-key "最近使用文件"))
+  "f" '(find-file :which-key "找到打开文件")
+  "." '(find-file :which-key "找到打开文件")
+  "r" '(consult-recent-file :which-key "找到打开文件")
+  "d" '(dired :which-key "文件目录浏览"))
 
 ;; `windows'
 (+general-global-menu! "window" "w"
@@ -243,7 +246,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "ip"  '(:ignore t :which-key "insert")
   "il" '(org-insert-link :which-key "insert link")
   "n"  '(org-toggle-narrow-to-subtree :which-key "toggle narrow")
-  "s"  '(dw/counsel-rg-org-files :which-key "search notes")
+  "s"  '(dw/consult-rg-org-files :which-key "search notes")
   "a"  '(org-agenda :which-key "status")
   "t"  '(org-todo-list :which-key "todos")
   "c"  '(org-capture t :which-key "capture")
@@ -290,17 +293,17 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
 
 ;; `search'
 (+general-global-menu! "search" "s"
-  "a" '(counsel-fonts :which-key "fonts")
-  "b" '(counsel-bookmark :which-key "bookmark")
-  "c" '(counsel-colors-emacs :which-key "colors")
-  "f" '(counsel-describe-function :which-key "function")
-  "F" '(counsel-describe-face :which-key "face")
-  "p" '(counsel-package :which-key "package")
-  "r" '(counsel-rg :which-key "ripgrep")
+  "a" '(list-fontset :which-key "fonts")
+  "b" '(consult-bookmark :which-key "bookmark")
+  "c" '(list-colors-display :which-key "colors")
+  "f" '(describe-function :which-key "function")
+  "F" '(describe-face :which-key "face")
+  "p" '(describe-package :which-key "package")
+  "r" '(consult-ripgrep :which-key "ripgrep")
   "s" '(save-buffer :which-key "save all")
-  "u" '(counsel-unicode-char :which-key "unicode")
-  "v" '(counsel-describe-variable :which-key "variable")
-  "t" '(counsel-load-theme :which-key "themes"))
+  "u" '(consult-unicode-char :which-key "unicode")
+  "v" '(consult-describe-variable :which-key "variable")
+  "t" '(consult-theme :which-key "themes"))
 
 ;; `project'
 (+general-global-menu! "project" "p"
@@ -386,8 +389,8 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   "*" 'org-ctrl-c-star
   "+" 'org-ctrl-c-minus
   "," 'org-switchb
-  "." 'counsel-org-goto
-  "/" 'counsel-org-goto-all
+  "." 'consult-org-goto
+  "/" 'consult-org-goto-all
   "A" 'org-archive-subtree
   "e" 'org-export-dispatch
   "f" 'org-footnote-action
@@ -475,6 +478,11 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
   (global-set-key (kbd "C-c t") 'counsel-load-theme)
   (global-set-key (kbd "C-c F") 'counsel-org-file))
 
-(+ivy-keybinds-h)
+(defun +vertico-keybinds-h ()
+  "Only when vertico is enabled")
+
+(if USE-VERTICO
+    (+vertico-keybinds-h)
+  (+ivy-keybinds-h))
 
 (provide 'core-keybinds)

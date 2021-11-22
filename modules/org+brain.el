@@ -2,7 +2,7 @@
 ;; ✿ NOTE: Brain配置
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 (use-package org-brain
-  :ensure t
+  
   :init
   (setq org-brain-visualize-default-choices 'all
         org-brain-title-max-length 24

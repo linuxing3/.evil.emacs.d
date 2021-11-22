@@ -3,7 +3,7 @@
 ;; ---------------------------------------------------------
 (use-package evil
   :commands (evil-mode)
-  :ensure t
+  
   :config
   (evil-mode 1))
 
@@ -13,10 +13,10 @@
   (global-evil-leader-mode))
 
 (use-package evil-escape
-  :ensure t)
+  )
 
 (use-package evil-surround
-  :ensure t)
+  )
 
 
 (use-package evil-snipe
@@ -28,7 +28,7 @@
         evil-snipe-char-fold t))
 
 (use-package evil-textobj-anyblock
-  :ensure t
+  
   :config
   (setq evil-textobj-anyblock-blocks
         '(("(" . ")")

@@ -5,7 +5,7 @@
 
 
 (use-package plantuml-mode
-  :ensure t
+  
   :commands plantuml-download-jar
   :config
   (add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
@@ -43,6 +43,6 @@
         org-plantuml-jar-path plantuml-jar-path))
 
 (use-package flycheck-plantuml
-  :ensure t
+  
   :after plantuml-mode
   :config (flycheck-plantuml-setup))

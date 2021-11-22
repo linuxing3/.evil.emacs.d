@@ -1,7 +1,6 @@
 (use-package all-the-icons-dired)
 
 (use-package dired
-  :ensure nil
   :defer 1
   :commands (dired dired-jump)
   :config

@@ -1,7 +1,7 @@
 (require 'dap-python)
 
 (use-package python-mode
-  :ensure t
+  
   :hook (python-mode . lsp-deferred)
   :custom
   ;; NOTE: Set these if Python 3 is called "python3" on your system!
@@ -21,7 +21,7 @@
 
 
 ;; (use-package lsp-jedi
-;;   :ensure t
+;;   
 ;;   :config
 ;;   (with-eval-after-load "lsp-mode"
 ;;     (add-to-list 'lsp-disabled-clients 'pyls)

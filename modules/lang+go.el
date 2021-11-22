@@ -3,7 +3,7 @@
 ;; ---------------------------------------------------------
 
 (use-package go-mode
-  :ensure t
+  
   :hook ((go-mode . lsp-deferred))
   :config
   (require 'dap-go)
@@ -21,7 +21,7 @@
 	 :envFile nil))))
 
 (use-package go-eldoc
-  :ensure t
+  
   :hook ((go-mode . go-eldoc-setup))
   :config
   (set-face-attribute 'eldoc-highlight-function-argument nil
