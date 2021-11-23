@@ -481,7 +481,7 @@ Create prefix map: +general-global-NAME. Prefix bindings in BODY with INFIX-KEY.
 (defun +vertico-keybinds-h ()
   "Only when vertico is enabled")
 
-(if USE-VERTICO
+(if (string= linuxing3-completion-mode "vertico")
     (+vertico-keybinds-h)
   (+ivy-keybinds-h))
 

@@ -14,9 +14,6 @@
 (defconst IS-WINDOWS (memq system-type '(cygwin windows-nt ms-dos)))
 (defconst IS-BSD     (or IS-MAC (eq system-type 'berkeley-unix)))
 
-(defconst USE-VERTICO (string= linuxing3-completion-mode "vertico"))
-(defconst USE-IVY (string= linuxing3-completion-mode "ivy"))
-
 (defun linuxing3/ensure-user-env ()
   "Check user env settings"
   (prog

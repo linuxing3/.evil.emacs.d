@@ -235,7 +235,7 @@
 (linuxing3/better-find-h)
 
 ;; choose completion mode
-;; (linuxing3/better-defaults-ivy-h)
-;; (linuxing3/better-defaults-vertico-h)
+;; (linuxing3/better-ivy-h)
+;; (linuxing3/better-vertico-h)
 
 (provide 'core-default)
