@@ -1,0 +1,158 @@
+#+TITLE: Awesome org mode
+#+AUTHOR: linuxing3
+#+EMAIL: linuxing3@qq.com
+#+DATE: [2021-11-07 Sun 01:12]
+#+OPTIONS: ':t *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t c:nil
+#+OPTIONS: creator:comment d:(not LOGBOOK) date:t e:t email:nil f:t inline:t
+#+OPTIONS: num:t p:nil pri:nil stat:t tags:t tasks:t tex:t timestamp:t toc:t
+#+OPTIONS: todo:t |:t
+#+CREATOR: Emacs 26.3.50.3 (Org mode 8.0.3)
+#+DESCRIPTION:
+#+EXCLUDE_TAGS: noexport
+#+KEYWORDS:
+#+LANGUAGE: en
+#+SELECT_TAGS: export
+
+
+* Todays
+** Workflow
+
+1. Edit org file in emacs
+
+2. Publish the org file as blog/journal under =OneDrive/org/journal= dir
+
+3. Publish the =site.css= files to =~/workspace/github.io/assets/css/site.css=
+
+4. Publish the js files to =~/workspace/github.io/assets/js/= dir
+
+5. Run the =pm2 start --name orglog serve -- -l 3000 ~/workspace/github.io= to start a =http server process daemon=
+
+6. Visit =127.0.0.1:3000= to browse files!
+
+7. Config =caddy= to point to =3000=
+
+** Install =pm2=
+
+Start webserver on =orgblog= dir
+
+#+BEGIN_SRC sh
+npm i -g pm2
+
+# use org-publish to deploy blogs in specific folder
+# or you can do this with emacs scripts
+# (emacs -q --eval (progn (org-publish-project blog) (kill-emacs)))
+cargo doc --target-dir ~/var/www/html/github.io/rustdoc
+# cp ~/.cargo/registry/src/github.com-1ecc6299db9ec823/nickel-0.11.0/target/doc ~/workspace/github.io/
+cd ~/var/www/html/github.io
+
+pm2 start --name orgblog serve -- -l 4000 .
+
+#+END_SRC
+
+** Caddy
+
+#+BEGIN_SRC sh
+:8000
+{
+  root /var/www/html/github.io 
+  gzip
+  browse
+}
+#+END_SRC
+
+* Using  Template
+** apt install emacs-gtk
+#+TITLE: Rust Day1: nickel web framework
+#+AUTHOR: linuxing3
+#+EMAIL: linuxing3@qq.com
+#+DATE: [2021-11-07 Sun 11:44]
+#+OPTIONS: ':t *:t -:t ::t <:t H:3 \n:nil ^:t arch:headline author:t c:nil
+#+OPTIONS: creator:comment d:(not LOGBOOK) date:t e:t email:nil f:t inline:t
+#+OPTIONS: num:t p:nil pri:nil stat:t tags:t tasks:t tex:t timestamp:t toc:t
+#+OPTIONS: todo:t |:t
+#+CREATOR: Emacs 26.3.50.3 (Org mode 8.0.3)
+#+DESCRIPTION:
+#+EXCLUDE_TAGS: noexport
+#+KEYWORDS:
+#+LANGUAGE: en
+#+SELECT_TAGS: export
+
+* Nickel web framework
+
+** Introduction
+
+http://nickel-org.github.io is a simple and lightweight foundation for web applications written in Rust. Its API is inspired by the popular express framework for JavaScript.
+
+*** Hello world
+
+#+BEGIN_SRC sh
+#[macro_use] extern crate nickel;
+
+use nickel::{Nickel, HttpRouter};
+
+fn main() {
+    let mut server = Nickel::new();
+    server.get("**", middleware!("Hello World"));
+    server.listen("127.0.0.1:6767");
+}
+#+END_SRC
+
+*** Dependencies
+
+You'll need to create a *Cargo.toml* that looks like this;
+
+#+BEGIN_SRC rust
+[package]
+
+name = "my-nickel-app"
+version = "0.0.1"
+authors = ["yourname"]
+
+[dependencies.nickel]
+version = "*"
+# If you are using the 'nightly' rust channel you can uncomment
+# the line below to activate unstable features
+# features = ["unstable"]
+
+# Some examples require the `rustc_serialize` crate, which will
+# require uncommenting the lines below
+# [dependencies]
+# rustc-serialize = "*"
+#+END_SRC
+
+
+You can then compile this using *Cargo build* and run it using *Cargo run*.
+
+After it's running you should visit http://localhost:6767 to see your hello world!
+
+*** More examples
+
+
+** Basic commands
+
+
+#+BEGIN_SRC sh
+cargo run --example example_name
+cargo test --verbose --no-default-features
+#+END_SRC rust
+
+#+BEGIN_SRC rust
+[package]
+name = "nickel"
+version = "0.11.0"
+authors = ["Christoph Burgdorf <christoph@thoughtram.io>", "Kevin Butler <haqkrs@gmail.com>", "Simon Persson <simon@flaskpost.org>", "Jeff Olhoeft <jolhoeft@gmail.com>"]
+autoexamples = false
+description = "An express.js inspired web framework"
+homepage = "http://nickel-org.github.io/"
+readme = "README.md"
+keywords = ["nickel", "server", "web", "express"]
+license = "MIT"
+repository = "https://github.com/nickel-org/nickel.rs"
+
+name = "logger_middleware"
+path = "examples/logger_middleware.rs"
+
+name = "routing"
+path = "examples/routing.rs"
+#+END_SRC
+

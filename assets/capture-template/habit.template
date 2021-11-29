@@ -1,0 +1,6 @@
+** %^{Habit |reading|writing|computer|music|PE|gaming}
+  SCHEDULED: %T
+  :PROPERTIES:
+  :STYLE:    habit
+  :END:
+  %?
