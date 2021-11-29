@@ -1,4 +1,3 @@
-;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 ;; Capture
 ;; ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂ ✂
 
@@ -160,7 +159,11 @@
                  "Snippets"
                  entry
                  (file snippets-org-file)
+<<<<<<< HEAD
                  (file "~/org/template/snippet.template")
+=======
+                 (file "~/.evil.emacs.d/assets/capture-template/snippet.template")
+>>>>>>> a0036bf979168f73a725a2f2792eb19da002c8c1
                  ;; "* %?\t%^g\n #+BEGIN_SRC %^{language}\n\n#+END_SRC"
                  :jump-to-captured t))
   (setq billing-org-file "~/org/billing.org")
@@ -169,7 +172,11 @@
                  "Billing"
                  plain
                  (file+function billing-org-file find-month-tree)
+<<<<<<< HEAD
                  (file "~/org/template/billing.template")
+=======
+                 (file "~/.evil.emacs.d/assets/capture-template/billing.template")
+>>>>>>> a0036bf979168f73a725a2f2792eb19da002c8c1
                  ;; " | %U | %^{类别} | %^{描述} | %^{金额} |"
                  :jump-to-captured t))
 
@@ -179,7 +186,11 @@
                  "Contacts"
                  entry
                  (file contacts-org-file)
+<<<<<<< HEAD
                  (file "~/org/template/contact.template")
+=======
+                 (file "~/.evil.emacs.d/assets/capture-template/contact.template")
+>>>>>>> a0036bf979168f73a725a2f2792eb19da002c8c1
                  ;; "* %^{姓名} %^{手机号}p %^{邮箱}p %^{住址}p %^{微信}p %^{微博}p %^{whatsapp}p\n\n  %?"
                  :empty-lines 1
                  :kill-buffer t))
@@ -201,7 +212,11 @@
                  "Hugo Markdown Blog"
                  plain
                  (file ,(concat blog-org-dir (format-time-string "%Y-%m-%d.md"))) ;; Markdown file
+<<<<<<< HEAD
                  (file "~/org/template/blog.template")
+=======
+                 (file "~/.evil.emacs.d/assets/capture-template/blog.template")
+>>>>>>> a0036bf979168f73a725a2f2792eb19da002c8c1
 		 ))
 
   (add-to-list 'org-capture-templates
@@ -209,7 +224,11 @@
                  "Roam Daily Notes"
                  plain
                  (file ,(concat "~/org/roam/daily/" (format-time-string "%Y-%m-%d.org"))) ;; Org file
+<<<<<<< HEAD
                  (file "~/org/template/roamdaily.template")
+=======
+                 (file "~/.evil.emacs.d/assets/capture-template/roamdaily.template")
+>>>>>>> a0036bf979168f73a725a2f2792eb19da002c8c1
 		 ))
 
   ;; `Protocol' 网页抓取
