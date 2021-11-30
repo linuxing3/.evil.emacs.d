@@ -1,4 +1,4 @@
-;;; modules/module-helper.el -*- lexical-binding: t; -*-
+;; modules/module-helper.el -*- lexical-binding: t; -*-
 
 (require 'cl)
 (require 'subr-x)

@@ -46,3 +46,5 @@
   
   :after plantuml-mode
   :config (flycheck-plantuml-setup))
+
+(provide 'lang+plantuml)

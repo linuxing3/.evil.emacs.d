@@ -205,7 +205,7 @@
 (require 'org+publish)
 (require 'org+brain)
 (require 'org+present)
-(require 'org+roam)
+(require 'org+roam2)
 (require 'org+elfeed)
 
 ;; keybinds
