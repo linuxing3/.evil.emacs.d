@@ -63,6 +63,7 @@
  "C-S-p"   #'eshell
  "C-S-s"   #'server-start
  ;; increase font size
+ "M-<SPC>"   #'pyim
  "M-="       #'text-scale-increase
  "M--"       #'text-scale-decrease
  "M-N"       #'make-frame ;;创建新的帧
@@ -85,6 +86,7 @@
 
 (general-define-key
  :states '(normal visual emacs)
+ "C-\\" #'toggle-input-method
  "C-o" #'open-with-external-app
  "C-p" #'consult-buffer
  "C-f" #'consult-buffer-other-window
