@@ -1,5 +1,8 @@
 ;; -*- lexical-binding: t -*-
 
+(require 'meow)
+(meow-global-mode 1)
+
 ;; (straight-use-package '(meow :type git :host github :repo "DogLooksGood/meow"))
 
 (meow-leader-define-key
@@ -194,10 +197,6 @@
                                    (meow-cancel . keyboard-quit)
                                    (meow-pop . meow-pop-grab)
                                    (meow-delete . meow-C-d)))
-
-(require 'meow)
-
-(meow-global-mode 1)
 
 (with-eval-after-load "meow"
   ;; make Meow usable in TUI Emacs

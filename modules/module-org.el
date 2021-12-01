@@ -201,11 +201,12 @@
 
 ;; Application
 (require 'org+hugo)
-(require 'org+journal)
+;; (require 'org+journal)
 (require 'org+publish)
-(require 'org+brain)
+;; (require 'org+brain)
 (require 'org+present)
 (require 'org+roam2)
+(require 'org+calendar)
 (require 'org+elfeed)
 
 ;; keybinds

@@ -21,5 +21,3 @@
              :custom (straight-use-package-by-default t))
 
 (provide 'core-straight)
-
-(provide 'core-straight)
