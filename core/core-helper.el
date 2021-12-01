@@ -721,9 +721,7 @@ open and unsaved."
   (unless yas-global-mode
     (progn
       (yas-global-mode 1)
-      (setq my-snippet-dir (expand-file-name "~/emacs-snippets"))
-      (setq yas-snippet-dirs  my-snippet-dir)
-      (yas-load-directory my-snippet-dir)
+      (yas-load-directory +snippets-dir)
       (setq yas-wrap-around-region t)))
   (yas-minor-mode 1))
 

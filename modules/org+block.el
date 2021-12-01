@@ -12,9 +12,16 @@
 
 ;; Enable abbrev-mode
 (add-hook 'org-mode-hook (lambda () (abbrev-mode 1)))
+(add-hook 'text-mode-hook (lambda () (abbrev-mode 1)))
 
 ;; Skeletons
-;;
+;; chinese note
+(define-skeleton skel-chinese-input-block
+  "Insert an chinese note."
+  "" "* 中文输入" str)
+
+(define-abbrev org-mode-abbrev-table "cn" "" 'skel-chinese-input-block)
+
 ;; sblk - Generic block #+begin_FOO .. #+end_FOO
 (define-skeleton skel-org-block
   "Insert an org block, querying for type."

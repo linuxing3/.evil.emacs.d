@@ -1,4 +1,4 @@
-;;; -*- lexical-binding: t -*-
+;; -*- lexical-binding: t -*-
 
 ;; (straight-use-package '(meow :type git :host github :repo "DogLooksGood/meow"))
 
@@ -82,9 +82,10 @@
    '("j" . project-switch-to-buffer)
    '("d" . dired)
    '("b" . switch-to-buffer)
-   '("r" . rg-project)
+   '("r" . counsel-rg)
    '("f" . find-file)
    '("i" . imenu)
+   '("s" . save-buffer)
    '("9" . org-agenda)
    '("0" . org-capture)
    '("a" . "M-x")
@@ -96,11 +97,8 @@
    '("P" . pass)
    '("R" . org-roam-mode)
    '("D" . docker))
-  ;; `insert' mode key
-  ;; (meow-insert-define-key
-  ;; '("jj" . "ESC")
-  ;; '("C-j" . "ESC")
-  ;; )
+
+  
   ;; `normal' mode as `keypad'
   (meow-normal-define-key
    '("0" . meow-expand-0)
@@ -153,7 +151,7 @@
    '("o" . meow-block)
    '("O" . meow-block-expand)
    ;; `M-w' to copy and p to yark
-   '("p" . meow-yank)
+   '("p" . meow-yank)                   ;; paste from register
    '("P" . meow-yank-pop)
    '("q" . meow-quit)
    '("G" . meow-goto-line) ;; like G in vim
@@ -174,7 +172,7 @@
    '("W" . meow-mark-symbol)
    '("x" . meow-line) ;; super productivity
    '("X" . meow-kmacro-lines) ;; super productivity
-   '("y" . meow-save)
+   '("y" . meow-save)         ;; save to register
    '("z" . meow-pop-selection)
    '("Z" . meow-pop-all-selection)
    '("&" . meow-query-replace)
