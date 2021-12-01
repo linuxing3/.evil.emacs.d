@@ -1,5 +1,6 @@
 ;; Org-Roam basic configuration
 (use-package org-roam
+    ;; :load-path "./localelpa/org-roam"
     :after org)
 
 (setq
@@ -24,6 +25,8 @@
   (global-set-key (kbd "C-c n s") 'org-roam-db-sync)
 
   (org-roam-setup)
+  (setq org-roam-complete-link-at-point t)
+  (setq org-roam-completion-everywhere t)
   (require 'org-roam-protocol))
 
 ;;; templates
@@ -67,6 +70,5 @@
           org-roam-ui-follow t
           org-roam-ui-update-on-save t
           org-roam-ui-open-on-start t))
-
 
 (provide 'org+roam2)

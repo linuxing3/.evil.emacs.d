@@ -3,44 +3,44 @@
 ;; (straight-use-package '(meow :type git :host github :repo "DogLooksGood/meow"))
 
 (meow-leader-define-key
-   ;; reverse command query
-   '("^" . meow-keypad-describe-key)
-   ;; cheatsheet
-   '("?" . meow-cheatsheet)
-   ;; high frequency keybindings
-   '("e" . "C-x C-e")
-   '(")" . "C-)")
-   '("}" . "C-}")
-   '("." . "M-.")
-   '("," . "M-,")
-   ;; window management
-   '("w" . other-window)
-   '("W" . window-swap-states)
-   '("o" . delete-other-windows)
-   '("/" . split-window-right)
-   '("-" . split-window-below)
-   ;; high frequency commands
-   '("$" . +change-theme)
-   '(";" . comment-dwim)
-   '("k" . kill-this-buffer)
-   '("p" . project-find-file)
-   '("j" . project-switch-to-buffer)
-   '("d" . dired)
-   '("b" . switch-to-buffer)
-   '("r" . rg-project)
-   '("f" . find-file)
-   '("i" . imenu)
-   '("c" . org-capture)
-   '("A" . org-agenda)
-   '("a" . "M-x")
-   '("v" . "C-x g")
-   ;; toggles
-   '("L" . display-line-numbers-mode)
-   '("S" . smartparens-strict-mode)
-   '("t" . telega)
-   '("P" . pass)
-   '("R" . org-roam-mode)
-   '("D" . docker))
+ ;; reverse command query
+ '("^" . meow-keypad-describe-key)
+ ;; cheatsheet
+ '("?" . meow-cheatsheet)
+ ;; high frequency keybindings
+ '("e" . "C-x C-e")
+ '(")" . "C-)")
+ '("}" . "C-}")
+ '("." . "M-.")
+ '("," . "M-,")
+ ;; window management
+ '("w" . other-window)
+ '("W" . window-swap-states)
+ '("o" . delete-other-windows)
+ '("/" . split-window-right)
+ '("-" . split-window-below)
+ ;; high frequency commands
+ '("$" . +change-theme)
+ '(";" . comment-dwim)
+ '("k" . kill-this-buffer)
+ '("p" . project-find-file)
+ '("j" . project-switch-to-buffer)
+ '("d" . dired)
+ '("b" . switch-to-buffer)
+ '("r" . rg-project)
+ '("f" . find-file)
+ '("i" . imenu)
+ '("9" . org-capture)
+ '("0" . org-agenda)
+ '("a" . "M-x")
+ '("v" . "C-x g")
+ ;; toggles
+ '("L" . display-line-numbers-mode)
+ '("S" . smartparens-strict-mode)
+ '("t" . telega)
+ '("P" . pass)
+ '("R" . org-roam-mode)
+ '("D" . docker))
 
 (defun meow-setup ()
   (setq meow-cheatsheet-layout meow-cheatsheet-layout-qwerty)
@@ -60,8 +60,6 @@
    '("6" . meow-digit-argument)
    '("7" . meow-digit-argument)
    '("8" . meow-digit-argument)
-   '("9" . meow-digit-argument)
-   '("0" . meow-digit-argument)
    ;; cheatsheet
    '("?" . meow-cheatsheet)
    ;; high frequency keybindings
@@ -87,9 +85,9 @@
    '("r" . rg-project)
    '("f" . find-file)
    '("i" . imenu)
-   '("a" . org-agenda)
-   '("c" . org-capture)
-   '("x" . "M-x")
+   '("9" . org-agenda)
+   '("0" . org-capture)
+   '("a" . "M-x")
    '("G" . "C-x g")
    ;; toggles
    '("L" . display-line-numbers-mode)

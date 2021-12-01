@@ -1,5 +1,6 @@
 (if IS-LINUX
-     (use-package mu4e
+    (use-package mu4e
+      :ensure nil
       :defer 20 ; Wait until 20 seconds after startup
       :config
 
