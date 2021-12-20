@@ -3,6 +3,34 @@
 ;; ---------------------------------------------------------
 (setq user-full-name "Xing Wenju"
       user-mail-address "linuxing3@qq.com")
+;; ---------------------------------------------------------
+;; set encoding
+;; ---------------------------------------------------------
+(setq system-time-locale "C")
+;;(setq locale-coding-system 'utf-8)
+;;(set-default-coding-systems 'utf-8)
+(prefer-coding-system 'utf-8)
+(set-language-environment 'utf-8)
+(set-buffer-file-coding-system 'utf-8)
+(set-clipboard-coding-system 'utf-8)
+(set-file-name-coding-system 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-selection-coding-system 'utf-8)
+(setq org-export-coding-system 'utf-8)
+;;(modify-coding-system-alist 'process "*" 'utf-8)
+
+;;
+;; Font
+;;
+;; BlexMono Nerd Font
+;; Iosevka Nerd Font Mono
+;; Yahei Consolas Hybrid
+(setq doom-font (font-spec :family "Droid Sans Mono" :size 22))
+(setq doom-variable-pitch-font (font-spec :family "Droid Sans Mono" :size 22))
+(setq doom-big-font (font-spec :family "Droid Sans Mono" :size 24))
+(setq doom-serif-font (font-spec :family "Droid Sans Mono" :weight 'light :size 22))
+
 
 ;; ---------------------------------------------------------
 ;; set theme
